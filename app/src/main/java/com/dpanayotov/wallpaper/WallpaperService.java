@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 /**
@@ -150,7 +149,6 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private void update() {
             short stepSpeed = (short) (actualSpeed * delta);
-            Log.d("zxc", "zxc stepSpeed" + stepSpeed);
             Bar bar, lastBar;
             for (int i = 0; i < bars.size(); i++) {
                 bar = bars.get(i);
