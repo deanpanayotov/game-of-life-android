@@ -26,11 +26,20 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private static final byte FRAMES_PER_SECOND = 100;
         private static final byte FRAME = 1000 / FRAMES_PER_SECOND; //in milliseconds;
 
+        private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
+        private static final byte HUE_STEP = 5; //in degrees;
+        private static final byte SATURATION_STEP = 10; //in percents;
+
         private Paint paint = new Paint();
 
         //dimensions
         private short width;
         private short height;
+
+        private short h = 240;
+        private short s = 100;
+        private short v = 20;
+
 
         //lifecycle
         private boolean visible = true;
