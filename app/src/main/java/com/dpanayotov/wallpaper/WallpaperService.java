@@ -2,7 +2,6 @@ package com.dpanayotov.wallpaper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -27,8 +26,13 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private static final byte FRAME = 1000 / FRAMES_PER_SECOND; //in milliseconds;
 
         private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
+        private static final short H = 240;
+        private static final short S = 100;
+        private static final short V = 20;
         private static final byte HUE_STEP = 5; //in degrees;
-        private static final byte SATURATION_STEP = 10; //in percents;
+        private static final byte VALUE_STEP = 10; //in percents;
+        private static final byte VALUE_LIMIT = 60; //in percents;
+        private static final float SPEED = 0.5f; //in bars per second;
 
         private Paint paint = new Paint();
 
@@ -36,11 +40,13 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private short width;
         private short height;
 
-        private short h = 240;
-        private short s = 100;
-        private short v = 20;
 
-        private Bar[] bars = new Bar[NUMBER_OF_BARS + 1];
+        private ColorDispenser dispenser = new LinearColorDispenser(H, S, V, HUE_STEP,
+                VALUE_STEP, VALUE_LIMIT);
+        private List<Bar> bars = new ArrayList<>();
+        private short step; //pixels;
+        private short border; //pixels;
+        private short actualSpeed; //per second;
 
         //lifecycle
         private boolean visible = true;
@@ -113,10 +119,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             if (force || restart) {
                 restart = false;
 
-                int step = height / NUMBER_OF_BARS;
-                for(int i=0;i<0;i++){
-                    bars[i] = new Bar((short) (step * (i - 1)), 0);
+                step = (short) (height / NUMBER_OF_BARS);
+                for (int i = 0; i < NUMBER_OF_BARS + 1; i++) {
+                    bars.add(new Bar((short) (step * i), dispenser.nextColor()));
                 }
+                actualSpeed = (short) (step * SPEED);
+                border = (short) (step * -1);
 
                 then = System.currentTimeMillis();
                 handler.post(drawRunner);
@@ -131,7 +139,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             }
         };
 
-        private void step(){
+        private void step() {
             now = System.currentTimeMillis();
             delta = (now - then) / 1000f;
             then = now;
@@ -140,7 +148,17 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         }
 
         private void update() {
-            //TODO
+            short stepSpeed = (short) (actualSpeed * delta);
+            Bar bar, lastBar;
+            for (int i = 0; i < bars.size(); i++) {
+                bar = bars.get(i);
+                bar.y += stepSpeed;
+                if (bar.y <= border) {
+                    lastBar = bars.get(bars.size() - 1);
+                    bars.remove(bar);
+                    bar.y = (short) (lastBar.y + step);
+                }
+            }
         }
 
         private void draw() {
@@ -150,7 +168,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 try {
                     canvas = holder.lockCanvas();
                     if (canvas != null) {
-                        //TODO
+                        for (Bar bar : bars) {
+                            paint.setColor(bar.color);
+                            canvas.drawRect(0, bar.y, width, bar.y + step, paint);
+                        }
                     }
                 } finally {
                     if (canvas != null)
