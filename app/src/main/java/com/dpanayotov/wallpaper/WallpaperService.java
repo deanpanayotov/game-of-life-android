@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 /**
@@ -27,11 +28,11 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
         private static final short H = 240;
-        private static final short S = 100;
-        private static final short V = 20;
+        private static final float S = 1f;
+        private static final float V = 0.2f;
         private static final byte HUE_STEP = 5; //in degrees;
-        private static final byte VALUE_STEP = 10; //in percents;
-        private static final byte VALUE_LIMIT = 60; //in percents;
+        private static final float VALUE_STEP = 0.1f; //in percents;
+        private static final float VALUE_LIMIT = 0.6f; //in percents;
         private static final float SPEED = 0.5f; //in bars per second;
 
         private Paint paint = new Paint();
@@ -123,7 +124,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 for (int i = 0; i < NUMBER_OF_BARS + 1; i++) {
                     bars.add(new Bar((short) (step * i), dispenser.nextColor()));
                 }
-                actualSpeed = (short) (step * SPEED);
+                actualSpeed = (short) (step * SPEED * -1);
                 border = (short) (step * -1);
 
                 then = System.currentTimeMillis();
@@ -149,6 +150,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private void update() {
             short stepSpeed = (short) (actualSpeed * delta);
+            Log.d("zxc", "zxc stepSpeed" + stepSpeed);
             Bar bar, lastBar;
             for (int i = 0; i < bars.size(); i++) {
                 bar = bars.get(i);
@@ -157,6 +159,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                     lastBar = bars.get(bars.size() - 1);
                     bars.remove(bar);
                     bar.y = (short) (lastBar.y + step);
+                    bar.color = dispenser.nextColor();
+                    bars.add(bar);
                 }
             }
         }

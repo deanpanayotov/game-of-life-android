@@ -5,17 +5,13 @@ package com.dpanayotov.wallpaper;
  */
 public class LinearColorDispenser extends ColorDispenser {
 
-    protected short valueLimit;
+    protected float valueLimit;
     protected byte direction = 1;
 
-    public LinearColorDispenser(short h, short s, short v, short hueStep, short valueStep, short
+    public LinearColorDispenser(short h, float s, float v, short hueStep, float valueStep, float
             valueLimit) {
         super(h, s, v, hueStep, valueStep);
         this.valueLimit = valueLimit;
-        if ((valueLimit - v) % valueStep != 0) {
-            throw new IllegalArgumentException("v, valueStep and valueLimit should be compatible " +
-                    "values!");
-        }
     }
 
     @Override
