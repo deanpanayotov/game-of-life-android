@@ -27,12 +27,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
         private static final int H = 240;
-        private static final int S = 75;
-        private static final int V = 20;
+        private static final int S = 65;
+        private static final int V = 15;
         private static final byte HUE_STEP = 5; //in degrees;
         private static final int VALUE_STEP = 10; //in percents;
-        private static final int VALUE_LIMIT = 60; //in percents;
-        private static final float SPEED = 0.1f; //in bars per second;
+        private static final int VALUE_LIMIT = 55; //in percents;
+        private static final float SPEED = 0.05f; //in bars per second;
 
         private Paint paint = new Paint();
 
