@@ -11,11 +11,15 @@ public class LinearColorDispenser extends ColorDispenser {
     protected float initialValue;
     protected byte direction = 1;
 
-    public LinearColorDispenser(short h, float s, float v, short hueStep, float valueStep, float
+    public LinearColorDispenser(short h, short s, short v, short hueStep, short valueStep, short
             valueLimit) {
         super(h, s, v, hueStep, valueStep);
         this.valueLimit = valueLimit;
         this.initialValue = v;
+
+        if((valueLimit - v) % valueStep != 0){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

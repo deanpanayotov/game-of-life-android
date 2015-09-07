@@ -7,12 +7,12 @@ import android.graphics.Color;
  */
 public abstract class ColorDispenser {
     protected short h;
-    protected float s;
-    protected float v;
+    protected short s;
+    protected short v;
     protected short hueStep;
     protected float valueStep;
 
-    public ColorDispenser(short h, float s, float v, short hueStep, float valueStep) {
+    public ColorDispenser(short h, short s, short v, short hueStep, short valueStep) {
         this.h = h;
         this.s = s;
         this.v = v;
@@ -22,7 +22,7 @@ public abstract class ColorDispenser {
 
     public int nextColor() {
 
-        int color = Color.HSVToColor(new float[]{h, s, v});
+        int color = Color.HSVToColor(new float[]{h, s/100f, v/100f});
         runColorStrategy();
         return color;
     }
