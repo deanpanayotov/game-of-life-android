@@ -1,7 +1,5 @@
 package com.dpanayotov.wallpaper;
 
-import android.util.Log;
-
 /**
  * Created by Dean Panayotov Local on 7.9.2015
  */
@@ -25,7 +23,6 @@ public class LinearColorDispenser extends ColorDispenser {
     @Override
     protected void runColorStrategy() {
         v += valueStep * direction;
-        Log.d("zxc", "zxc v:" + v);
         if (v == valueLimit || v == initialValue) {
             direction *= -1;
             if(direction == 1){
