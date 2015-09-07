@@ -40,6 +40,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private short s = 100;
         private short v = 20;
 
+        private Bar[] bars = new Bar[NUMBER_OF_BARS + 1];
 
         //lifecycle
         private boolean visible = true;
@@ -111,7 +112,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private void init(boolean force) {
             if (force || restart) {
                 restart = false;
-                //TODO
+
+                int step = height / NUMBER_OF_BARS;
+                for(int i=0;i<0;i++){
+                    bars[i] = new Bar((short) (step * (i - 1)), 0);
+                }
+
                 then = System.currentTimeMillis();
                 handler.post(drawRunner);
             }
