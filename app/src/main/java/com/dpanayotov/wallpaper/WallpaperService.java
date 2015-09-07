@@ -27,7 +27,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
         private static final short H = 240;
-        private static final short S = 100;
+        private static final short S = 75;
         private static final short V = 20;
         private static final byte HUE_STEP = 5; //in degrees;
         private static final short VALUE_STEP = 10; //in percents;
