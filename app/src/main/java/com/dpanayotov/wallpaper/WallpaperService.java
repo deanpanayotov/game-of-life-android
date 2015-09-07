@@ -26,27 +26,27 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private static final byte FRAME = 1000 / FRAMES_PER_SECOND; //in milliseconds;
 
         private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
-        private static final short H = 240;
-        private static final short S = 75;
-        private static final short V = 20;
+        private static final int H = 240;
+        private static final int S = 75;
+        private static final int V = 20;
         private static final byte HUE_STEP = 5; //in degrees;
-        private static final short VALUE_STEP = 10; //in percents;
-        private static final short VALUE_LIMIT = 60; //in percents;
+        private static final int VALUE_STEP = 10; //in percents;
+        private static final int VALUE_LIMIT = 60; //in percents;
         private static final float SPEED = 0.1f; //in bars per second;
 
         private Paint paint = new Paint();
 
         //dimensions
-        private short width;
-        private short height;
+        private int width;
+        private int height;
 
 
         private ColorDispenser dispenser = new LinearColorDispenser(H, S, V, HUE_STEP,
                 VALUE_STEP, VALUE_LIMIT);
         private List<Bar> bars = new ArrayList<>();
-        private short step; //pixels;
-        private short border; //pixels;
-        private short actualSpeed; //per second;
+        private int step; //pixels;
+        private int border; //pixels;
+        private float actualSpeed; //per second;
 
         //lifecycle
         private boolean visible = true;
@@ -107,8 +107,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         public void onSurfaceChanged(SurfaceHolder holder, int format,
                                      int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
-            this.width = (short) width;
-            this.height = (short) height;
+            this.width = (int) width;
+            this.height = (int) height;
             init(false);
         }
 
@@ -119,12 +119,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             if (force || restart) {
                 restart = false;
 
-                step = (short) (height / NUMBER_OF_BARS);
+                step = (int) (height / NUMBER_OF_BARS);
                 for (int i = 0; i < NUMBER_OF_BARS + 1; i++) {
-                    bars.add(new Bar((short) (step * i), dispenser.nextColor()));
+                    bars.add(new Bar((int) (step * i), dispenser.nextColor()));
                 }
-                actualSpeed = (short) (step * SPEED * -1);
-                border = (short) (step * -1);
+                actualSpeed = (int) (step * SPEED * -1);
+                border = (int) (step * -1);
 
                 then = System.currentTimeMillis();
                 handler.post(drawRunner);
@@ -148,7 +148,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         }
 
         private void update() {
-            short stepSpeed = (short) (actualSpeed * delta);
+            float stepSpeed = actualSpeed * delta;
             Bar bar, lastBar;
             for (int i = 0; i < bars.size(); i++) {
                 bar = bars.get(i);
@@ -156,7 +156,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 if (bar.y <= border) {
                     lastBar = bars.get(bars.size() - 1);
                     bars.remove(bar);
-                    bar.y = (short) (lastBar.y + step);
+                    bar.y = (int) (lastBar.y + step);
                     bar.color = dispenser.nextColor();
                     bars.add(bar);
                 }

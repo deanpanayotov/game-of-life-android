@@ -5,11 +5,11 @@ package com.dpanayotov.wallpaper;
  */
 public class LinearColorDispenser extends ColorDispenser {
 
-    protected float valueLimit;
-    protected float initialValue;
+    protected int valueLimit;
+    protected int initialValue;
     protected byte direction = 1;
 
-    public LinearColorDispenser(short h, short s, short v, short hueStep, short valueStep, short
+    public LinearColorDispenser(int h, int s, int v, int hueStep, int valueStep, int
             valueLimit) {
         super(h, s, v, hueStep, valueStep);
         this.valueLimit = valueLimit;

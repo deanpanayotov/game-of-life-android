@@ -6,13 +6,13 @@ import android.graphics.Color;
  * Created by Dean Panayotov Local on 7.9.2015
  */
 public abstract class ColorDispenser {
-    protected short h;
-    protected short s;
-    protected short v;
-    protected short hueStep;
+    protected int h;
+    protected int s;
+    protected int v;
+    protected int hueStep;
     protected float valueStep;
 
-    public ColorDispenser(short h, short s, short v, short hueStep, short valueStep) {
+    public ColorDispenser(int h, int s, int v, int hueStep, int valueStep) {
         this.h = h;
         this.s = s;
         this.v = v;
