@@ -173,9 +173,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                         paint.setColor(Color.parseColor("#595594"));
                         for (int i = 0; i < Constants.GRID_WIDTH; i++) {
                             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
-                                if (life.grid.cells[i][j] == 1) {
+                                if (life.summedGrid.cells[i][j] > 0) {
                                     int cellX = i * cellWidth + cellWidth / 2;
                                     int cellY = j * cellHeight + cellHeight / 2;
+                                    paint.setAlpha((int) (255 * (1 / (float) life.summedGrid.cells[i][j])));
                                     canvas.drawCircle(cellX, cellY, cellWidth / 2 - Constants
                                             .CELL_PADDING, paint);
                                 }

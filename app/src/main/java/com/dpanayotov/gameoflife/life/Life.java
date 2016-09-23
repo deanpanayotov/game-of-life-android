@@ -1,16 +1,27 @@
 package com.dpanayotov.gameoflife.life;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Dean Panayotov on 9/23/2016
  */
 
 public class Life {
 
-    public Grid grid;
+    private boolean first = true;
 
+    private List<Grid> queue = new ArrayList<>();
+
+    private Grid grid;
+
+    public Grid summedGrid;
 
     public Life() {
         grid = new Grid(true);
+        for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
+            queue.add(new Grid(false));
+        }
     }
 
     public void update() {
@@ -25,7 +36,27 @@ public class Life {
                 }
             }
         }
+        if(first){
+            first = false;
+        }else {
+            queue.add(0, new Grid(grid));
+            queue.remove(queue.size() - 1);
+        }
 
-        grid = nextGrid;
+        grid = new Grid(nextGrid);
+        summedGrid = new Grid(grid);
+
+        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+                if (summedGrid.cells[i][j] == 0) {
+                    for (int k = 0; k < Constants.QUEUE_SIZE; k++) {
+                        if (queue.get(k).cells[i][j] == 1) {
+                            summedGrid.cells[i][j] = k + 2;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
