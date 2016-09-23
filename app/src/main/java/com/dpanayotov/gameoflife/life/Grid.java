@@ -55,5 +55,16 @@ public class Grid {
         }
     }
 
+    public void mirrorPopulate() {
+
+        Random random = new Random(92484829894l);
+
+        for (int i = 0; i < Constants.GRID_WIDTH/2+1; i++) {
+            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+                cells[i][j] = random.nextInt(2);
+                cells[Constants.GRID_WIDTH - i - 1][j] = cells[i][j];
+            }
+        }
+    }
 
 }
