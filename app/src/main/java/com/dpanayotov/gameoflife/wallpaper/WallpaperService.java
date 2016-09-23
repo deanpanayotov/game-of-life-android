@@ -168,9 +168,9 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 try {
                     canvas = holder.lockCanvas();
                     if (canvas != null) {
-                        paint.setColor(Color.BLACK);
+                        paint.setColor(Color.parseColor("#0B083B"));
                         canvas.drawRect(0, 0, width, height, paint);
-                        paint.setColor(Color.WHITE);
+                        paint.setColor(Color.parseColor("#595594"));
                         for (int i = 0; i < Constants.GRID_WIDTH; i++) {
                             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
                                 if (life.grid.cells[i][j] == 1) {
