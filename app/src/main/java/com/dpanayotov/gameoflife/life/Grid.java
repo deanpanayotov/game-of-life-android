@@ -13,7 +13,7 @@ public class Grid {
 
     public Grid(boolean populate) {
         if (populate) {
-            populate();
+            mirrorPopulate();
         } else {
             for (int[] row : cells) {
                 Arrays.fill(row, 0);
@@ -67,4 +67,16 @@ public class Grid {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Grid grid = (Grid) obj;
+        for(int i=0;i<Constants.GRID_WIDTH;i++){
+            for(int j=0;j<Constants.GRID_HEIGHT;j++){
+                if(cells[i][j] != grid.cells[i][j]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

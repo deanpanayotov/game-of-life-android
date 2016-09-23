@@ -9,19 +9,18 @@ import java.util.List;
 
 public class Life {
 
-    private boolean first = true;
-
-    private List<Grid> queue = new ArrayList<>();
+    private List<Grid> queue;
 
     private Grid grid;
+
+    private Grid previousGrid;
 
     public Grid summedGrid;
 
     public Life() {
+        previousGrid = new Grid(false);
         grid = new Grid(true);
-        for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
-            queue.add(new Grid(false));
-        }
+        resetQueue();
     }
 
     public void update() {
@@ -36,27 +35,35 @@ public class Life {
                 }
             }
         }
-        if(first){
-            first = false;
-        }else {
-            queue.add(0, new Grid(grid));
-            queue.remove(queue.size() - 1);
-        }
 
-        grid = new Grid(nextGrid);
-        summedGrid = new Grid(grid);
+        if (previousGrid.equals(nextGrid)) {
+            previousGrid = new Grid(false);
+            grid = new Grid(true);
+            resetQueue();
+        } else {
+            previousGrid = grid;
+            grid = new Grid(nextGrid);
+            summedGrid = new Grid(grid);
 
-        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
-                if (summedGrid.cells[i][j] == 0) {
-                    for (int k = 0; k < Constants.QUEUE_SIZE; k++) {
-                        if (queue.get(k).cells[i][j] == 1) {
-                            summedGrid.cells[i][j] = k + 2;
-                            break;
+            for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+                for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+                    if (summedGrid.cells[i][j] == 0) {
+                        for (int k = 0; k < Constants.QUEUE_SIZE; k++) {
+                            if (queue.get(k).cells[i][j] == 1) {
+                                summedGrid.cells[i][j] = k + 2;
+                                break;
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void resetQueue() {
+        queue = new ArrayList<>();
+        for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
+            queue.add(new Grid(false));
         }
     }
 }
