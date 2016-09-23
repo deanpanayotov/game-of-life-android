@@ -22,7 +22,10 @@ public class Grid {
     }
 
     public Grid(Grid grid) {
-        System.arraycopy(grid.cells, 0, cells, 0, grid.cells.length);
+        cells = new int[grid.cells.length][];
+        for(int i=0;i<grid.cells.length;i++){
+            cells[i] = Arrays.copyOf(grid.cells[i], grid.cells[i].length);
+        }
     }
 
     public int getNeighboursCount(int x, int y) {
@@ -43,7 +46,7 @@ public class Grid {
 
     public void populate() {
 
-        Random random = new Random();
+        Random random = new Random(92484829894l);
 
         for (int i = 0; i < Constants.GRID_WIDTH; i++) {
             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
