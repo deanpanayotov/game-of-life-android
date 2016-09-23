@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wallpaper</string>
+    <string name="app_name">Game of Life</string>
 
     <string name="apply_wallpaper">Apply wallpaper</string>
     <string name="preferences">Preferences</string>

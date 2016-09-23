@@ -1,4 +1,4 @@
-package com.dpanayotov.wallpaper;
+package com.dpanayotov.gameoflife;
 
 import android.app.Activity;
 import android.os.Bundle;

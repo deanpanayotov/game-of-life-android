@@ -1,4 +1,4 @@
-package com.dpanayotov.wallpaper;
+package com.dpanayotov.gameoflife;
 
 /**
  * Created by Dean Panayotov Local on 7.9.2015

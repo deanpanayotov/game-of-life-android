@@ -1,4 +1,4 @@
-package com.dpanayotov.wallpaper;
+package com.dpanayotov.gameoflife;
 
 import android.graphics.Color;
 
