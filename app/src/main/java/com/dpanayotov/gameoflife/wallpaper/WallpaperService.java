@@ -5,10 +5,15 @@ import java.util.List;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.dpanayotov.gameoflife.life.Constants;
+import com.dpanayotov.gameoflife.life.Life;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015
@@ -21,6 +26,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
     }
 
     private class MyWallpaperEngine extends android.service.wallpaper.WallpaperService.Engine {
+
+        private Life life = new Life();
 
         private static final byte FRAMES_PER_SECOND = 100;
         private static final byte FRAME = 1000 / FRAMES_PER_SECOND; //in milliseconds;
@@ -39,6 +46,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         //dimensions
         private int width;
         private int height;
+        private int cellWidth;
+        private int cellHeight;
 
 
         private ColorDispenser dispenser = new LinearColorDispenser(H, S, V, HUE_STEP,
@@ -66,7 +75,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private SharedPreferences.OnSharedPreferenceChangeListener prefsListener =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                                          String key) {
                         getPreferences();
                         init(true);
                     }
@@ -109,6 +119,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             super.onSurfaceChanged(holder, format, width, height);
             this.width = (int) width;
             this.height = (int) height;
+            this.cellWidth = width / Constants.GRID_WIDTH;
+            this.cellHeight = height / Constants.GRID_HEIGHT;
             init(false);
         }
 
@@ -140,27 +152,13 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         };
 
         private void step() {
-            now = System.currentTimeMillis();
-            delta = (now - then) / 1000f;
-            then = now;
             update();
             draw();
+            handler.postDelayed(drawRunner, Constants.TICK_INTERVAL);
         }
 
         private void update() {
-            float stepSpeed = actualSpeed * delta;
-            Bar bar, lastBar;
-            for (int i = 0; i < bars.size(); i++) {
-                bar = bars.get(i);
-                bar.y += stepSpeed;
-                if (bar.y <= border) {
-                    lastBar = bars.get(bars.size() - 1);
-                    bars.remove(bar);
-                    bar.y = (int) (lastBar.y + step);
-                    bar.color = dispenser.nextColor();
-                    bars.add(bar);
-                }
-            }
+            life.update();
         }
 
         private void draw() {
@@ -170,16 +168,24 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 try {
                     canvas = holder.lockCanvas();
                     if (canvas != null) {
-                        for (Bar bar : bars) {
-                            paint.setColor(bar.color);
-                            canvas.drawRect(0, bar.y, width, bar.y + step, paint);
+                        paint.setColor(Color.BLACK);
+                        canvas.drawRect(0, 0, width, height, paint);
+                        paint.setColor(Color.WHITE);
+                        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+                            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+                                if (life.grid.cells[i][j] == 1) {
+                                    int cellX = i * cellWidth;
+                                    int cellY = j * cellHeight;
+                                    canvas.drawRect(cellX, cellY, cellX + cellWidth, cellY +
+                                            cellHeight, paint);
+                                }
+                            }
                         }
                     }
                 } finally {
                     if (canvas != null)
                         holder.unlockCanvasAndPost(canvas);
                 }
-                handler.postDelayed(drawRunner, FRAME);
             }
         }
 
