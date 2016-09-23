@@ -13,7 +13,7 @@ public class Grid {
 
     public Grid(boolean populate) {
         if (populate) {
-            mirrorPopulate();
+            populate();
         } else {
             for (int[] row : cells) {
                 Arrays.fill(row, 0);
@@ -46,7 +46,7 @@ public class Grid {
 
     public void populate() {
 
-        Random random = new Random(92484829894l);
+        Random random = new Random();
 
         for (int i = 0; i < Constants.GRID_WIDTH; i++) {
             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
@@ -57,7 +57,7 @@ public class Grid {
 
     public void mirrorPopulate() {
 
-        Random random = new Random(92484829894l);
+        Random random = new Random();
 
         for (int i = 0; i < Constants.GRID_WIDTH/2+1; i++) {
             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
