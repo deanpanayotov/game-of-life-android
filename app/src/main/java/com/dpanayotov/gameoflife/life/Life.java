@@ -41,6 +41,10 @@ public class Life {
             grid = new Grid(true);
             resetQueue();
         } else {
+
+            queue.add(0, new Grid(grid));
+            queue.remove(queue.size() - 1);
+            
             previousGrid = grid;
             grid = new Grid(nextGrid);
             summedGrid = new Grid(grid);
