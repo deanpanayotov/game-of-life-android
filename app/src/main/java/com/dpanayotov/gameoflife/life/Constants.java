@@ -14,6 +14,6 @@ public class Constants {
 
     public static final int RADIUS_STEP = 2;
 
-    public static final int QUEUE_SIZE = 3;
+    public static final int QUEUE_SIZE = 4;
 
 }
