@@ -174,10 +174,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                         for (int i = 0; i < Constants.GRID_WIDTH; i++) {
                             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
                                 if (life.grid.cells[i][j] == 1) {
-                                    int cellX = i * cellWidth;
-                                    int cellY = j * cellHeight;
-                                    canvas.drawRect(cellX, cellY, cellX + cellWidth, cellY +
-                                            cellHeight, paint);
+                                    int cellX = i * cellWidth + cellWidth / 2;
+                                    int cellY = j * cellHeight + cellHeight / 2;
+                                    canvas.drawCircle(cellX, cellY, cellWidth / 2 - Constants
+                                            .CELL_PADDING, paint);
                                 }
                             }
                         }

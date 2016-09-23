@@ -10,4 +10,6 @@ public class Constants {
     public static final int GRID_WIDTH = 27;
     public static final int TICK_INTERVAL = 500;
 
+    public static final int CELL_PADDING = 4;
+
 }
