@@ -12,6 +12,8 @@ public class Constants {
 
     public static final int CELL_PADDING = 4;
 
+    public static final int RADIUS_STEP = 2;
+
     public static final int QUEUE_SIZE = 3;
 
 }

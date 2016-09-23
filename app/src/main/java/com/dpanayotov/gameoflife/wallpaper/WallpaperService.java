@@ -176,9 +176,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                                 if (life.summedGrid.cells[i][j] > 0) {
                                     int cellX = i * cellWidth + cellWidth / 2;
                                     int cellY = j * cellHeight + cellHeight / 2;
-                                    paint.setAlpha((int) (255 * (1 / (float) life.summedGrid.cells[i][j])));
-                                    canvas.drawCircle(cellX, cellY, cellWidth / 2 - Constants
-                                            .CELL_PADDING, paint);
+                                    paint.setAlpha((int) (255 * (1 / (float) life.summedGrid
+                                            .cells[i][j])));
+                                    int radius = (cellWidth / 2 - Constants.CELL_PADDING) -
+                                            Constants.RADIUS_STEP * (life.summedGrid.cells[i][j]
+                                                    - 1);
+                                    canvas.drawCircle(cellX, cellY, radius, paint);
                                 }
                             }
                         }
