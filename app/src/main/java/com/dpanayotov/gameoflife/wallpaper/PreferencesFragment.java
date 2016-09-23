@@ -1,9 +1,11 @@
-package com.dpanayotov.gameoflife;
+package com.dpanayotov.gameoflife.wallpaper;
 
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.widget.Toast;
+
+import com.dpanayotov.gameoflife.R;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015

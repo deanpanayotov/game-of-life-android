@@ -1,7 +1,9 @@
-package com.dpanayotov.gameoflife;
+package com.dpanayotov.gameoflife.wallpaper;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.dpanayotov.gameoflife.R;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015

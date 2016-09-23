@@ -1,4 +1,4 @@
-package com.dpanayotov.gameoflife;
+package com.dpanayotov.gameoflife.wallpaper;
 
 import java.util.ArrayList;
 import java.util.List;
