@@ -1,15 +1,11 @@
 package com.dpanayotov.gameoflife.wallpaper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.life.Constants;
@@ -22,10 +18,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
     @Override
     public android.service.wallpaper.WallpaperService.Engine onCreateEngine() {
-        return new MyWallpaperEngine();
+        return new WallpaperEngine();
     }
 
-    private class MyWallpaperEngine extends android.service.wallpaper.WallpaperService.Engine {
+    private class WallpaperEngine extends android.service.wallpaper.WallpaperService.Engine {
 
         private Life life = new Life();
 
@@ -52,7 +48,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private boolean visible = true;
         private boolean restart;
 
-        public MyWallpaperEngine() {
+        public WallpaperEngine() {
             getPreferences();
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
