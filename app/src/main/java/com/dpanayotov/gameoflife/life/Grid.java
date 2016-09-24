@@ -23,7 +23,7 @@ public class Grid {
 
     public Grid(Grid grid) {
         cells = new int[grid.cells.length][];
-        for(int i=0;i<grid.cells.length;i++){
+        for (int i = 0; i < grid.cells.length; i++) {
             cells[i] = Arrays.copyOf(grid.cells[i], grid.cells[i].length);
         }
     }
@@ -35,7 +35,8 @@ public class Grid {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 total += cells[(Constants.GRID_WIDTH + (x + i)) % Constants.GRID_WIDTH]
-                        [(Constants.GRID_HEIGHT + (y + j)) % Constants.GRID_HEIGHT]; //mod is used for the edge warp
+                        [(Constants.GRID_HEIGHT + (y + j)) % Constants.GRID_HEIGHT]; //mod is
+                // used for the edge warp
             }
         }
 
@@ -59,7 +60,7 @@ public class Grid {
 
         Random random = new Random();
 
-        for (int i = 0; i < Constants.GRID_WIDTH/2+1; i++) {
+        for (int i = 0; i < Constants.GRID_WIDTH / 2 + 1; i++) {
             for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
                 cells[i][j] = random.nextInt(2);
                 cells[Constants.GRID_WIDTH - i - 1][j] = cells[i][j];
@@ -70,9 +71,9 @@ public class Grid {
     @Override
     public boolean equals(Object obj) {
         Grid grid = (Grid) obj;
-        for(int i=0;i<Constants.GRID_WIDTH;i++){
-            for(int j=0;j<Constants.GRID_HEIGHT;j++){
-                if(cells[i][j] != grid.cells[i][j]){
+        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+                if (cells[i][j] != grid.cells[i][j]) {
                     return false;
                 }
             }
