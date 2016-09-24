@@ -29,17 +29,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private Life life = new Life();
 
-        private static final byte FRAMES_PER_SECOND = 100;
-        private static final byte FRAME = 1000 / FRAMES_PER_SECOND; //in milliseconds;
-
-        private static final byte NUMBER_OF_BARS = 4; //in milliseconds;
         private static final int H = 240;
         private static final int S = 65;
         private static final int V = 15;
         private static final byte HUE_STEP = 5; //in degrees;
         private static final int VALUE_STEP = 10; //in percents;
         private static final int VALUE_LIMIT = 55; //in percents;
-        private static final float SPEED = 0.05f; //in bars per second;
 
         private Paint paint = new Paint();
 
@@ -52,17 +47,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private ColorDispenser dispenser = new LinearColorDispenser(H, S, V, HUE_STEP,
                 VALUE_STEP, VALUE_LIMIT);
-        private List<Bar> bars = new ArrayList<>();
-        private int step; //pixels;
-        private int border; //pixels;
-        private float actualSpeed; //per second;
 
         //lifecycle
         private boolean visible = true;
         private boolean restart;
-        private float delta;
-        private long then;
-        private long now;
 
         public MyWallpaperEngine() {
             getPreferences();
@@ -83,6 +71,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 };
 
         private void getPreferences() {
+            //TODO example for preferences
 //            maxNumber = Integer
 //                    .valueOf(prefs.getString("numberOfCircles", "4"));
 //            touchEnabled = prefs.getBoolean("touch", false);
@@ -92,7 +81,6 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         public void onVisibilityChanged(boolean visible) {
             this.visible = visible;
             if (visible) {
-                then = System.currentTimeMillis();
                 handler.post(drawRunner);
             } else {
                 handler.removeCallbacks(drawRunner);
@@ -117,8 +105,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         public void onSurfaceChanged(SurfaceHolder holder, int format,
                                      int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
-            this.width = (int) width;
-            this.height = (int) height;
+            this.width = width;
+            this.height = height;
             this.cellWidth = width / Constants.GRID_WIDTH;
             this.cellHeight = height / Constants.GRID_HEIGHT;
             init(false);
@@ -130,15 +118,6 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private void init(boolean force) {
             if (force || restart) {
                 restart = false;
-
-                step = (int) (height / NUMBER_OF_BARS);
-                for (int i = 0; i < NUMBER_OF_BARS + 1; i++) {
-                    bars.add(new Bar((int) (step * i), dispenser.nextColor()));
-                }
-                actualSpeed = (int) (step * SPEED * -1);
-                border = (int) (step * -1);
-
-                then = System.currentTimeMillis();
                 handler.post(drawRunner);
             }
         }
@@ -148,13 +127,13 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             @Override
             public void run() {
                 step();
+                handler.postDelayed(drawRunner, Constants.TICK_INTERVAL);
             }
         };
 
         private void step() {
             update();
             draw();
-            handler.postDelayed(drawRunner, Constants.TICK_INTERVAL);
         }
 
         private void update() {
