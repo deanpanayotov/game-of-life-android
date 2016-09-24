@@ -6,6 +6,7 @@ import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.util.CellRadiusSeekBarPreference;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015
@@ -22,6 +23,21 @@ public class PreferencesFragment extends PreferenceFragment {
 
         // add the validator
         circlePreference.setOnPreferenceChangeListener(numberCheckListener);
+
+        Preference cellRadiusPreference = getPreferenceScreen().findPreference("circle_radius");
+
+        cellRadiusPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(preference instanceof CellRadiusSeekBarPreference){
+                    CellRadiusSeekBarPreference cellRadiusSeekBarPreference = (CellRadiusSeekBarPreference) preference;
+                    cellRadiusSeekBarPreference.setSummary(newValue.toString()+" pixels");
+                }
+                return true;
+            }
+        });
     }
 
     /**
