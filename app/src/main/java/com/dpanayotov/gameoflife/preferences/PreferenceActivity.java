@@ -25,6 +25,9 @@ public class PreferenceActivity extends Activity {
     @BindView(R.id.test2)
     ValueSetSeekBar<Float> seekBar2;
 
+    @BindView(R.id.color_picker_preference)
+    ColorPickerPreference colorPickerPreference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,18 @@ public class PreferenceActivity extends Activity {
             public void onValueChange(Float value) {
                 Toast.makeText(PreferenceActivity.this, "" + value, Toast
                         .LENGTH_SHORT).show();
+            }
+        });
+
+        colorPickerPreference.setOnClickListener(new ColorPickerPreference.OnClickListener() {
+            @Override
+            public void onPrimaryColorClick() {
+                Toast.makeText(PreferenceActivity.this, "primary", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onBackgroundColorClick() {
+                Toast.makeText(PreferenceActivity.this, "background", Toast.LENGTH_SHORT).show();
             }
         });
     }
