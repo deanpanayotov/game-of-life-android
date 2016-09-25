@@ -14,17 +14,10 @@
             android:text="@string/grid"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/grid_width"
+            android:id="@+id/grid_width_height"
             style="@style/HorizontalBar"
             custom:show_bar="false"
-            custom:title="@string/grid_width"
-            custom:suffix="@string/suffix_cells"/>
-
-        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/grid_height"
-            style="@style/HorizontalBar"
-            custom:show_bar="false"
-            custom:title="@string/grid_height"
+            custom:title= "@string/grid_width"
             custom:suffix="@string/suffix_cells"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar

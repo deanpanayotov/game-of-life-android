@@ -19,11 +19,8 @@ import butterknife.ButterKnife;
 
 public class PreferenceActivity extends Activity {
 
-    @BindView(R.id.grid_height)
-    ValueSetSeekBar<Integer> gridHeight;
-
-    @BindView(R.id.grid_width)
-    ValueSetSeekBar<Integer> gridWidth;
+    @BindView(R.id.grid_width_height)
+    ValueSetSeekBar<Screen.Resolution> gridWidthHeight;
 
     @BindView(R.id.cell_size)
     ValueSetSeekBar<Integer> cellSize;
@@ -34,30 +31,24 @@ public class PreferenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences2);
+        setContentView(R.layout.activity_preferences3);
         ButterKnife.bind(this);
 
         List<Screen.Resolution> resolutions = Screen.getAvailableResolutions(this);
 
-        final List<Integer> gridWidths = new ArrayList<>();
-        final List<Integer> gridHeights = new ArrayList<>();
         List<Integer> cellSizes = new ArrayList<>();
 
         for(Screen.Resolution resolution : resolutions){
-            gridWidths.add(resolution.gridWidth);
-            gridHeights.add(resolution.gridHeight);
             cellSizes.add(resolution.cellSize);
         }
 
-        gridWidth.setValues(gridWidths);
-        gridHeight.setValues(gridHeights);
+        gridWidthHeight.setValues(resolutions);
         cellSize.setValues(cellSizes);
 
         cellSize.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
-                gridWidth.setPosition(position);
-                gridHeight.setPosition(position);
+                gridWidthHeight.setPosition(position);
             }
         });
 

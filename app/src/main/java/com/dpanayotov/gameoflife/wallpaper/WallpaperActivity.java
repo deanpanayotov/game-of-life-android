@@ -1,15 +1,11 @@
 package com.dpanayotov.gameoflife.wallpaper;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.View;
 import android.widget.Toast;
 

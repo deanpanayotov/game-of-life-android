@@ -93,7 +93,8 @@ public class Screen {
         List<Resolution> resolutions = new ArrayList<>();
         Point screenSize = getScreenSize(context);
         for (int cellSize : cellSizes) {
-            resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize, cellSize));
+            resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize,
+                    cellSize));
         }
         return resolutions;
     }
@@ -107,6 +108,11 @@ public class Screen {
             this.gridWidth = gridWidth;
             this.gridHeight = gridHeight;
             this.cellSize = cellSize;
+        }
+
+        @Override
+        public String toString() {
+            return gridWidth + "x" + gridHeight;
         }
     }
 
