@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Dean Panayotov on 9/23/2016
  */
 
-public class Screen {
+public class ScreenUtil {
 
     private static Point getScreenSize(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context
@@ -45,7 +45,7 @@ public class Screen {
                 //this may not be 100% accurate, but it's all we've got
                 screenSize.x = display.getWidth();
                 screenSize.y = display.getHeight();
-                Log.e("Screen Info", "Couldn't use reflection to get the real display metrics.");
+                Log.e("ScreenUtil Info", "Couldn't use reflection to get the real display metrics.");
             }
 
         } else {
