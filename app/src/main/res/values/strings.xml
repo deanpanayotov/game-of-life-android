@@ -12,9 +12,7 @@
     <string name="grid">Grid</string>
 
     <string name="cell_size">Cell size</string>
-    <string name="grid_width">Grid width</string>
-    <string name="grid_height">Grid height</string>
-
+    <string name="grid_dimensions">Grid dimensions</string>
     <string name="suffix_pixels">pixels</string>
     <string name="suffix_cells">cells</string>
 

@@ -17,7 +17,7 @@
             android:id="@+id/grid_width_height"
             style="@style/HorizontalBar"
             custom:show_bar="false"
-            custom:title= "@string/grid_width"
+            custom:title= "@string/grid_dimensions"
             custom:suffix="@string/suffix_cells"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
