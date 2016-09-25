@@ -9,10 +9,12 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.Toast;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.preferences.PreferenceActivity;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015
@@ -48,6 +50,13 @@ public class WallpaperActivity extends Activity{
                 Fragment fragment = new PreferencesFragment();
                 fragmentTransaction.add(R.id.frame, fragment, "-");
                 fragmentTransaction.commit();
+            }
+        });
+
+        findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WallpaperActivity.this, PreferenceActivity.class));
             }
         });
     }
