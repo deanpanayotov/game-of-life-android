@@ -143,9 +143,9 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 try {
                     canvas = holder.lockCanvas();
                     if (canvas != null) {
-                        canvas.rotate(45f);
-                        canvas.scale(1.7f, 1.7f);
-                        canvas.translate(00,-700);
+//                        canvas.rotate(45f);
+//                        canvas.scale(1.7f, 1.7f);
+//                        canvas.translate(00,-700);
                         paint.setColor(Color.parseColor("#0B083B"));
                         canvas.drawRect(0, 0, width, height, paint);
                         paint.setColor(Color.parseColor("#595594"));
