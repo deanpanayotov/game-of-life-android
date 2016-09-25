@@ -45,7 +45,7 @@ public class SplashScreenActivity extends Activity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            finish();
+                            SplashScreenActivity.this.finish();
                         }
                     }).show();
                 }
