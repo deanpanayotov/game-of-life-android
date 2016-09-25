@@ -9,22 +9,27 @@
         android:id="@+id/background_color"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:foreground="?android:attr/selectableItemBackground"/>
 
     <LinearLayout
         android:id="@+id/primary_color"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <View
             style="@style/ColorStripe"
             android:alpha="0.15"/>
+
         <View
             style="@style/ColorStripe"
             android:alpha="0.33"/>
+
         <View
             style="@style/ColorStripe"
             android:alpha="0.5"/>
+
         <View
             style="@style/ColorStripe"
             android:alpha="1"/>
