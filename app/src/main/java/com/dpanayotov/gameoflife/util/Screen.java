@@ -12,6 +12,7 @@ import com.dpanayotov.gameoflife.life.Constants;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -96,6 +97,9 @@ public class Screen {
             resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize,
                     cellSize));
         }
+
+        Collections.reverse(resolutions);
+
         return resolutions;
     }
 
