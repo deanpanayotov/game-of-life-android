@@ -1,8 +1,14 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ColorStripe">
+        <item name="android:background">#C6FF03</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
 </resources>
