@@ -33,6 +33,11 @@
         <activity
             android:name="com.dpanayotov.gameoflife.wallpaper.WallpaperActivity"
             android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.dpanayotov.gameoflife.wallpaper.SplashScreenActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

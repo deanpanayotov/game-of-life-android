@@ -17,4 +17,8 @@
     <string name="suffix_cells">cells</string>
 
     <string name="color">Color</string>
+
+    <string name="close">Close</string>
+    <string name="error">Error</string>
+    <string name="incompatible_message">Unfortunately, this device is incompatible with Game of Life.</string>
 </resources>
