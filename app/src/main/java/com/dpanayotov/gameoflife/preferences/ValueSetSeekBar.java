@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by Dean Panayotov on 9/24/2016
  */
 
-public class ValueSetSeekBar extends LinearLayout {
+public class ValueSetSeekBar<T> extends LinearLayout {
 
     @BindView(R.id.title)
     TextView title;
@@ -30,9 +30,11 @@ public class ValueSetSeekBar extends LinearLayout {
     @BindView(R.id.seekbar)
     SeekBar seekBar;
 
-    List<Integer> set;
+    List<T> set;
 
-    OnValueChangeListener onValueChangeListener;
+    OnValueChangeListener<T> onValueChangeListener;
+
+    T currentValue;
 
     public ValueSetSeekBar(Context context) {
         super(context);
@@ -57,10 +59,10 @@ public class ValueSetSeekBar extends LinearLayout {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (set != null) {
-                    Integer val = set.get(progress);
-                    value.setText(val.toString());
+                    currentValue = set.get(progress);
+                    value.setText(currentValue.toString());
                     if(onValueChangeListener!=null){
-                        onValueChangeListener.onValueChange(val);
+                        onValueChangeListener.onValueChange(currentValue);
                     }
                 }
             }
@@ -75,7 +77,7 @@ public class ValueSetSeekBar extends LinearLayout {
         });
     }
 
-    public void setValues(List<Integer> values) {
+    public void setValues(List<T> values) {
         set = new ArrayList<>();
         set.addAll(values);
 
@@ -86,12 +88,11 @@ public class ValueSetSeekBar extends LinearLayout {
         seekBar.setProgress(seekBarDefault);
     }
 
-    public void setOnValueChangeListener(OnValueChangeListener onValueChangedListener){
+    public void setOnValueChangeListener(OnValueChangeListener<T> onValueChangedListener){
         this.onValueChangeListener = onValueChangedListener;
     }
 
-    interface OnValueChangeListener {
-        void onValueChange(int value);
+    interface OnValueChangeListener<U> {
+        void onValueChange(U value);
     }
-
 }
