@@ -11,7 +11,7 @@
 
     <string name="grid">Grid</string>
 
-    <string name="cell_radius">Cell radius</string>
+    <string name="cell_size">Cell size</string>
     <string name="grid_width">Grid width</string>
     <string name="grid_height">Grid height</string>
 

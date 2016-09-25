@@ -42,17 +42,6 @@ public class WallpaperActivity extends Activity{
             }
         });
 
-        findViewById(R.id.preferences).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment fragment = new PreferencesFragment();
-                fragmentTransaction.add(R.id.frame, fragment, "-");
-                fragmentTransaction.commit();
-            }
-        });
-
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

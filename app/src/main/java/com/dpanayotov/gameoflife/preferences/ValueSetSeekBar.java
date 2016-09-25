@@ -74,7 +74,7 @@ public class ValueSetSeekBar<T> extends LinearLayout {
                     currentValue = set.get(progress);
                     value.setText(currentValue.toString());
                     if (onValueChangeListener != null) {
-                        onValueChangeListener.onValueChange(currentValue);
+                        onValueChangeListener.onValueChange(currentValue, progress);
                     }
                 }
             }
@@ -105,7 +105,7 @@ public class ValueSetSeekBar<T> extends LinearLayout {
     }
 
     interface OnValueChangeListener<U> {
-        void onValueChange(U value);
+        void onValueChange(U value, int position);
     }
 
     private Attributes getAttributes(Context context, AttributeSet attrs) {
@@ -127,5 +127,9 @@ public class ValueSetSeekBar<T> extends LinearLayout {
         boolean showSeekBar;
         String title;
         String suffix;
+    }
+
+    public void setPosition(int position) {
+        seekBar.setProgress(Math.min(position, seekBar.getMax()));
     }
 }

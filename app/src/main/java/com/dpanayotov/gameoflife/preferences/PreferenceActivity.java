@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,11 +19,14 @@ import butterknife.ButterKnife;
 
 public class PreferenceActivity extends Activity {
 
-    @BindView(R.id.cell_radius)
-    ValueSetSeekBar<Integer> seekBar;
-
     @BindView(R.id.grid_height)
-    ValueSetSeekBar<Float> seekBar2;
+    ValueSetSeekBar<Integer> gridHeight;
+
+    @BindView(R.id.grid_width)
+    ValueSetSeekBar<Integer> gridWidth;
+
+    @BindView(R.id.cell_size)
+    ValueSetSeekBar<Integer> cellSize;
 
     @BindView(R.id.color_picker_preference)
     ColorPickerPreference colorPickerPreference;
@@ -34,38 +37,27 @@ public class PreferenceActivity extends Activity {
         setContentView(R.layout.activity_preferences2);
         ButterKnife.bind(this);
 
-        final List<Integer> vals = new ArrayList<>();
-        vals.add(1);
-        vals.add(2);
-        vals.add(3);
-        vals.add(5);
-        vals.add(8);
-        vals.add(13);
-        vals.add(21);
+        List<Screen.Resolution> resolutions = Screen.getAvailableResolutions(this);
 
-        seekBar.setValues(vals);
-        seekBar.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+        final List<Integer> gridWidths = new ArrayList<>();
+        final List<Integer> gridHeights = new ArrayList<>();
+        List<Integer> cellSizes = new ArrayList<>();
+
+        for(Screen.Resolution resolution : resolutions){
+            gridWidths.add(resolution.gridWidth);
+            gridHeights.add(resolution.gridHeight);
+            cellSizes.add(resolution.cellSize);
+        }
+
+        gridWidth.setValues(gridWidths);
+        gridHeight.setValues(gridHeights);
+        cellSize.setValues(cellSizes);
+
+        cellSize.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
             @Override
-            public void onValueChange(Integer value) {
-                Toast.makeText(PreferenceActivity.this, "" + value, Toast
-                        .LENGTH_SHORT).show();
-            }
-        });
-
-        final List<Float> vals2 = new ArrayList<>();
-        vals2.add(1.5f);
-        vals2.add(2.5f);
-        vals2.add(3.5f);
-        vals2.add(5.5f);
-        vals2.add(8.5f);
-
-
-        seekBar2.setValues(vals2);
-        seekBar2.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Float>() {
-            @Override
-            public void onValueChange(Float value) {
-                Toast.makeText(PreferenceActivity.this, "" + value, Toast
-                        .LENGTH_SHORT).show();
+            public void onValueChange(Integer value, int position) {
+                gridWidth.setPosition(position);
+                gridHeight.setPosition(position);
             }
         });
 

@@ -82,11 +82,32 @@ public class Screen {
         return commonDivisors;
     }
 
-    public static List<Integer> getAvailableCellRadiuses(Context context) {
+    private static List<Integer> getAvailableCellSizes(Context context) {
         return getCommonDivisors(getDivisors(getScreenSize(context).x,
-                Constants.MIN_GRID_WIDTH, Constants.MIN_CELL_RADIUS * 2), getDivisors
-                (getScreenSize(context).y, Constants.MIN_GRID_HEIGHT, Constants.MIN_CELL_RADIUS *
-                        2));
+                Constants.MIN_GRID_WIDTH, Constants.MIN_CELL_SIZE), getDivisors
+                (getScreenSize(context).y, Constants.MIN_GRID_HEIGHT, Constants.MIN_CELL_SIZE));
+    }
+
+    public static List<Resolution> getAvailableResolutions(Context context) {
+        List<Integer> cellSizes = getAvailableCellSizes(context);
+        List<Resolution> resolutions = new ArrayList<>();
+        Point screenSize = getScreenSize(context);
+        for (int cellSize : cellSizes) {
+            resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize, cellSize));
+        }
+        return resolutions;
+    }
+
+    public static class Resolution {
+        public int gridWidth;
+        public int gridHeight;
+        public int cellSize;
+
+        public Resolution(int gridWidth, int gridHeight, int cellSize) {
+            this.gridWidth = gridWidth;
+            this.gridHeight = gridHeight;
+            this.cellSize = cellSize;
+        }
     }
 
 }

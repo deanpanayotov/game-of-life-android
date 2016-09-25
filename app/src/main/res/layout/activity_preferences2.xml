@@ -14,13 +14,6 @@
             android:text="@string/grid"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/cell_radius"
-            style="@style/HorizontalBar"
-            custom:show_bar="false"
-            custom:title="@string/cell_radius"
-            custom:suffix="@string/suffix_pixels"/>
-
-        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
             android:id="@+id/grid_width"
             style="@style/HorizontalBar"
             custom:show_bar="false"
@@ -30,8 +23,15 @@
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
             android:id="@+id/grid_height"
             style="@style/HorizontalBar"
+            custom:show_bar="false"
             custom:title="@string/grid_height"
             custom:suffix="@string/suffix_cells"/>
+
+        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+            android:id="@+id/cell_size"
+            style="@style/HorizontalBar"
+            custom:title="@string/cell_size"
+            custom:suffix="@string/suffix_pixels"/>
 
     </LinearLayout>
 

@@ -16,12 +16,6 @@
         android:text="@string/apply_wallpaper"/>
 
     <Button
-        android:id="@+id/preferences"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/preferences"/>
-
-    <Button
         android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
