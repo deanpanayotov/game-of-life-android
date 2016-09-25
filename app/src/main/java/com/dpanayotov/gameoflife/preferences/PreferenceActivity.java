@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 public class PreferenceActivity extends Activity {
 
     @BindView(R.id.grid_width_height)
-    ValueSetSeekBar<ScreenUtil.Resolution> gridWidthHeight;
+    ValueSetSeekBar<Resolution> gridWidthHeight;
 
     @BindView(R.id.cell_size)
     ValueSetSeekBar<Integer> cellSize;
@@ -34,11 +35,11 @@ public class PreferenceActivity extends Activity {
         setContentView(R.layout.activity_preferences3);
         ButterKnife.bind(this);
 
-        List<ScreenUtil.Resolution> resolutions = ScreenUtil.getAvailableResolutions(this);
+        List<Resolution> resolutions = ScreenUtil.getAvailableResolutions(this);
 
         List<Integer> cellSizes = new ArrayList<>();
 
-        for(ScreenUtil.Resolution resolution : resolutions){
+        for(Resolution resolution : resolutions){
             cellSizes.add(resolution.cellSize);
         }
 
