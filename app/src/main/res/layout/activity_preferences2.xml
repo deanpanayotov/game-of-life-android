@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#EEEEEE"
@@ -10,19 +11,27 @@
 
         <TextView
             style="@style/PreferenceSectionHeader"
-            android:text="Grid"/>
+            android:text="@string/grid"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
             android:id="@+id/cell_radius"
-            style="@style/HorizontalBar"/>
+            style="@style/HorizontalBar"
+            custom:show_bar="false"
+            custom:title="@string/cell_radius"
+            custom:suffix="@string/suffix_pixels"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
             android:id="@+id/grid_width"
-            style="@style/HorizontalBar"/>
+            style="@style/HorizontalBar"
+            custom:show_bar="false"
+            custom:title="@string/grid_width"
+            custom:suffix="@string/suffix_cells"/>
 
         <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
             android:id="@+id/grid_height"
-            style="@style/HorizontalBar"/>
+            style="@style/HorizontalBar"
+            custom:title="@string/grid_height"
+            custom:suffix="@string/suffix_cells"/>
 
     </LinearLayout>
 
@@ -36,7 +45,7 @@
 
         <TextView
             style="@style/PreferenceSectionHeader"
-            android:text="Color"/>
+            android:text="@string/color"/>
 
         <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
             android:id="@+id/color_picker_preference"

@@ -1,6 +1,7 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -38,30 +39,41 @@ public class ValueSetSeekBar<T> extends LinearLayout {
 
     public ValueSetSeekBar(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public ValueSetSeekBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        init();
+        init(getAttributes(context, attrs));
     }
 
     public ValueSetSeekBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(getAttributes(context, attrs));
     }
 
-    private void init() {
+    private void init(Attributes attributes) {
         View root = inflate(getContext(), R.layout.value_set_seekbar, this);
         ButterKnife.bind(root, this);
+        if (attributes != null) {
+            if (attributes.title != null) {
+                title.setText(attributes.title);
+            }
+            if (attributes.suffix != null) {
+                suffix.setText(attributes.suffix);
+            }
+            if (!attributes.showSeekBar) {
+                seekBar.setVisibility(GONE);
+            }
+        }
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (set != null) {
                     currentValue = set.get(progress);
                     value.setText(currentValue.toString());
-                    if(onValueChangeListener!=null){
+                    if (onValueChangeListener != null) {
                         onValueChangeListener.onValueChange(currentValue);
                     }
                 }
@@ -88,11 +100,32 @@ public class ValueSetSeekBar<T> extends LinearLayout {
         seekBar.setProgress(seekBarDefault);
     }
 
-    public void setOnValueChangeListener(OnValueChangeListener<T> onValueChangedListener){
+    public void setOnValueChangeListener(OnValueChangeListener<T> onValueChangedListener) {
         this.onValueChangeListener = onValueChangedListener;
     }
 
     interface OnValueChangeListener<U> {
         void onValueChange(U value);
+    }
+
+    private Attributes getAttributes(Context context, AttributeSet attrs) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable
+                .ValueSetSeekBar, 0, 0);
+        Attributes attributes = null;
+        try {
+            attributes = new Attributes();
+            attributes.showSeekBar = a.getBoolean(R.styleable.ValueSetSeekBar_show_bar, true);
+            attributes.title = a.getString(R.styleable.ValueSetSeekBar_title);
+            attributes.suffix = a.getString(R.styleable.ValueSetSeekBar_suffix);
+        } finally {
+            a.recycle();
+        }
+        return attributes;
+    }
+
+    class Attributes {
+        boolean showSeekBar;
+        String title;
+        String suffix;
     }
 }
