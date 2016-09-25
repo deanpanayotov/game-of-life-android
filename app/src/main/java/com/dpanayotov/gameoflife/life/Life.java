@@ -18,28 +18,16 @@ public class Life {
     public Grid summedGrid;
 
     public Life() {
-        previousGrid = new Grid(false);
-        grid = new Grid(true);
-        resetQueue();
+        reset();
     }
 
     public void update() {
 
-        Grid nextGrid = new Grid(false);
+        Grid nextGrid = grid.deriveNextState();
 
-        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
-                int neighboursCount = grid.getNeighboursCount(i, j);
-                if ((grid.cells[i][j] == 1 && neighboursCount == 2) || neighboursCount == 3) {
-                    nextGrid.cells[i][j] = 1;
-                }
-            }
-        }
-
-        if (previousGrid.equals(nextGrid)) {
-            previousGrid = new Grid(false);
-            grid = new Grid(true);
-            resetQueue();
+        if (nextGrid.populationCount < Constants.MIN_POPULATION_COUNT || previousGrid.equals
+                (nextGrid)) {
+            reset();
         } else {
 
             queue.add(0, new Grid(grid));
@@ -69,5 +57,11 @@ public class Life {
         for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
             queue.add(new Grid(false));
         }
+    }
+
+    private void reset() {
+        previousGrid = new Grid(false);
+        grid = new Grid(true);
+        resetQueue();
     }
 }
