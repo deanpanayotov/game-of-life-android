@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 
 public class PreferenceActivity extends Activity {
 
-    @BindView(R.id.test)
+    @BindView(R.id.cell_radius)
     ValueSetSeekBar<Integer> seekBar;
 
-    @BindView(R.id.test2)
+    @BindView(R.id.grid_height)
     ValueSetSeekBar<Float> seekBar2;
 
     @BindView(R.id.color_picker_preference)

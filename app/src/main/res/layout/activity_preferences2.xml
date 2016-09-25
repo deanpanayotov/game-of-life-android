@@ -2,32 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#EEEEEE"
               android:orientation="vertical">
 
-    <include layout="@layout/value_set_seekbar"/>
+    <LinearLayout
+        style="@style/PreferenceCard">
 
-    <include layout="@layout/value_set_seekbar"/>
+        <TextView
+            style="@style/PreferenceSectionHeader"
+            android:text="Grid"/>
 
-    <include layout="@layout/value_set_seekbar"/>
+        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+            android:id="@+id/cell_radius"
+            style="@style/HorizontalBar"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#55000000"/>
+        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+            android:id="@+id/grid_width"
+            style="@style/HorizontalBar"/>
 
-    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+            android:id="@+id/grid_height"
+            style="@style/HorizontalBar"/>
 
-    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-        android:id="@+id/test2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
-        android:id="@+id/color_picker_preference"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<TextView-->
+    <!--style="@style/PreferenceSectionHeader"-->
+    <!--android:text="General"/>-->
+
+
+    <LinearLayout
+        style="@style/PreferenceCard">
+
+        <TextView
+            style="@style/PreferenceSectionHeader"
+            android:text="Color"/>
+
+        <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
+            android:id="@+id/color_picker_preference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/PreferenceSectionHeader"
+        android:text="Restart"/>
 
 </LinearLayout>
