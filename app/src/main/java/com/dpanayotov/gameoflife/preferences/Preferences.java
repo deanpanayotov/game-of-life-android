@@ -1,7 +1,7 @@
 package com.dpanayotov.gameoflife.preferences;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 
 import com.dpanayotov.gameoflife.GameOfLifeApplication;
@@ -54,6 +54,36 @@ public class Preferences {
         String json = gson.toJson(object);
         prefsEditor.putString(key, json);
         prefsEditor.apply();
+    }
+
+    public static void setColor(Colors color, int value) {
+        getPrefs().edit().putInt(color.getKey(), value).commit();
+    }
+
+    public static int getColor(Colors color) {
+        return getPrefs().getInt(color.getKey(), color.getDefaultValue());
+    }
+
+    public enum Colors {
+        PRIMARY("PRIMARY", Color.parseColor("#0B083B")),
+        BACKGROUND("BACKGROUND", Color.parseColor("#595594"));
+
+        String key;
+        int defaultValue;
+
+        Colors(String key, int defaultValue) {
+            this.key = key;
+            this.defaultValue = defaultValue;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public int getDefaultValue() {
+            return defaultValue;
+        }
+
     }
 
     public static boolean isInitialized() {

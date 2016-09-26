@@ -2,9 +2,9 @@ package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.widget.Toast;
 
+import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
@@ -58,13 +58,26 @@ public class PreferenceActivity extends Activity {
         colorPickerPreference.setOnClickListener(new ColorPickerPreference.OnClickListener() {
             @Override
             public void onPrimaryColorClick() {
-                Toast.makeText(PreferenceActivity.this, "primary", Toast.LENGTH_SHORT).show();
+                showColorPickerDialog(Preferences.Colors.PRIMARY);
             }
 
             @Override
             public void onBackgroundColorClick() {
-                Toast.makeText(PreferenceActivity.this, "background", Toast.LENGTH_SHORT).show();
+                showColorPickerDialog(Preferences.Colors.BACKGROUND);
             }
         });
+    }
+
+    private void showColorPickerDialog(final Preferences.Colors color) {
+        ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
+        colorPickerDialog.hideOpacityBar();
+        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+            @Override
+            public void onColorPicked(int value, String hexVal) {
+                Preferences.setColor(color, value);
+            }
+        });
+        colorPickerDialog.setInitialColor(Preferences.getColor(color));
+        colorPickerDialog.show();
     }
 }

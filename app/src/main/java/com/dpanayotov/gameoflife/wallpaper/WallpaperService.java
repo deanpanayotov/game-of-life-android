@@ -26,6 +26,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
     private class WallpaperEngine extends android.service.wallpaper.WallpaperService.Engine {
 
         private Resolution resolution;
+        private int colorPrimary;
+        private int colorBackground;
 
         private Life life;
 
@@ -69,6 +71,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private void getPreferences() {
             resolution = Preferences.getResolutions().get(Preferences.getResolution());
+            colorPrimary = Preferences.getColor(Preferences.Colors.PRIMARY);
+            colorBackground = Preferences.getColor(Preferences.Colors.BACKGROUND);
         }
 
         @Override
@@ -144,9 +148,9 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 //                        canvas.rotate(45f);
 //                        canvas.scale(1.7f, 1.7f);
 //                        canvas.translate(00,-700);
-                        paint.setColor(Color.parseColor("#0B083B"));
+                        paint.setColor(colorBackground);
                         canvas.drawRect(0, 0, screenWidth, screenHeight, paint);
-                        paint.setColor(Color.parseColor("#595594"));
+                        paint.setColor(colorPrimary);
                         for (int i = 0; i < resolution.gridWidth; i++) {
                             for (int j = 0; j < resolution.gridHeight; j++) {
                                 if (life.summedGrid.cells[i][j] > 0) {
