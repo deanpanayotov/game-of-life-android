@@ -17,7 +17,13 @@ public class Life {
 
     public Grid summedGrid;
 
-    public Life() {
+    private int width, height;
+
+    public Life(int width, int height) {
+
+        this.width = width;
+        this.height = height;
+
         reset();
     }
 
@@ -37,8 +43,8 @@ public class Life {
             grid = new Grid(nextGrid);
             summedGrid = new Grid(grid);
 
-            for (int i = 0; i < Constants.GRID_WIDTH; i++) {
-                for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
                     if (summedGrid.cells[i][j] == 0) {
                         for (int k = 0; k < Constants.QUEUE_SIZE; k++) {
                             if (queue.get(k).cells[i][j] == 1) {
@@ -55,13 +61,13 @@ public class Life {
     private void resetQueue() {
         queue = new ArrayList<>();
         for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
-            queue.add(new Grid(false));
+            queue.add(new Grid(width, height, false));
         }
     }
 
     private void reset() {
-        previousGrid = new Grid(false);
-        grid = new Grid(true);
+        previousGrid = new Grid(width, height, false);
+        grid = new Grid(width, height, true);
         resetQueue();
     }
 }

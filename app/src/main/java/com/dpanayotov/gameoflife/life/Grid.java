@@ -9,11 +9,19 @@ import java.util.Random;
 
 public class Grid {
 
-    public int[][] cells = new int[Constants.GRID_WIDTH][Constants.GRID_HEIGHT];
+    public int[][] cells;
 
     public int populationCount = 0;
 
-    public Grid(boolean populate) {
+    public int width, height;
+
+    public Grid(int width, int height, boolean populate) {
+
+        this.width = width;
+        this.height = height;
+
+        cells = new int[width][height];
+
         if (populate) {
             populate();
         } else {
@@ -26,6 +34,9 @@ public class Grid {
         for (int i = 0; i < grid.cells.length; i++) {
             cells[i] = Arrays.copyOf(grid.cells[i], grid.cells[i].length);
         }
+        populationCount = grid.populationCount;
+        width = grid.width;
+        height = grid.height;
     }
 
     public int getNeighboursCount(int x, int y) {
@@ -34,8 +45,8 @@ public class Grid {
 
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                total += cells[(Constants.GRID_WIDTH + (x + i)) % Constants.GRID_WIDTH]
-                        [(Constants.GRID_HEIGHT + (y + j)) % Constants.GRID_HEIGHT]; //mod is
+                total += cells[(width + (x + i)) % width]
+                        [(height + (y + j)) % height]; //mod is
                 // used for the edge warp
             }
         }
@@ -49,9 +60,9 @@ public class Grid {
 
         Random random = new Random();
 
-        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
+        for (int i = 0; i < width; i++) {
             populationCount = 0;
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+            for (int j = 0; j < height; j++) {
                 cells[i][j] = random.nextInt(2);
                 populationCount += cells[i][j];
             }
@@ -69,11 +80,11 @@ public class Grid {
 
         Random random = new Random();
 
-        for (int i = 0; i < Constants.GRID_WIDTH / 2 + 1; i++) {
+        for (int i = 0; i < width / 2 + 1; i++) {
             populationCount = 0;
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+            for (int j = 0; j < height; j++) {
                 cells[i][j] = random.nextInt(2);
-                cells[Constants.GRID_WIDTH - i - 1][j] = cells[i][j];
+                cells[width - i - 1][j] = cells[i][j];
                 populationCount += cells[i][j] * 2;
             }
         }
@@ -82,8 +93,8 @@ public class Grid {
     @Override
     public boolean equals(Object obj) {
         Grid grid = (Grid) obj;
-        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 if (cells[i][j] != grid.cells[i][j]) {
                     return false;
                 }
@@ -92,10 +103,10 @@ public class Grid {
         return true;
     }
 
-    public Grid deriveNextState(){
-        Grid nextGrid = new Grid(false);
-        for (int i = 0; i < Constants.GRID_WIDTH; i++) {
-            for (int j = 0; j < Constants.GRID_HEIGHT; j++) {
+    public Grid deriveNextState() {
+        Grid nextGrid = new Grid(width, height, false);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 int neighboursCount = getNeighboursCount(i, j);
                 if ((cells[i][j] == 1 && neighboursCount == 2) || neighboursCount == 3) {
                     nextGrid.cells[i][j] = 1;

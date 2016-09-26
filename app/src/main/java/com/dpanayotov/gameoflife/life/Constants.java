@@ -6,8 +6,6 @@ package com.dpanayotov.gameoflife.life;
 
 public class Constants {
 
-    public static final int GRID_HEIGHT = 96;
-    public static final int GRID_WIDTH = 54;
     public static final int TICK_INTERVAL = 500;
 
     public static final int CELL_PADDING = 2;
