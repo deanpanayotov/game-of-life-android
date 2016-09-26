@@ -55,6 +55,8 @@ public class PreferenceActivity extends Activity {
             }
         });
 
+        updateColors();
+
         colorPickerPreference.setOnClickListener(new ColorPickerPreference.OnClickListener() {
             @Override
             public void onPrimaryColorClick() {
@@ -75,9 +77,16 @@ public class PreferenceActivity extends Activity {
             @Override
             public void onColorPicked(int value, String hexVal) {
                 Preferences.setColor(color, value);
+                updateColors();
             }
         });
         colorPickerDialog.setInitialColor(Preferences.getColor(color));
         colorPickerDialog.show();
+    }
+
+    private void updateColors() {
+        colorPickerPreference.setPrimaryColor(Preferences.getColor(Preferences.Colors.PRIMARY));
+        colorPickerPreference.setBackgroundColor(Preferences.getColor(Preferences.Colors
+                .BACKGROUND));
     }
 }

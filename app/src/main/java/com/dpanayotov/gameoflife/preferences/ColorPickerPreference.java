@@ -18,9 +18,11 @@ import butterknife.ButterKnife;
 public class ColorPickerPreference extends LinearLayout {
 
     @BindView(R.id.primary_color)
-    View primaryColor;
+    LinearLayout primaryColor;
     @BindView(R.id.background_color)
     View backgroundColor;
+    @BindView(R.id.frame)
+    View frame;
 
     OnClickListener onClickListener;
 
@@ -46,7 +48,7 @@ public class ColorPickerPreference extends LinearLayout {
         primaryColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onPrimaryColorClick();
                 }
             }
@@ -54,19 +56,29 @@ public class ColorPickerPreference extends LinearLayout {
         backgroundColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onBackgroundColorClick();
                 }
             }
         });
     }
 
-    public void setOnClickListener(OnClickListener onClickListener){
+    public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
     interface OnClickListener {
         void onPrimaryColorClick();
+
         void onBackgroundColorClick();
+    }
+
+    public void setPrimaryColor(int color) {
+        for (int i = 0; i < primaryColor.getChildCount(); i++)
+            primaryColor.getChildAt(i).setBackgroundColor(color);
+    }
+
+    public void setBackgroundColor(int color) {
+        frame.setBackgroundColor(color);
     }
 }
