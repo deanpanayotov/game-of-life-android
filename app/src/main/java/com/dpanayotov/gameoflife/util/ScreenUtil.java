@@ -1,17 +1,22 @@
 package com.dpanayotov.gameoflife.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.dpanayotov.gameoflife.life.Constants;
+import com.dpanayotov.gameoflife.preferences.Keys;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +50,8 @@ public class ScreenUtil {
                 //this may not be 100% accurate, but it's all we've got
                 screenSize.x = display.getWidth();
                 screenSize.y = display.getHeight();
-                Log.e("ScreenUtil Info", "Couldn't use reflection to get the real display metrics.");
+                Log.e("ScreenUtil Info", "Couldn't use reflection to get the real display metrics" +
+                        ".");
             }
 
         } else {
@@ -73,7 +79,7 @@ public class ScreenUtil {
         List<Integer> commonDivisors = new ArrayList<>();
         for (int i = 0; i < a.size(); i++) {
             for (int j = 0; j < b.size(); j++) {
-                if (a.get(i) == b.get(j)) {
+                if (a.get(i).equals(b.get(j))) {
                     commonDivisors.add(a.get(i));
                     b.remove(j);
                     break;
@@ -90,16 +96,43 @@ public class ScreenUtil {
     }
 
     public static List<Resolution> getAvailableResolutions(Context context) {
-        List<Integer> cellSizes = getAvailableCellSizes(context);
-        List<Resolution> resolutions = new ArrayList<>();
-        Point screenSize = getScreenSize(context);
-        for (int cellSize : cellSizes) {
-            resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize,
-                    cellSize));
+
+        List<Resolution> resolutions = getStoredResolutions(context);
+        if (resolutions == null) {
+            List<Integer> cellSizes = getAvailableCellSizes(context);
+            resolutions = new ArrayList<>();
+            Point screenSize = getScreenSize(context);
+            for (int cellSize : cellSizes) {
+                resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize,
+                        cellSize));
+            }
+
+            Collections.reverse(resolutions);
+
+            storeResolutions(context, resolutions);
+
         }
 
-        Collections.reverse(resolutions);
-
         return resolutions;
+    }
+
+    private static void storeResolutions(Context context, List<Resolution> resolutions) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(resolutions);
+        prefsEditor.putString(Keys.RESOLUTIONS, json);
+        prefsEditor.apply();
+    }
+
+    private static List<Resolution> getStoredResolutions(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
+        String json = prefs.getString(Keys.RESOLUTIONS, "");
+        Resolution[] resolutions = gson.fromJson(json, Resolution[].class);
+        if (resolutions != null) {
+            return Arrays.asList(resolutions);
+        }
+        return null;
     }
 }
