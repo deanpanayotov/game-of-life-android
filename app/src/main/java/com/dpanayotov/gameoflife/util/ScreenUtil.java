@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.dpanayotov.gameoflife.life.Constants;
 import com.dpanayotov.gameoflife.preferences.Keys;
+import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
@@ -97,8 +98,10 @@ public class ScreenUtil {
 
     public static List<Resolution> getAvailableResolutions(Context context) {
 
-        List<Resolution> resolutions = getStoredResolutions(context);
+        List<Resolution> resolutions = Preferences.getResolutions();
+        Log.d("zxc", "res");
         if (resolutions == null) {
+            Log.d("zxc", "res-load");
             List<Integer> cellSizes = getAvailableCellSizes(context);
             resolutions = new ArrayList<>();
             Point screenSize = getScreenSize(context);
@@ -109,30 +112,12 @@ public class ScreenUtil {
 
             Collections.reverse(resolutions);
 
-            storeResolutions(context, resolutions);
+            Preferences.setResolutions(resolutions);
 
         }
 
         return resolutions;
     }
 
-    private static void storeResolutions(Context context, List<Resolution> resolutions) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor prefsEditor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(resolutions);
-        prefsEditor.putString(Keys.RESOLUTIONS, json);
-        prefsEditor.apply();
-    }
 
-    private static List<Resolution> getStoredResolutions(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Gson gson = new Gson();
-        String json = prefs.getString(Keys.RESOLUTIONS, "");
-        Resolution[] resolutions = gson.fromJson(json, Resolution[].class);
-        if (resolutions != null) {
-            return Arrays.asList(resolutions);
-        }
-        return null;
-    }
 }

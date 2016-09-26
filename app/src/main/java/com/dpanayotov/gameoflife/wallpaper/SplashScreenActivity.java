@@ -8,6 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.preferences.Preferences;
+import com.dpanayotov.gameoflife.util.Resolution;
+import com.dpanayotov.gameoflife.util.ScreenUtil;
+
+import java.util.List;
 
 /**
  * Created by Dean Panayotov on 9/25/2016
@@ -24,18 +29,20 @@ public class SplashScreenActivity extends Activity {
 
             @Override
             protected Boolean doInBackground(Void... params) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                List<Resolution> resolutions = ScreenUtil.getAvailableResolutions
+                        (SplashScreenActivity.this);
+                if (resolutions != null && resolutions.size() > 0) {
+                    Preferences.setResolution(resolutions.get((resolutions.size() - 1) / 2));
+                    return true;
                 }
-                return true;
+                return false;
             }
 
             @Override
             protected void onPostExecute(Boolean initializationSuccessful) {
                 if (initializationSuccessful) {
-                    Intent intent = new Intent(SplashScreenActivity.this, WallpaperActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.this, WallpaperActivity
+                            .class);
                     startActivity(intent);
                     SplashScreenActivity.this.finish();
                 } else {
@@ -50,6 +57,10 @@ public class SplashScreenActivity extends Activity {
                     }).show();
                 }
             }
-        }.execute();
+        }
+
+                .
+
+                        execute();
     }
 }
