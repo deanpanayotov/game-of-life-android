@@ -37,6 +37,9 @@ public class PreferenceActivity extends Activity {
     @BindView(R.id.isometric_projection)
     Switch isometricProjection;
 
+    @BindView(R.id.highlife)
+    Switch highlife;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +94,16 @@ public class PreferenceActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 Preferences.setIsometricProjection(checked);
+            }
+        });
+
+        highlife.setChecked(Preferences.getHighlife());
+        highlife.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
+                () {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                Preferences.setHighlife(checked);
             }
         });
     }

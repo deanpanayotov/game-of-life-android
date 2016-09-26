@@ -31,6 +31,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private int colorBackground;
         private int tickRate;
         private boolean isometricProjection;
+        private boolean highlife;
 
         private Life life;
 
@@ -78,6 +79,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             colorBackground = Preferences.getColor(Preferences.Colors.BACKGROUND);
             tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
             isometricProjection = Preferences.getIsometricProjection();
+            highlife = Preferences.getHighlife();
         }
 
         @Override
@@ -118,7 +120,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private void init(boolean force) {
             if (force || restart) {
                 handler.removeCallbacks(drawRunner);
-                life = new Life(resolution.gridWidth, resolution.gridHeight);
+                life = new Life(resolution.gridWidth, resolution.gridHeight, highlife);
                 restart = false;
                 handler.post(drawRunner);
             }

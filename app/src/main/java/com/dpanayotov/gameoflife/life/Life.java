@@ -19,17 +19,20 @@ public class Life {
 
     private int width, height;
 
-    public Life(int width, int height) {
+    private boolean highlife;
+
+    public Life(int width, int height, boolean highlife) {
 
         this.width = width;
         this.height = height;
+        this.highlife = highlife;
 
         reset();
     }
 
     public void update() {
 
-        Grid nextGrid = grid.deriveNextState();
+        Grid nextGrid = grid.deriveNextState(highlife);
 
         if (nextGrid.populationCount < Constants.MIN_POPULATION_COUNT || previousGrid.equals
                 (nextGrid)) {

@@ -45,8 +45,7 @@ public class Grid {
 
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                total += cells[(width + (x + i)) % width]
-                        [(height + (y + j)) % height]; //mod is
+                total += cells[(width + (x + i)) % width][(height + (y + j)) % height]; //mod is
                 // used for the edge warp
             }
         }
@@ -103,15 +102,21 @@ public class Grid {
         return true;
     }
 
-    public Grid deriveNextState() {
+    public Grid deriveNextState(boolean highlife) {
         Grid nextGrid = new Grid(width, height, false);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 int neighboursCount = getNeighboursCount(i, j);
-                if ((cells[i][j] == 1 && neighboursCount == 2) || neighboursCount == 3) {
-                    nextGrid.cells[i][j] = 1;
-                    nextGrid.populationCount++;
+                if (cells[i][j] == 1) {
+                    if (neighboursCount == 2 || neighboursCount == 3) {
+                        nextGrid.cells[i][j] = 1;
+                    }
+                } else {
+                    if (neighboursCount == 3 || (highlife && neighboursCount == 6)) {
+                        nextGrid.cells[i][j] = 1;
+                    }
                 }
+                nextGrid.populationCount += nextGrid.cells[i][j];
             }
         }
         return nextGrid;

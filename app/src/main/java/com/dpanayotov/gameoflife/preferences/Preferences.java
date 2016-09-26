@@ -114,6 +114,14 @@ public class Preferences {
         return getPrefs().getBoolean(Keys.ISOMETRIC_PROJECTION, false);
     }
 
+    public static void setHighlife(boolean highlife) {
+        getPrefs().edit().putBoolean(Keys.HIGHLIFE, highlife).apply();
+    }
+
+    public static boolean getHighlife() {
+        return getPrefs().getBoolean(Keys.HIGHLIFE, false);
+    }
+
     public static boolean isInitialized() {
         return getPrefs().contains(Keys.RESOLUTION);
     }

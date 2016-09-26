@@ -19,6 +19,7 @@
     <string name="tick_rate">Tick rate</string>
     <string name="suffix_milliseconds">milliseconds</string>
     <string name="isometric_projection">Isometric projection</string>
+    <string name="highlife">Highlife</string>
 
 
     <string name="close">Close</string>
