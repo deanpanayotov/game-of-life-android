@@ -2,6 +2,7 @@ package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.widget.Toast;
 
 import com.dpanayotov.gameoflife.R;
@@ -39,17 +40,18 @@ public class PreferenceActivity extends Activity {
 
         List<Integer> cellSizes = new ArrayList<>();
 
-        for(Resolution resolution : resolutions){
+        for (Resolution resolution : resolutions) {
             cellSizes.add(resolution.cellSize);
         }
 
         gridWidthHeight.setValues(resolutions);
         cellSize.setValues(cellSizes);
-
+        cellSize.setPosition(Preferences.getResolution());
         cellSize.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
+                Preferences.setResolution(position);
             }
         });
 

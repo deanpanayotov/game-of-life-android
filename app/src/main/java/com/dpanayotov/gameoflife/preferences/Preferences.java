@@ -40,13 +40,12 @@ public class Preferences {
         return null;
     }
 
-    public static void setResolution(Resolution resolution) {
-        setJsonPrefrence(resolution, Keys.RESOLUTION);
+    public static void setResolution(int position) {
+        getPrefs().edit().putInt(Keys.RESOLUTION, position).apply();
     }
 
-    public static Resolution getResolution() {
-        String json = getPrefs().getString(Keys.RESOLUTION, "");
-        return new Gson().fromJson(json, Resolution.class);
+    public static int getResolution() {
+        return getPrefs().getInt(Keys.RESOLUTION, 0);
     }
 
     private static void setJsonPrefrence(Object object, String key) {
@@ -55,5 +54,9 @@ public class Preferences {
         String json = gson.toJson(object);
         prefsEditor.putString(key, json);
         prefsEditor.apply();
+    }
+
+    public static boolean isInitialized() {
+        return getPrefs().contains(Keys.RESOLUTION);
     }
 }
