@@ -73,11 +73,10 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         @Override
         public void onVisibilityChanged(boolean visible) {
+            handler.removeCallbacks(drawRunner);
             this.visible = visible;
             if (visible) {
                 handler.post(drawRunner);
-            } else {
-                handler.removeCallbacks(drawRunner);
             }
         }
 
@@ -110,6 +109,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
          */
         private void init(boolean force) {
             if (force || restart) {
+                handler.removeCallbacks(drawRunner);
                 life = new Life(resolution.gridWidth, resolution.gridHeight);
                 restart = false;
                 handler.post(drawRunner);

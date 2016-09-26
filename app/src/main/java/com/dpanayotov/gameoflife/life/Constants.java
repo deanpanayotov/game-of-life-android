@@ -6,7 +6,7 @@ package com.dpanayotov.gameoflife.life;
 
 public class Constants {
 
-    public static final int TICK_INTERVAL = 500;
+    public static final int TICK_INTERVAL = 2000;
 
     public static final int CELL_PADDING = 2;
     public static final int RADIUS_STEP = 2;
