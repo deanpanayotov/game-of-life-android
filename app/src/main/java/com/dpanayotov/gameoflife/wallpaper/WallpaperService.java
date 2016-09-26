@@ -160,7 +160,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                                     int cellX = i * resolution.cellSize + halfCell;
                                     int cellY = j * resolution.cellSize + halfCell;
                                     if (isometricProjection) {
-                                        cellY = (cellY + i * halfCell) % 1920;
+                                        cellY = (cellY + i * halfCell) % screenHeight;
                                     }
                                     paint.setAlpha((int) (255 * (1 / (float) life.summedGrid
                                             .cells[i][j])));
