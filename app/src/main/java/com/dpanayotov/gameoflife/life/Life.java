@@ -17,7 +17,7 @@ public class Life {
 
     public Grid summedGrid;
 
-    private int width, height;
+    private int width, height, minPopulation;
 
     private boolean highlife;
 
@@ -27,6 +27,8 @@ public class Life {
         this.height = height;
         this.highlife = highlife;
 
+        this.minPopulation = (width*height)/10;
+
         reset();
     }
 
@@ -34,7 +36,7 @@ public class Life {
 
         Grid nextGrid = grid.deriveNextState(highlife);
 
-        if (nextGrid.populationCount < Constants.MIN_POPULATION_COUNT || previousGrid.equals
+        if (nextGrid.populationCount < minPopulation || previousGrid.equals
                 (nextGrid)) {
             reset();
         } else {

@@ -12,10 +12,5 @@ public class Constants {
     public static final int MIN_GRID_WIDTH = 24;
     public static final int MIN_GRID_HEIGHT = 32;
     public static final int MIN_CELL_SIZE = 12;
-    public static final float MIN_POPULATION_PERCENTAGE = 35f;
-
-    public static final int MIN_POPULATION_COUNT = 280;
-//    public static final int MIN_POPULATION_COUNT = (int) ((GRID_HEIGHT * GRID_WIDTH) * ( 1 /
-//    MIN_POPULATION_PERCENTAGE));
-
+    
 }
