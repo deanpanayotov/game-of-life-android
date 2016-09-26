@@ -106,6 +106,14 @@ public class Preferences {
         return getPrefs().getInt(Keys.TICK_RATE, (tickRates.size() - 1) / 2);
     }
 
+    public static void setIsometricProjection(boolean isometricProjection) {
+        getPrefs().edit().putBoolean(Keys.ISOMETRIC_PROJECTION, isometricProjection).apply();
+    }
+
+    public static boolean getIsometricProjection() {
+        return getPrefs().getBoolean(Keys.ISOMETRIC_PROJECTION, false);
+    }
+
     public static boolean isInitialized() {
         return getPrefs().contains(Keys.RESOLUTION);
     }

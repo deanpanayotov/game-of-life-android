@@ -1,66 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#EEEEEE"
-              android:orientation="vertical">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        style="@style/PreferenceCard">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        android:orientation="vertical">
 
-        <TextView
-            style="@style/PreferenceSectionHeader"
-            android:text="@string/grid"/>
+        <LinearLayout
+            style="@style/PreferenceCard">
 
-        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/grid_width_height"
-            style="@style/HorizontalBar"
-            custom:show_bar="false"
-            custom:suffix="@string/suffix_cells"
-            custom:title="@string/grid_dimensions"/>
+            <TextView
+                style="@style/PreferenceSectionHeader"
+                android:text="@string/grid"/>
 
-        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/cell_size"
-            style="@style/HorizontalBar"
-            custom:suffix="@string/suffix_pixels"
-            custom:title="@string/cell_size"/>
+            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                android:id="@+id/grid_width_height"
+                style="@style/HorizontalBar"
+                custom:show_bar="false"
+                custom:suffix="@string/suffix_cells"
+                custom:title="@string/grid_dimensions"/>
 
+            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                android:id="@+id/cell_size"
+                style="@style/HorizontalBar"
+                custom:suffix="@string/suffix_pixels"
+                custom:title="@string/cell_size"/>
+
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--style="@style/PreferenceSectionHeader"-->
+        <!--android:text="General"/>-->
+
+
+        <LinearLayout
+            style="@style/PreferenceCard">
+
+            <TextView
+                style="@style/PreferenceSectionHeader"
+                android:text="@string/color"/>
+
+            <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
+                android:id="@+id/color_picker_preference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/PreferenceCard">
+
+            <TextView
+                style="@style/PreferenceSectionHeader"
+                android:text="General"/>
+
+            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                android:id="@+id/tick_rate"
+                style="@style/HorizontalBar"
+                custom:suffix="@string/suffix_milliseconds"
+                custom:title="@string/tick_rate"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/isometric_projection"/>
+
+                <Switch
+                    android:id="@+id/isometric_projection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
-    <!--<TextView-->
-    <!--style="@style/PreferenceSectionHeader"-->
-    <!--android:text="General"/>-->
-
-
-    <LinearLayout
-        style="@style/PreferenceCard">
-
-        <TextView
-            style="@style/PreferenceSectionHeader"
-            android:text="@string/color"/>
-
-        <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
-            android:id="@+id/color_picker_preference"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        style="@style/PreferenceCard">
-
-        <TextView
-            style="@style/PreferenceSectionHeader"
-            android:text="General"/>
-
-        <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-            android:id="@+id/tick_rate"
-            style="@style/HorizontalBar"
-            custom:suffix="@string/suffix_milliseconds"
-            custom:title="@string/tick_rate"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

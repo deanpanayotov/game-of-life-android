@@ -18,6 +18,7 @@
     <string name="color">Color</string>
     <string name="tick_rate">Tick rate</string>
     <string name="suffix_milliseconds">milliseconds</string>
+    <string name="isometric_projection">Isometric projection</string>
 
 
     <string name="close">Close</string>

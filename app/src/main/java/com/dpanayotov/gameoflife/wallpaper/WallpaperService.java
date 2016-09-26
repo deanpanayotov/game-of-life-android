@@ -30,6 +30,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private int colorPrimary;
         private int colorBackground;
         private int tickRate;
+        private boolean isometricProjection;
 
         private Life life;
 
@@ -76,6 +77,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             colorPrimary = Preferences.getColor(Preferences.Colors.PRIMARY);
             colorBackground = Preferences.getColor(Preferences.Colors.BACKGROUND);
             tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
+            isometricProjection = Preferences.getIsometricProjection();
         }
 
         @Override
@@ -155,7 +157,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                                 if (life.summedGrid.cells[i][j] > 0) {
                                     int cellX = i * resolution.cellSize + halfCell;
                                     int cellY = j * resolution.cellSize + halfCell;
-                                    if (true) {
+                                    if (isometricProjection) {
                                         cellY = (cellY + i * halfCell) % 1920;
                                     }
                                     paint.setAlpha((int) (255 * (1 / (float) life.summedGrid

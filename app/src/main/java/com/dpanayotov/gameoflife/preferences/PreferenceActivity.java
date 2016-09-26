@@ -2,7 +2,8 @@ package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
@@ -32,6 +33,9 @@ public class PreferenceActivity extends Activity {
 
     @BindView(R.id.tick_rate)
     ValueSetSeekBar<Integer> tickRate;
+
+    @BindView(R.id.isometric_projection)
+    Switch isometricProjection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,15 @@ public class PreferenceActivity extends Activity {
             @Override
             public void onValueChange(Integer value, int position) {
                 Preferences.setTickRate(position);
+            }
+        });
+        isometricProjection.setChecked(Preferences.getIsometricProjection());
+        isometricProjection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
+                () {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                Preferences.setIsometricProjection(checked);
             }
         });
     }
