@@ -30,8 +30,7 @@ public class SplashScreenActivity extends Activity {
             @Override
             protected Boolean doInBackground(Void... params) {
                 if (!Preferences.isInitialized()) {
-                    List<Resolution> resolutions = ScreenUtil.getAvailableResolutions
-                            (SplashScreenActivity.this);
+                    List<Resolution> resolutions = ScreenUtil.getAvailableResolutions();
                     if (resolutions != null && resolutions.size() > 0) {
                         Preferences.setResolution((resolutions.size() - 1) / 2);
                         return true;

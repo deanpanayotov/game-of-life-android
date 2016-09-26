@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.dpanayotov.gameoflife.GameOfLifeApplication;
 import com.dpanayotov.gameoflife.life.Constants;
 import com.dpanayotov.gameoflife.preferences.Keys;
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -27,9 +28,9 @@ import java.util.List;
 
 public class ScreenUtil {
 
-    private static Point getScreenSize(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context
-                .WINDOW_SERVICE);
+    public static Point getScreenSize() {
+        WindowManager windowManager = (WindowManager) GameOfLifeApplication.getInstance()
+                .getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point screenSize = new Point();
 
@@ -51,8 +52,8 @@ public class ScreenUtil {
                 //this may not be 100% accurate, but it's all we've got
                 screenSize.x = display.getWidth();
                 screenSize.y = display.getHeight();
-                Log.e("ScreenUtil Info", "Couldn't use reflection to get the real display metrics" +
-                        ".");
+                Log.e("ScreenUtil Info", "Couldn't use reflection to get the real display " +
+                        "metrics" + ".");
             }
 
         } else {
@@ -90,21 +91,21 @@ public class ScreenUtil {
         return commonDivisors;
     }
 
-    private static List<Integer> getAvailableCellSizes(Context context) {
-        return getCommonDivisors(getDivisors(getScreenSize(context).x,
-                Constants.MIN_GRID_WIDTH, Constants.MIN_CELL_SIZE), getDivisors
-                (getScreenSize(context).y, Constants.MIN_GRID_HEIGHT, Constants.MIN_CELL_SIZE));
+    private static List<Integer> getAvailableCellSizes() {
+        return getCommonDivisors(getDivisors(getScreenSize().x, Constants.MIN_GRID_WIDTH,
+                Constants.MIN_CELL_SIZE), getDivisors(getScreenSize().y, Constants
+                .MIN_GRID_HEIGHT, Constants.MIN_CELL_SIZE));
     }
 
-    public static List<Resolution> getAvailableResolutions(Context context) {
+    public static List<Resolution> getAvailableResolutions() {
 
         List<Resolution> resolutions = Preferences.getResolutions();
         Log.d("zxc", "res");
         if (resolutions == null) {
             Log.d("zxc", "res-load");
-            List<Integer> cellSizes = getAvailableCellSizes(context);
+            List<Integer> cellSizes = getAvailableCellSizes();
             resolutions = new ArrayList<>();
-            Point screenSize = getScreenSize(context);
+            Point screenSize = getScreenSize();
             for (int cellSize : cellSizes) {
                 resolutions.add(new Resolution(screenSize.x / cellSize, screenSize.y / cellSize,
                         cellSize));

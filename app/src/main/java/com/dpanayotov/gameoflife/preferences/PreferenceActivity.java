@@ -39,7 +39,7 @@ public class PreferenceActivity extends Activity {
         setContentView(R.layout.activity_preferences3);
         ButterKnife.bind(this);
 
-        List<Resolution> resolutions = ScreenUtil.getAvailableResolutions(this);
+        List<Resolution> resolutions = ScreenUtil.getAvailableResolutions();
 
         List<Integer> cellSizes = new ArrayList<>();
 

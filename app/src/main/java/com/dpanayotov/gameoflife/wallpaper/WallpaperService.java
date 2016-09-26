@@ -2,7 +2,6 @@ package com.dpanayotov.gameoflife.wallpaper;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -12,6 +11,7 @@ import com.dpanayotov.gameoflife.life.Constants;
 import com.dpanayotov.gameoflife.life.Life;
 import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.dpanayotov.gameoflife.util.Resolution;
+import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015
@@ -26,6 +26,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
     private class WallpaperEngine extends android.service.wallpaper.WallpaperService.Engine {
 
         private Resolution resolution;
+        private int halfCell;
         private int colorPrimary;
         private int colorBackground;
         private int tickRate;
@@ -71,6 +72,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         private void getPreferences() {
             resolution = Preferences.getResolutions().get(Preferences.getResolution());
+            halfCell = resolution.cellSize / 2;
             colorPrimary = Preferences.getColor(Preferences.Colors.PRIMARY);
             colorBackground = Preferences.getColor(Preferences.Colors.BACKGROUND);
             tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
@@ -145,22 +147,21 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 try {
                     canvas = holder.lockCanvas();
                     if (canvas != null) {
-//                        canvas.rotate(45f);
-//                        canvas.scale(1.7f, 1.7f);
-//                        canvas.translate(00,-700);
                         paint.setColor(colorBackground);
                         canvas.drawRect(0, 0, screenWidth, screenHeight, paint);
                         paint.setColor(colorPrimary);
                         for (int i = 0; i < resolution.gridWidth; i++) {
                             for (int j = 0; j < resolution.gridHeight; j++) {
                                 if (life.summedGrid.cells[i][j] > 0) {
-                                    int cellX = i * resolution.cellSize + resolution.cellSize / 2;
-                                    int cellY = j * resolution.cellSize + resolution.cellSize / 2;
+                                    int cellX = i * resolution.cellSize + halfCell;
+                                    int cellY = j * resolution.cellSize + halfCell;
+                                    if (true) {
+                                        cellY = (cellY + i * halfCell) % 1920;
+                                    }
                                     paint.setAlpha((int) (255 * (1 / (float) life.summedGrid
                                             .cells[i][j])));
-                                    int radius = (resolution.cellSize / 2 - Constants
-                                            .CELL_PADDING) - Constants.RADIUS_STEP * (life
-                                            .summedGrid.cells[i][j] - 1);
+                                    int radius = (halfCell - Constants.CELL_PADDING) - Constants
+                                            .RADIUS_STEP * (life.summedGrid.cells[i][j] - 1);
                                     canvas.drawCircle(cellX, cellY, radius, paint);
                                 }
                             }
@@ -171,6 +172,5 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 }
             }
         }
-
     }
 }
