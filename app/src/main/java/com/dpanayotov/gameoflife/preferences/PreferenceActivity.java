@@ -30,6 +30,9 @@ public class PreferenceActivity extends Activity {
     @BindView(R.id.color_picker_preference)
     ColorPickerPreference colorPickerPreference;
 
+    @BindView(R.id.tick_rate)
+    ValueSetSeekBar<Integer> tickRate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,15 @@ public class PreferenceActivity extends Activity {
             @Override
             public void onBackgroundColorClick() {
                 showColorPickerDialog(Preferences.Colors.BACKGROUND);
+            }
+        });
+
+        tickRate.setValues(Preferences.getTickRates());
+        tickRate.setPosition(Preferences.getTickRate());
+        tickRate.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+            @Override
+            public void onValueChange(Integer value, int position) {
+                Preferences.setTickRate(position);
             }
         });
     }

@@ -15,8 +15,10 @@
     <string name="grid_dimensions">Grid dimensions</string>
     <string name="suffix_pixels">pixels</string>
     <string name="suffix_cells">cells</string>
-
     <string name="color">Color</string>
+    <string name="tick_rate">Tick rate</string>
+    <string name="suffix_milliseconds">milliseconds</string>
+
 
     <string name="close">Close</string>
     <string name="error">Error</string>

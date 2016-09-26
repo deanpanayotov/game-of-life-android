@@ -9,6 +9,7 @@ import com.dpanayotov.gameoflife.util.Resolution;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,6 +19,13 @@ import java.util.List;
 public class Preferences {
 
     private static SharedPreferences prefs;
+
+    private static final List<Integer> tickRates;
+
+    static {
+        Integer[] array = new Integer[]{16, 32, 100, 250, 500, 1000, 1500, 2000, 3000, 5000};
+        tickRates = Arrays.asList(array);
+    }
 
     private static SharedPreferences getPrefs() {
         if (prefs == null) {
@@ -84,6 +92,18 @@ public class Preferences {
             return defaultValue;
         }
 
+    }
+
+    public static List<Integer> getTickRates() {
+        return tickRates;
+    }
+
+    public static void setTickRate(int poistion) {
+        getPrefs().edit().putInt(Keys.TICK_RATE, poistion).apply();
+    }
+
+    public static int getTickRate() {
+        return getPrefs().getInt(Keys.TICK_RATE, (tickRates.size() - 1) / 2);
     }
 
     public static boolean isInitialized() {

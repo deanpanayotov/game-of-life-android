@@ -28,6 +28,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private Resolution resolution;
         private int colorPrimary;
         private int colorBackground;
+        private int tickRate;
 
         private Life life;
 
@@ -57,22 +58,22 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             paint.setStyle(Paint.Style.FILL);
         }
 
-        private SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(WallpaperService.this);
-        private SharedPreferences.OnSharedPreferenceChangeListener prefsListener =
-                new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                                          String key) {
-                        getPreferences();
-                        init(true);
-                    }
-                };
+        private SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences
+                (WallpaperService.this);
+        private SharedPreferences.OnSharedPreferenceChangeListener prefsListener = new
+                SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                getPreferences();
+                init(true);
+            }
+        };
 
         private void getPreferences() {
             resolution = Preferences.getResolutions().get(Preferences.getResolution());
             colorPrimary = Preferences.getColor(Preferences.Colors.PRIMARY);
             colorBackground = Preferences.getColor(Preferences.Colors.BACKGROUND);
+            tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
         }
 
         @Override
@@ -99,8 +100,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         }
 
         @Override
-        public void onSurfaceChanged(SurfaceHolder holder, int format,
-                                     int width, int height) {
+        public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
             this.screenWidth = width;
             this.screenHeight = height;
@@ -125,7 +125,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             @Override
             public void run() {
                 step();
-                handler.postDelayed(drawRunner, Constants.TICK_INTERVAL);
+                handler.postDelayed(drawRunner, tickRate);
             }
         };
 
@@ -167,8 +167,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                         }
                     }
                 } finally {
-                    if (canvas != null)
-                        holder.unlockCanvasAndPost(canvas);
+                    if (canvas != null) holder.unlockCanvasAndPost(canvas);
                 }
             }
         }

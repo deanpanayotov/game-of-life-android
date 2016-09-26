@@ -10,6 +10,6 @@ public class Keys {
     public static final String RESOLUTION = "RESOLUTION";
     public static final String COLOR_PRIMARY = "COLOR_PRIMARY";
     public static final String COLOR_BACKGROUND = "COLOR_BACKGROUND";
-
+    public static final String TICK_RATE = "TICK_RATE";
 
 }
