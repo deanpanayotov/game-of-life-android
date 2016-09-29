@@ -2,6 +2,7 @@ package com.dpanayotov.gameoflife.wallpaper;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -44,6 +45,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private static final int VALUE_LIMIT = 55; //in percents;
 
         private Paint paint = new Paint();
+        private Paint paint2;
 
         //dimensions
         private int screenWidth;
@@ -60,6 +62,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             getPreferences();
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
+            paint2 = new Paint(paint);
+            paint2.setColor(Color.parseColor("#ffd57c"));
         }
 
         private SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences
@@ -168,11 +172,16 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                                     if (isometricProjection) {
                                         cellY = (cellY + i * halfCell) % screenHeight;
                                     }
-                                    paint.setAlpha((int) (255 * (1 / (float) life.summedGrid
+                                    paint2.setAlpha((int) (255 * (1 / (float) life.summedGrid
                                             .cells[i][j])));
                                     int radius = (halfCell - Constants.CELL_PADDING) - Constants
                                             .RADIUS_STEP * (life.summedGrid.cells[i][j] - 1);
-                                    canvas.drawCircle(cellX, cellY, radius, paint);
+                                    if(life.summedGrid.cells[i][j]>1){
+                                        canvas.drawCircle(cellX, cellY, radius, paint2);
+
+                                    }else{
+                                        canvas.drawCircle(cellX, cellY, radius, paint);
+                                    }
                                 }
                             }
                         }
