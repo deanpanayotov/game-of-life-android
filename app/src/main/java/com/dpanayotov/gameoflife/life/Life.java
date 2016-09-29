@@ -21,13 +21,13 @@ public class Life {
 
     private boolean highlife;
 
-    public Life(int width, int height, boolean highlife) {
+    public Life(int width, int height, boolean highlife, int populationPercentage) {
 
         this.width = width;
         this.height = height;
         this.highlife = highlife;
 
-        this.minPopulation = (width*height)/10;
+        this.minPopulation = (width * height) * (populationPercentage / 100);
 
         reset();
     }

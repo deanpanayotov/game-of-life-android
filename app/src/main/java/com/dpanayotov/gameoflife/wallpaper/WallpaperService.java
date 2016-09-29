@@ -32,6 +32,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private int tickRate;
         private boolean isometricProjection;
         private boolean highlife;
+        private int populationPercentage;
 
         private Life life;
 
@@ -65,12 +66,13 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 (WallpaperService.this);
         private SharedPreferences.OnSharedPreferenceChangeListener prefsListener = new
                 SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                getPreferences();
-                init(true);
-            }
-        };
+                    @Override
+                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                                          String key) {
+                        getPreferences();
+                        init(true);
+                    }
+                };
 
         private void getPreferences() {
             resolution = Preferences.getResolutions().get(Preferences.getResolution());
@@ -80,6 +82,9 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
             isometricProjection = Preferences.getIsometricProjection();
             highlife = Preferences.getHighlife();
+            populationPercentage = Preferences.getPopulationPercentages().get(Preferences
+                    .getPopulationPercentage());
+
         }
 
         @Override
@@ -120,7 +125,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private void init(boolean force) {
             if (force || restart) {
                 handler.removeCallbacks(drawRunner);
-                life = new Life(resolution.gridWidth, resolution.gridHeight, highlife);
+                life = new Life(resolution.gridWidth, resolution.gridHeight, highlife,
+                        populationPercentage);
                 restart = false;
                 handler.post(drawRunner);
             }

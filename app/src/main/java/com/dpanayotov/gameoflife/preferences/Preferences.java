@@ -9,7 +9,6 @@ import com.dpanayotov.gameoflife.util.Resolution;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,9 +21,13 @@ public class Preferences {
 
     private static final List<Integer> tickRates;
 
+    private static final List<Integer> populationPercentages;
+
     static {
         Integer[] array = new Integer[]{16, 32, 100, 250, 500, 1000, 1500, 2000, 3000, 5000};
         tickRates = Arrays.asList(array);
+        array = new Integer[]{4, 6, 8, 10, 12, 14, 16, 18, 20};
+        populationPercentages = Arrays.asList(array);
     }
 
     private static SharedPreferences getPrefs() {
@@ -120,6 +123,19 @@ public class Preferences {
 
     public static boolean getHighlife() {
         return getPrefs().getBoolean(Keys.HIGHLIFE, false);
+    }
+
+    public static List<Integer> getPopulationPercentages() {
+        return populationPercentages;
+    }
+
+    public static int getPopulationPercentage() {
+        return getPrefs().getInt(Keys.POPULATION_PERCENTAGE, (populationPercentages.size() - 1) /
+                2);
+    }
+
+    public static void setPopulationPercentage(int populationPercentage) {
+        getPrefs().edit().putInt(Keys.POPULATION_PERCENTAGE, populationPercentage).apply();
     }
 
     public static boolean isInitialized() {

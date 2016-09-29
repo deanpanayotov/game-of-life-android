@@ -20,6 +20,8 @@
     <string name="suffix_milliseconds">milliseconds</string>
     <string name="isometric_projection">Isometric projection</string>
     <string name="highlife">Highlife</string>
+    <string name="population_percentage">Restart grid after population hits</string>
+    <string name="suffix_percent">percent</string>
 
 
     <string name="close">Close</string>

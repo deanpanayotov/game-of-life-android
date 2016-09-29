@@ -40,6 +40,9 @@ public class PreferenceActivity extends Activity {
     @BindView(R.id.highlife)
     Switch highlife;
 
+    @BindView(R.id.restard_population)
+    ValueSetSeekBar<Integer> restartPopulation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +107,15 @@ public class PreferenceActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 Preferences.setHighlife(checked);
+            }
+        });
+
+        restartPopulation.setValues(Preferences.getPopulationPercentages());
+        restartPopulation.setPosition(Preferences.getPopulationPercentage());
+        restartPopulation.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+            @Override
+            public void onValueChange(Integer value, int position) {
+                Preferences.setPopulationPercentage(position);
             }
         });
     }
