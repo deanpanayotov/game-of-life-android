@@ -10,15 +10,10 @@ import java.util.List;
 public class Life {
 
     private List<Grid> queue;
-
     private Grid grid;
-
     private Grid previousGrid;
-
     public Grid summedGrid;
-
     private int width, height, minPopulation;
-
     private boolean highlife;
 
     public Life(int width, int height, boolean highlife, int populationPercentage) {
@@ -26,7 +21,7 @@ public class Life {
         this.width = width;
         this.height = height;
         this.highlife = highlife;
-
+        
         this.minPopulation = (width * height) * (populationPercentage / 100);
 
         reset();

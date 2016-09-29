@@ -1,7 +1,11 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -12,6 +16,7 @@ import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by Dean Panayotov on 9/24/2016
  */
 
-public class PreferenceActivity extends Activity {
+public class PreferenceActivity extends Activity implements SurfaceHolder.Callback {
 
     @BindView(R.id.grid_width_height)
     ValueSetSeekBar<Resolution> gridWidthHeight;
@@ -42,6 +47,9 @@ public class PreferenceActivity extends Activity {
 
     @BindView(R.id.restard_population)
     ValueSetSeekBar<Integer> restartPopulation;
+
+    @BindView(R.id.surface_view)
+    SurfaceView surfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +126,7 @@ public class PreferenceActivity extends Activity {
                 Preferences.setPopulationPercentage(position);
             }
         });
+        surfaceView.getHolder().addCallback(this);
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
@@ -138,5 +147,37 @@ public class PreferenceActivity extends Activity {
         colorPickerPreference.setPrimaryColor(Preferences.getColor(Preferences.Colors.PRIMARY));
         colorPickerPreference.setBackgroundColor(Preferences.getColor(Preferences.Colors
                 .BACKGROUND));
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        tryDrawing(surfaceHolder);
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+        tryDrawing(surfaceHolder);
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
+
+    }
+
+    private void tryDrawing(SurfaceHolder holder) {
+
+        Canvas canvas = holder.lockCanvas();
+        if (canvas == null) {
+            Log.e("zxc", "Cannot draw onto the canvas as it's null");
+        } else {
+            drawMyStuff(canvas);
+            holder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private void drawMyStuff(final Canvas canvas) {
+        Random random = new Random();
+        canvas.drawRGB(random.nextInt(255), random.nextInt(255), random.nextInt(255));
     }
 }
