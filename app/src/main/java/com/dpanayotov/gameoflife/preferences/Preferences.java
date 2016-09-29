@@ -30,7 +30,7 @@ public class Preferences {
         populationPercentages = Arrays.asList(array);
     }
 
-    private static SharedPreferences getPrefs() {
+    public static SharedPreferences getPrefs() {
         if (prefs == null) {
             prefs = PreferenceManager.getDefaultSharedPreferences(GameOfLifeApplication
                     .getInstance().getContext());
@@ -77,6 +77,7 @@ public class Preferences {
 
     public enum Colors {
         PRIMARY("PRIMARY", Color.parseColor("#0B083B")),
+        SECONDARY("SECONDARY", Color.parseColor("#FFD57C")),
         BACKGROUND("BACKGROUND", Color.parseColor("#595594"));
 
         String key;
