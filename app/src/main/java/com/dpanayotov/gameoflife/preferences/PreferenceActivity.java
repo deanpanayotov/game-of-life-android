@@ -2,6 +2,8 @@ package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
 import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -11,6 +13,7 @@ import android.widget.Switch;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.life.Life;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
@@ -51,6 +54,24 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
 
+    private Life life;
+
+    /**
+     * Initialize the whole drawing process
+     */
+    private void initDemo() {
+        if (life != null) {
+            life.stop();
+        }
+        Resolution resolution = Preferences.getResolutions().get(Preferences.getResolution());
+        Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
+        int demoWidth = (int) Math.ceil((float) surfaceFrame.width() / (float) resolution.cellSize);
+        int demoHeight = (int) Math.ceil((float) surfaceFrame.height() / (float) resolution
+                .cellSize);
+        life = new Life(demoWidth, demoHeight, surfaceView.getHolder());
+        life.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +94,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
                 Preferences.setResolution(position);
+                initDemo();
             }
         });
 
@@ -82,11 +104,13 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             @Override
             public void onPrimaryColorClick() {
                 showColorPickerDialog(Preferences.Colors.PRIMARY);
+                initDemo();
             }
 
             @Override
             public void onBackgroundColorClick() {
                 showColorPickerDialog(Preferences.Colors.BACKGROUND);
+                initDemo();
             }
         });
 
@@ -96,6 +120,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             @Override
             public void onValueChange(Integer value, int position) {
                 Preferences.setTickRate(position);
+                initDemo();
             }
         });
         isometricProjection.setChecked(Preferences.getIsometricProjection());
@@ -105,6 +130,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 Preferences.setIsometricProjection(checked);
+                initDemo();
             }
         });
 
@@ -115,15 +141,18 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 Preferences.setHighlife(checked);
+                initDemo();
             }
         });
 
         restartPopulation.setValues(Preferences.getPopulationPercentages());
         restartPopulation.setPosition(Preferences.getPopulationPercentage());
-        restartPopulation.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+        restartPopulation.setOnValueChangeListener(new ValueSetSeekBar
+                .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 Preferences.setPopulationPercentage(position);
+                initDemo();
             }
         });
         surfaceView.getHolder().addCallback(this);
@@ -137,6 +166,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             public void onColorPicked(int value, String hexVal) {
                 Preferences.setColor(color, value);
                 updateColors();
+                initDemo();
             }
         });
         colorPickerDialog.setInitialColor(Preferences.getColor(color));
@@ -151,33 +181,15 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        tryDrawing(surfaceHolder);
+        initDemo();
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-        tryDrawing(surfaceHolder);
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
+        initDemo();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-
-    }
-
-    private void tryDrawing(SurfaceHolder holder) {
-
-        Canvas canvas = holder.lockCanvas();
-        if (canvas == null) {
-            Log.e("zxc", "Cannot draw onto the canvas as it's null");
-        } else {
-            drawMyStuff(canvas);
-            holder.unlockCanvasAndPost(canvas);
-        }
-    }
-
-    private void drawMyStuff(final Canvas canvas) {
-        Random random = new Random();
-        canvas.drawRGB(random.nextInt(255), random.nextInt(255), random.nextInt(255));
     }
 }
