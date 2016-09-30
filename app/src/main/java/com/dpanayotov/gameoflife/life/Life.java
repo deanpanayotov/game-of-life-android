@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.dpanayotov.gameoflife.util.Resolution;
+import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,8 @@ public class Life {
             secondaryPaint = new Paint(),
             backgroundPaint = new Paint();
 
-    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
+    public Life(int screenWidth, int screenHeight, int customGridWidth, int customGridHeight,
+                SurfaceHolder surfaceHolder) {
 
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -52,7 +54,22 @@ public class Life {
 
         getPreferences();
 
+        if (customGridWidth != 0) {
+            resolution.gridWidth = customGridWidth;
+        }
+        if (customGridHeight != 0) {
+            resolution.gridHeight = customGridHeight;
+        }
+
         reset();
+    }
+
+    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
+        this(screenWidth, screenHeight, 0, 0, surfaceHolder);
+    }
+
+    public Life(SurfaceHolder surfaceHolder) {
+        this(ScreenUtil.getScreenSize().x, ScreenUtil.getScreenSize().y, surfaceHolder);
     }
 
     private void initPaint(int color, Paint paint) {

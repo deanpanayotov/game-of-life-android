@@ -1,11 +1,8 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
-import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.CompoundButton;
@@ -19,7 +16,6 @@ import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,10 +61,12 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
         }
         Resolution resolution = Preferences.getResolutions().get(Preferences.getResolution());
         Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
-        int demoWidth = (int) Math.ceil((float) surfaceFrame.width() / (float) resolution.cellSize);
-        int demoHeight = (int) Math.ceil((float) surfaceFrame.height() / (float) resolution
+        int demoGridWidth = (int) Math.ceil((float) surfaceFrame.width() / (float) resolution
                 .cellSize);
-        life = new Life(demoWidth, demoHeight, surfaceView.getHolder());
+        int demoGridHeight = (int) Math.ceil((float) surfaceFrame.height() / (float) resolution
+                .cellSize);
+        life = new Life(surfaceFrame.width(), surfaceFrame.height(), demoGridWidth, demoGridHeight,
+                surfaceView.getHolder());
         life.start();
     }
 
