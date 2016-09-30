@@ -52,21 +52,27 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     private Life life;
 
-    /**
-     * Initialize the whole drawing process
-     */
+    private int canvasWidth;
+    private int canvasHeight;
+    private int demoGridWidth;
+    private int demoGridHeight;
+
+    private void calculateDimensions() {
+        Resolution resolution = Preferences.getResolutions().get(Preferences.getResolution());
+        Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
+        canvasWidth = surfaceFrame.width();
+        canvasHeight = surfaceFrame.height();
+        demoGridWidth = (int) Math.ceil((float) canvasWidth / (float) resolution.cellSize);
+        demoGridHeight = (int) Math.ceil((float) canvasHeight / (float) resolution.cellSize);
+    }
+
     private void initDemo() {
         if (life != null) {
             life.stop();
         }
-        Resolution resolution = Preferences.getResolutions().get(Preferences.getResolution());
-        Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
-        int demoGridWidth = (int) Math.ceil((float) surfaceFrame.width() / (float) resolution
-                .cellSize);
-        int demoGridHeight = (int) Math.ceil((float) surfaceFrame.height() / (float) resolution
-                .cellSize);
-        life = new Life(surfaceFrame.width(), surfaceFrame.height(), demoGridWidth, demoGridHeight,
-                surfaceView.getHolder());
+
+        life = new Life(canvasWidth, canvasHeight, demoGridWidth, demoGridHeight, surfaceView
+                .getHolder());
         life.start();
     }
 
@@ -92,6 +98,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
                 Preferences.setResolution(position);
+                calculateDimensions();
                 initDemo();
             }
         });
@@ -179,11 +186,11 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        initDemo();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
+        calculateDimensions();
         initDemo();
     }
 
