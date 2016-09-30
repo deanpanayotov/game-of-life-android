@@ -76,6 +76,11 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
         life.start();
     }
 
+    private void calculateAndInitDemo(){
+        calculateDimensions();
+        initDemo();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +103,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
                 Preferences.setResolution(position);
-                calculateDimensions();
-                initDemo();
+                calculateAndInitDemo();
             }
         });
 
@@ -190,8 +194,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-        calculateDimensions();
-        initDemo();
+        calculateAndInitDemo();
     }
 
     @Override
