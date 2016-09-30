@@ -1,129 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:custom="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EEEEEE"
         android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/PreferenceCard">
-            <SurfaceView
-                android:id="@+id/surface_view"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"/>
-        </LinearLayout>
+        <SurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
 
-        <LinearLayout
-            style="@style/PreferenceCard">
-
-            <TextView
-                style="@style/PreferenceSectionHeader"
-                android:text="@string/grid"/>
-
-            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-                android:id="@+id/grid_width_height"
-                style="@style/HorizontalBar"
-                custom:show_bar="false"
-                custom:suffix="@string/suffix_cells"
-                custom:title="@string/grid_dimensions"/>
-
-            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-                android:id="@+id/cell_size"
-                style="@style/HorizontalBar"
-                custom:suffix="@string/suffix_pixels"
-                custom:title="@string/cell_size"/>
-
-        </LinearLayout>
-
-        <!--<TextView-->
-        <!--style="@style/PreferenceSectionHeader"-->
-        <!--android:text="General"/>-->
-
-
-        <LinearLayout
-            style="@style/PreferenceCard">
-
-            <TextView
-                style="@style/PreferenceSectionHeader"
-                android:text="@string/color"/>
-
-            <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
-                android:id="@+id/color_picker_preference"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            style="@style/PreferenceCard">
-
-            <TextView
-                style="@style/PreferenceSectionHeader"
-                android:text="General"/>
-
-            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-                android:id="@+id/tick_rate"
-                style="@style/HorizontalBar"
-                custom:suffix="@string/suffix_milliseconds"
-                custom:title="@string/tick_rate"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:layout_height="match_parent"
+                android:background="#EEEEEE"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/isometric_projection"
-                    android:textSize="16sp"/>
+                <LinearLayout
+                    style="@style/PreferenceCard">
 
-                <Switch
-                    android:id="@+id/isometric_projection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"/>
+                    <TextView
+                        style="@style/PreferenceSectionHeader"
+                        android:text="@string/grid"/>
+
+                    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                        android:id="@+id/grid_width_height"
+                        style="@style/HorizontalBar"
+                        custom:show_bar="false"
+                        custom:suffix="@string/suffix_cells"
+                        custom:title="@string/grid_dimensions"/>
+
+                    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                        android:id="@+id/cell_size"
+                        style="@style/HorizontalBar"
+                        custom:suffix="@string/suffix_pixels"
+                        custom:title="@string/cell_size"/>
+
+                </LinearLayout>
+
+                <!--<TextView-->
+                <!--style="@style/PreferenceSectionHeader"-->
+                <!--android:text="General"/>-->
+
+
+                <LinearLayout
+                    style="@style/PreferenceCard">
+
+                    <TextView
+                        style="@style/PreferenceSectionHeader"
+                        android:text="@string/color"/>
+
+                    <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
+                        android:id="@+id/color_picker_preference"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/PreferenceCard">
+
+                    <TextView
+                        style="@style/PreferenceSectionHeader"
+                        android:text="General"/>
+
+                    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                        android:id="@+id/tick_rate"
+                        style="@style/HorizontalBar"
+                        custom:suffix="@string/suffix_milliseconds"
+                        custom:title="@string/tick_rate"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/isometric_projection"
+                            android:textSize="16sp"/>
+
+                        <Switch
+                            android:id="@+id/isometric_projection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/highlife"
+                            android:textSize="16sp"/>
+
+                        <Switch
+                            android:id="@+id/highlife"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
+                        android:id="@+id/restard_population"
+                        style="@style/HorizontalBar"
+                        custom:suffix="@string/suffix_percent"
+                        custom:title="@string/population_percentage"/>
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/highlife"
-                    android:textSize="16sp"/>
-
-                <Switch
-                    android:id="@+id/highlife"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"/>
-            </LinearLayout>
-
-            <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-                android:id="@+id/restard_population"
-                style="@style/HorizontalBar"
-                custom:suffix="@string/suffix_percent"
-                custom:title="@string/population_percentage"/>
-        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
-</ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="160dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE"
+            android:alpha="0.3 "/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE"
+            android:alpha="0.5"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE"
+            android:alpha="0.7"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE"
+            android:alpha="0.9"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE"
+            android:alpha="1.0"/>
+
+    </LinearLayout>
+
+</FrameLayout>
+
+
+
