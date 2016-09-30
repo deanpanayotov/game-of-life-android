@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -35,7 +36,9 @@ public class Life {
     private int populationPercentage;
 
 
-    private Paint primaryPaint, secondaryPaint, backgroundPaint;
+    private Paint primaryPaint = new Paint(),
+            secondaryPaint = new Paint(),
+            backgroundPaint = new Paint();
 
     public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
 
@@ -53,7 +56,6 @@ public class Life {
     }
 
     private void initPaint(int color, Paint paint) {
-        paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(color);
@@ -116,6 +118,7 @@ public class Life {
     }
 
     private void draw() {
+        Log.d("zxc", "draw");
         Canvas canvas = null;
         try {
             canvas = surfaceHolder.lockCanvas();
