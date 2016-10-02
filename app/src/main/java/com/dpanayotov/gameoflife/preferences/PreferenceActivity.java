@@ -17,7 +17,6 @@ import android.widget.Switch;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
-import com.dpanayotov.gameoflife.util.OnSwipeTouchListener;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
@@ -62,6 +61,12 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     @BindView(R.id.color_primary)
     View colorPrimary;
+
+    @BindView(R.id.swap_left)
+    View swapLeft;
+
+    @BindView(R.id.swap_right)
+    View swapRight;
 
     private Life life;
 
@@ -188,40 +193,26 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             }
         });
 
-        colorPrimary.setOnTouchListener(new OnSwipeTouchListener(this){
+        swapLeft.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSwipeLeft() {
-                Preferences.swapColors(Preferences.Colors.PRIMARY, Preferences.Colors.SECONDARY);
-                updateColors();
-                initDemo();
+            public void onClick(View v) {
+                swapColors(Preferences.Colors.BACKGROUND, Preferences.Colors.SECONDARY);
             }
         });
 
-        colorSecondary.setOnTouchListener(new OnSwipeTouchListener(this){
+        swapRight.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSwipeLeft() {
-                Preferences.swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.BACKGROUND);
-                updateColors();
-                initDemo();
-            }
-
-            @Override
-            public void onSwipeRight() {
-                Preferences.swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.PRIMARY);
-                updateColors();
-                initDemo();
+            public void onClick(View v) {
+                swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.PRIMARY);
             }
         });
 
-        colorBackgorund.setOnTouchListener(new OnSwipeTouchListener(this){
-            @Override
-            public void onSwipeRight() {
-                Preferences.swapColors(Preferences.Colors.BACKGROUND, Preferences.Colors.SECONDARY);
-                updateColors();
-                initDemo();
-            }
-        });
+    }
 
+    private void swapColors(Preferences.Colors a, Preferences.Colors b){
+        Preferences.swapColors(a, b);
+        updateColors();
+        initDemo();
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
