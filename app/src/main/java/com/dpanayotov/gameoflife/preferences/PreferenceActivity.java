@@ -209,7 +209,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     }
 
-    private void swapColors(Preferences.Colors a, Preferences.Colors b){
+    private void swapColors(Preferences.Colors a, Preferences.Colors b) {
         Preferences.swapColors(a, b);
         updateColors();
         initDemo();
@@ -233,7 +233,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
     private void updateColors() {
         animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Colors
                 .BACKGROUND));
-        colorSecondary.setBackgroundColor(Preferences.getColor(Preferences.Colors.BACKGROUND));
+        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Colors.BACKGROUND));
         for (int i = 0; i < colorSecondary.getChildCount(); i++) {
             animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
                     .Colors.SECONDARY));
