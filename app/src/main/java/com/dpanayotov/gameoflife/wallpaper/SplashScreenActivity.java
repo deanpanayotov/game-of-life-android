@@ -2,6 +2,8 @@ package com.dpanayotov.gameoflife.wallpaper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -43,8 +45,10 @@ public class SplashScreenActivity extends Activity {
             @Override
             protected void onPostExecute(Boolean initializationSuccessful) {
                 if (initializationSuccessful) {
-                    Intent intent = new Intent(SplashScreenActivity.this, WallpaperActivity
-                            .class);
+                    Intent intent = new Intent();
+                    intent.setAction(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new
+                            ComponentName(SplashScreenActivity.this, WallpaperService.class));
                     startActivity(intent);
                     SplashScreenActivity.this.finish();
                 } else {
@@ -59,10 +63,6 @@ public class SplashScreenActivity extends Activity {
                     }).show();
                 }
             }
-        }
-
-                .
-
-                        execute();
+        }.execute();
     }
 }
