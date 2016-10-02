@@ -23,6 +23,9 @@
     <string name="population_percentage">Restart grid after population hits</string>
     <string name="suffix_percent">percent</string>
 
+    <string name="color_primary">Primary</string>
+    <string name="color_secondary">Secondary</string>
+    <string name="color_background">Background</string>
 
     <string name="close">Close</string>
     <string name="error">Error</string>

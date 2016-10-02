@@ -1,16 +1,23 @@
 package com.dpanayotov.gameoflife.preferences;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.util.OnSwipeTouchListener;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
@@ -32,9 +39,6 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
     @BindView(R.id.cell_size)
     ValueSetSeekBar<Integer> cellSize;
 
-    @BindView(R.id.color_picker_preference)
-    ColorPickerPreference colorPickerPreference;
-
     @BindView(R.id.tick_rate)
     ValueSetSeekBar<Integer> tickRate;
 
@@ -49,6 +53,15 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
 
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
+
+    @BindView(R.id.color_background)
+    View colorBackgorund;
+
+    @BindView(R.id.color_secondary)
+    LinearLayout colorSecondary;
+
+    @BindView(R.id.color_primary)
+    View colorPrimary;
 
     private Life life;
 
@@ -76,9 +89,13 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
         life.start();
     }
 
-    private void calculateAndInitDemo(){
+    private void calculateAndInitDemo() {
         calculateDimensions();
         initDemo();
+    }
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     @Override
@@ -104,22 +121,6 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
                 gridWidthHeight.setPosition(position);
                 Preferences.setResolution(position);
                 calculateAndInitDemo();
-            }
-        });
-
-        updateColors();
-
-        colorPickerPreference.setOnClickListener(new ColorPickerPreference.OnClickListener() {
-            @Override
-            public void onPrimaryColorClick() {
-                showColorPickerDialog(Preferences.Colors.PRIMARY);
-                initDemo();
-            }
-
-            @Override
-            public void onBackgroundColorClick() {
-                showColorPickerDialog(Preferences.Colors.BACKGROUND);
-                initDemo();
             }
         });
 
@@ -165,6 +166,62 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
             }
         });
         surfaceView.getHolder().addCallback(this);
+
+        updateColors();
+
+        colorBackgorund.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showColorPickerDialog(Preferences.Colors.BACKGROUND);
+            }
+        });
+        colorSecondary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showColorPickerDialog(Preferences.Colors.SECONDARY);
+            }
+        });
+        colorPrimary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showColorPickerDialog(Preferences.Colors.PRIMARY);
+            }
+        });
+
+        colorPrimary.setOnTouchListener(new OnSwipeTouchListener(this){
+            @Override
+            public void onSwipeLeft() {
+                Preferences.swapColors(Preferences.Colors.PRIMARY, Preferences.Colors.SECONDARY);
+                updateColors();
+                initDemo();
+            }
+        });
+
+        colorSecondary.setOnTouchListener(new OnSwipeTouchListener(this){
+            @Override
+            public void onSwipeLeft() {
+                Preferences.swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.BACKGROUND);
+                updateColors();
+                initDemo();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                Preferences.swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.PRIMARY);
+                updateColors();
+                initDemo();
+            }
+        });
+
+        colorBackgorund.setOnTouchListener(new OnSwipeTouchListener(this){
+            @Override
+            public void onSwipeRight() {
+                Preferences.swapColors(Preferences.Colors.BACKGROUND, Preferences.Colors.SECONDARY);
+                updateColors();
+                initDemo();
+            }
+        });
+
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
@@ -183,9 +240,31 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
     }
 
     private void updateColors() {
-        colorPickerPreference.setPrimaryColor(Preferences.getColor(Preferences.Colors.PRIMARY));
-        colorPickerPreference.setBackgroundColor(Preferences.getColor(Preferences.Colors
+        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Colors
                 .BACKGROUND));
+        colorSecondary.setBackgroundColor(Preferences.getColor(Preferences.Colors.BACKGROUND));
+        for (int i = 0; i < colorSecondary.getChildCount(); i++) {
+            animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
+                    .Colors.SECONDARY));
+        }
+        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Colors.PRIMARY));
+    }
+
+    private void animateBackgroundColor(final View view, int newColor) {
+        ColorDrawable currentColorDrawable = (ColorDrawable) view.getBackground();
+        int oldColor = currentColorDrawable.getColor();
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), oldColor,
+                newColor);
+        colorAnimation.setDuration(500); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                view.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
     }
 
     @Override

@@ -75,6 +75,12 @@ public class Preferences {
         return getPrefs().getInt(color.getKey(), color.getDefaultValue());
     }
 
+    public static void swapColors(Colors a, Colors b) {
+        int c = getColor(b);
+        setColor(b, getColor(a));
+        setColor(a, c);
+    }
+
     public enum Colors {
         PRIMARY("PRIMARY", Color.parseColor("#0B083B")),
         SECONDARY("SECONDARY", Color.parseColor("#FFD57C")),

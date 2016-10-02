@@ -47,26 +47,6 @@
 
                 </LinearLayout>
 
-                <!--<TextView-->
-                <!--style="@style/PreferenceSectionHeader"-->
-                <!--android:text="General"/>-->
-
-
-                <LinearLayout
-                    style="@style/PreferenceCard">
-
-                    <TextView
-                        style="@style/PreferenceSectionHeader"
-                        android:text="@string/color"/>
-
-                    <com.dpanayotov.gameoflife.preferences.ColorPickerPreference
-                        android:id="@+id/color_picker_preference"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-
                 <LinearLayout
                     style="@style/PreferenceCard">
 
@@ -130,6 +110,13 @@
                         custom:suffix="@string/suffix_percent"
                         custom:title="@string/population_percentage"/>
                 </LinearLayout>
+                <LinearLayout style="@style/PreferenceCard">
+                    <TextView
+                        style="@style/PreferenceSectionHeader"
+                        android:text="@string/color"/>
+                    <include layout="@layout/view_color_preferences_h"/>
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

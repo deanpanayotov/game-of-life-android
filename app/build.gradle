@@ -6,6 +6,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.dpanayotov.wallpaper"
         minSdkVersion 15
         targetSdkVersion 24
@@ -22,11 +23,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
 
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:design:24.2.1'
 
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.azeesoft.lib.colorpicker:colorpicker:1.0.8@aar'
