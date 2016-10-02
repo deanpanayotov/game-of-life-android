@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Dean Panayotov on 9/24/2016
  */
 
-public class PreferenceActivity extends Activity implements SurfaceHolder.Callback {
+public class PreferencesActivity extends Activity implements SurfaceHolder.Callback {
 
     @BindView(R.id.grid_width_height)
     ValueSetSeekBar<Resolution> gridWidthHeight;
@@ -106,7 +106,7 @@ public class PreferenceActivity extends Activity implements SurfaceHolder.Callba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences3);
+        setContentView(R.layout.activity_preferences);
         ButterKnife.bind(this);
 
         List<Resolution> resolutions = ScreenUtil.getAvailableResolutions();
