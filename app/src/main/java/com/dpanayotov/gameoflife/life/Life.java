@@ -139,7 +139,6 @@ public class Life {
     }
 
     private void draw() {
-        Log.d("zxc", "draw");
         Canvas canvas = null;
         try {
             canvas = surfaceHolder.lockCanvas();
