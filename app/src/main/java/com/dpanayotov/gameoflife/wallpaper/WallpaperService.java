@@ -47,7 +47,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         @Override
         public void onVisibilityChanged(boolean visible) {
             if (visible) {
-                init(true);
+                life.start();
             } else {
                 life.stop();
             }

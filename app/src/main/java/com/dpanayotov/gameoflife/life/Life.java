@@ -36,6 +36,8 @@ public class Life {
     private boolean highlife;
     private int populationPercentage;
 
+    private boolean isRunning = false;
+
 
     private Paint primaryPaint = new Paint(),
             secondaryPaint = new Paint(),
@@ -177,11 +179,15 @@ public class Life {
     };
 
     public void start() {
-        handler.post(drawRunner);
+        if(!isRunning) {
+            isRunning = true;
+            handler.post(drawRunner);
+        }
     }
 
     public void stop() {
         handler.removeCallbacks(drawRunner);
+        isRunning = false;
     }
 
 
