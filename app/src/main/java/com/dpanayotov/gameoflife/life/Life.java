@@ -181,15 +181,17 @@ public class Life {
     };
 
     public void start() {
-        if(!isRunning) {
+        if (!isRunning) {
             isRunning = true;
             handler.post(drawRunner);
         }
     }
 
     public void stop() {
-        handler.removeCallbacks(drawRunner);
-        isRunning = false;
+        if (isRunning) {
+            handler.removeCallbacks(drawRunner);
+            isRunning = false;
+        }
     }
 
 

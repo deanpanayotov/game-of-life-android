@@ -275,6 +275,16 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onStop() {
         super.onStop();
-        life.stop();
+        if (life != null) {
+            life.stop();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (life != null) {
+            life.start();
+        }
     }
 }
