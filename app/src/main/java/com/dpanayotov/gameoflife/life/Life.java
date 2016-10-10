@@ -34,7 +34,7 @@ public class Life {
     private int tickRate;
     private boolean isometricProjection;
     private boolean highlife;
-    private int populationPercentage;
+    private int minPopulationCount;
 
     private boolean isRunning = false;
 
@@ -84,7 +84,7 @@ public class Life {
 
         Grid nextGrid = grid.deriveNextState(highlife);
 
-        if (nextGrid.populationCount < populationPercentage || previousGrid.equals(nextGrid)) {
+        if (nextGrid.populationCount < minPopulationCount || previousGrid.equals(nextGrid)) {
             reset();
         } else {
 
@@ -131,8 +131,10 @@ public class Life {
         tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
         isometricProjection = Preferences.getIsometricProjection();
         highlife = Preferences.getHighlife();
-        populationPercentage = Preferences.getPopulationPercentages().get(Preferences
+        int populationPercentage = Preferences.getPopulationPercentages().get(Preferences
                 .getPopulationPercentage());
+        minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
+                populationPercentage);
 
     }
 
