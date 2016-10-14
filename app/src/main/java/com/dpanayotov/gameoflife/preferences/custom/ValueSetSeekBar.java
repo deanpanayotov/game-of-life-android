@@ -1,4 +1,4 @@
-package com.dpanayotov.gameoflife.preferences;
+package com.dpanayotov.gameoflife.preferences.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -104,7 +104,7 @@ public class ValueSetSeekBar<T> extends LinearLayout {
         this.onValueChangeListener = onValueChangedListener;
     }
 
-    interface OnValueChangeListener<U> {
+    public interface OnValueChangeListener<U> {
         void onValueChange(U value, int position);
     }
 

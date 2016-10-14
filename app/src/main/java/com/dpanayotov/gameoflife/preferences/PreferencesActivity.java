@@ -17,6 +17,7 @@ import android.widget.Switch;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBar;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
