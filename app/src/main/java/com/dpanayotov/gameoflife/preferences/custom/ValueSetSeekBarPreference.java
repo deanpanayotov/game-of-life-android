@@ -53,7 +53,7 @@ public class ValueSetSeekBarPreference<T> extends LinearLayout {
     }
 
     private void init(Attributes attributes) {
-        View root = inflate(getContext(), R.layout.value_set_seekbar, this);
+        View root = inflate(getContext(), R.layout.view_value_set_seekbar, this);
         ButterKnife.bind(root, this);
         if (attributes != null) {
             if (attributes.title != null) {
