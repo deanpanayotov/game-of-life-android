@@ -22,8 +22,8 @@ public class SwitchPreference extends LinearLayout {
 
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.button)
-    Switch button;
+    @BindView(R.id.check_box)
+    Switch checkBox;
 
     OnCheckedChangeListener onCheckedChangeListener;
 
@@ -51,7 +51,7 @@ public class SwitchPreference extends LinearLayout {
             }
         }
 
-        button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (onCheckedChangeListener != null) {
@@ -88,6 +88,6 @@ public class SwitchPreference extends LinearLayout {
     }
 
     public void setChecked(boolean isChecked){
-        button.setChecked(isChecked);
+        checkBox.setChecked(isChecked);
     }
 }
