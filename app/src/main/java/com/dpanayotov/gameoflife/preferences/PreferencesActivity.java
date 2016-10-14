@@ -17,7 +17,7 @@ import android.widget.Switch;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
-import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBar;
+import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 
@@ -34,13 +34,13 @@ import butterknife.ButterKnife;
 public class PreferencesActivity extends Activity implements SurfaceHolder.Callback {
 
     @BindView(R.id.grid_width_height)
-    ValueSetSeekBar<Resolution> gridWidthHeight;
+    ValueSetSeekBarPreference<Resolution> gridWidthHeight;
 
     @BindView(R.id.cell_size)
-    ValueSetSeekBar<Integer> cellSize;
+    ValueSetSeekBarPreference<Integer> cellSize;
 
     @BindView(R.id.tick_rate)
-    ValueSetSeekBar<Integer> tickRate;
+    ValueSetSeekBarPreference<Integer> tickRate;
 
     @BindView(R.id.isometric_projection)
     Switch isometricProjection;
@@ -49,7 +49,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     Switch highlife;
 
     @BindView(R.id.min_population_density)
-    ValueSetSeekBar<Integer> minPopulationDensity;
+    ValueSetSeekBarPreference<Integer> minPopulationDensity;
 
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
@@ -121,7 +121,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         gridWidthHeight.setValues(resolutions);
         cellSize.setValues(cellSizes);
         cellSize.setPosition(Preferences.getResolution());
-        cellSize.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+        cellSize.setOnValueChangeListener(new ValueSetSeekBarPreference.OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
@@ -132,7 +132,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         tickRate.setValues(Preferences.getTickRates());
         tickRate.setPosition(Preferences.getTickRate());
-        tickRate.setOnValueChangeListener(new ValueSetSeekBar.OnValueChangeListener<Integer>() {
+        tickRate.setOnValueChangeListener(new ValueSetSeekBarPreference.OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 Preferences.setTickRate(position);
@@ -163,7 +163,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         minPopulationDensity.setValues(Preferences.getMinPopulationDensityOptions());
         minPopulationDensity.setPosition(Preferences.getMinPopulationDensity());
-        minPopulationDensity.setOnValueChangeListener(new ValueSetSeekBar
+        minPopulationDensity.setOnValueChangeListener(new ValueSetSeekBarPreference
                 .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {

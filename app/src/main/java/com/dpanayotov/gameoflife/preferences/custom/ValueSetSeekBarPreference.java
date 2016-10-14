@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by Dean Panayotov on 9/24/2016
  */
 
-public class ValueSetSeekBar<T> extends LinearLayout {
+public class ValueSetSeekBarPreference<T> extends LinearLayout {
 
     @BindView(R.id.title)
     TextView title;
@@ -37,17 +37,17 @@ public class ValueSetSeekBar<T> extends LinearLayout {
 
     T currentValue;
 
-    public ValueSetSeekBar(Context context) {
+    public ValueSetSeekBarPreference(Context context) {
         super(context);
         init(null);
     }
 
-    public ValueSetSeekBar(Context context, AttributeSet attrs) {
+    public ValueSetSeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(getAttributes(context, attrs));
     }
 
-    public ValueSetSeekBar(Context context, AttributeSet attrs, int defStyle) {
+    public ValueSetSeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(getAttributes(context, attrs));
     }
@@ -110,13 +110,13 @@ public class ValueSetSeekBar<T> extends LinearLayout {
 
     private Attributes getAttributes(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable
-                .ValueSetSeekBar, 0, 0);
+                .ValueSetSeekBarPreference, 0, 0);
         Attributes attributes = null;
         try {
             attributes = new Attributes();
-            attributes.showSeekBar = a.getBoolean(R.styleable.ValueSetSeekBar_show_bar, true);
-            attributes.title = a.getString(R.styleable.ValueSetSeekBar_title);
-            attributes.suffix = a.getString(R.styleable.ValueSetSeekBar_suffix);
+            attributes.showSeekBar = a.getBoolean(R.styleable.ValueSetSeekBarPreference_show_bar, true);
+            attributes.title = a.getString(R.styleable.ValueSetSeekBarPreference_title);
+            attributes.suffix = a.getString(R.styleable.ValueSetSeekBarPreference_suffix);
         } finally {
             a.recycle();
         }
