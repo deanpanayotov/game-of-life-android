@@ -86,6 +86,7 @@ public class Life {
 
         if (nextGrid.populationCount < minPopulationCount || previousGrid.equals(nextGrid)) {
             reset();
+            update();
         } else {
 
             queue.add(0, new Grid(grid));
@@ -107,9 +108,8 @@ public class Life {
                     }
                 }
             }
+            draw();
         }
-
-        draw();
     }
 
     private void resetQueue() {
