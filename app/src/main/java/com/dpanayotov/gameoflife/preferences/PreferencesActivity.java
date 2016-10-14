@@ -17,6 +17,7 @@ import android.widget.Switch;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
@@ -43,10 +44,10 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     ValueSetSeekBarPreference<Integer> tickRate;
 
     @BindView(R.id.isometric_projection)
-    Switch isometricProjection;
+    SwitchPreference isometricProjection;
 
     @BindView(R.id.highlife)
-    Switch highlife;
+    SwitchPreference highlife;
 
     @BindView(R.id.min_population_density)
     ValueSetSeekBarPreference<Integer> minPopulationDensity;
@@ -139,23 +140,25 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 initDemo();
             }
         });
+
+
         isometricProjection.setChecked(Preferences.getIsometricProjection());
-        isometricProjection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
+        isometricProjection.setOnCheckedChangeListener(new SwitchPreference.OnCheckedChangeListener
                 () {
 
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+            public void onCheckedChanged(boolean checked) {
                 Preferences.setIsometricProjection(checked);
                 initDemo();
             }
         });
 
         highlife.setChecked(Preferences.getHighlife());
-        highlife.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
+        highlife.setOnCheckedChangeListener(new SwitchPreference.OnCheckedChangeListener
                 () {
 
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+            public void onCheckedChanged(boolean checked) {
                 Preferences.setHighlife(checked);
                 initDemo();
             }

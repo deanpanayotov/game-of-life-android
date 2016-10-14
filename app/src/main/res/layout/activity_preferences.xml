@@ -61,49 +61,17 @@
                         custom:suffix="@string/suffix_milliseconds"
                         custom:title="@string/tick_rate"/>
 
-                    <LinearLayout
+                    <com.dpanayotov.gameoflife.preferences.custom.SwitchPreference
+                        android:id="@+id/isometric_projection"
+                        custom:title="@string/isometric_projection"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp">
+                        android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="@string/isometric_projection"
-                            android:textSize="16sp"/>
-
-                        <Switch
-                            android:id="@+id/isometric_projection"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"/>
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <com.dpanayotov.gameoflife.preferences.custom.SwitchPreference
+                        android:id="@+id/highlife"
+                        custom:title="@string/highlife"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="@string/highlife"
-                            android:textSize="16sp"/>
-
-                        <Switch
-                            android:id="@+id/highlife"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"/>
-                    </LinearLayout>
+                        android:layout_height="wrap_content"/>
 
                     <com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference
                         android:id="@+id/min_population_density"

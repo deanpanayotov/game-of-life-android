@@ -67,7 +67,7 @@ public class SwitchPreference extends LinearLayout {
         SwitchPreference.Attributes attributes = null;
         try {
             attributes = new SwitchPreference.Attributes();
-            attributes.title = a.getString(R.styleable.SwitchPreference_title);
+            attributes.title = a.getString(R.styleable.Preference_title);
         } finally {
             a.recycle();
         }
@@ -85,5 +85,9 @@ public class SwitchPreference extends LinearLayout {
     public void setOnCheckedChangeListener(SwitchPreference.OnCheckedChangeListener
                                                    onCheckedChangeListener) {
         this.onCheckedChangeListener = onCheckedChangeListener;
+    }
+
+    public void setChecked(boolean isChecked){
+        button.setChecked(isChecked);
     }
 }
