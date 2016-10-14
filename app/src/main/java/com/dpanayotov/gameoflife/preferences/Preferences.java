@@ -140,26 +140,26 @@ public class Preferences {
         return minPopulationDensityOptions;
     }
 
-    public static int getMinPopulationDensityOption() {
-        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY_OPTIONS, (minPopulationDensityOptions.size() - 1) /
+    public static int getMinPopulationDensity() {
+        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY, (minPopulationDensityOptions.size() - 1) /
                 2);
     }
 
-    public static void setMinPopulationDensityOption(int position) {
-        getPrefs().edit().putInt(Keys.MIN_POPULATION_DENSITY_OPTIONS, position).apply();
+    public static void setMinPopulationDensity(int position) {
+        getPrefs().edit().putInt(Keys.MIN_POPULATION_DENSITY, position).apply();
     }
 
     public static List<Integer> getInitialPopulationDensityOptions() {
         return minPopulationDensityOptions;
     }
 
-    public static int getInitialPopulationDensityOption() {
-        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY_OPTIONS, (minPopulationDensityOptions.size() - 1) /
+    public static int getInitialPopulationDensity() {
+        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY, (minPopulationDensityOptions.size() - 1) /
                 2);
     }
 
-    public static void setInitialPopulationDensityOption(int position) {
-        getPrefs().edit().putInt(Keys.INITIAL_POPULATION_DENSITY_OPTIONS, position).apply();
+    public static void setInitialPopulationDensity(int position) {
+        getPrefs().edit().putInt(Keys.INITIAL_POPULATION_DENSITY, position).apply();
     }
 
     public static boolean isInitialized() {

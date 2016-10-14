@@ -161,12 +161,12 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         });
 
         minPopulationDensity.setValues(Preferences.getMinPopulationDensityOptions());
-        minPopulationDensity.setPosition(Preferences.getMinPopulationDensityOption());
+        minPopulationDensity.setPosition(Preferences.getMinPopulationDensity());
         minPopulationDensity.setOnValueChangeListener(new ValueSetSeekBar
                 .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
-                Preferences.setMinPopulationDensityOption(position);
+                Preferences.setMinPopulationDensity(position);
                 initDemo();
             }
         });

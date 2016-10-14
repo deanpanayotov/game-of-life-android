@@ -130,7 +130,7 @@ public class Life {
         isometricProjection = Preferences.getIsometricProjection();
         highlife = Preferences.getHighlife();
         int populationPercentage = Preferences.getMinPopulationDensityOptions().get(Preferences
-                .getMinPopulationDensityOption());
+                .getMinPopulationDensity());
         minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
                 populationPercentage);
 
