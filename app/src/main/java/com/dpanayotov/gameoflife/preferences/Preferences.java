@@ -22,12 +22,16 @@ public class Preferences {
     private static final List<Integer> tickRates;
 
     private static final List<Integer> minPopulationDensityOptions;
+    private static final List<Integer> initialPopulationDensityOptions;
+
 
     static {
         Integer[] array = new Integer[]{16, 32, 100, 250, 500, 1000, 1500, 2000, 3000, 5000};
         tickRates = Arrays.asList(array);
         array = new Integer[]{4, 6, 8, 10, 12, 14, 16, 18, 20};
         minPopulationDensityOptions = Arrays.asList(array);
+        array = new Integer[]{30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80};
+        initialPopulationDensityOptions = Arrays.asList(array);
     }
 
     public static SharedPreferences getPrefs() {
@@ -143,6 +147,19 @@ public class Preferences {
 
     public static void setMinPopulationDensityOption(int position) {
         getPrefs().edit().putInt(Keys.MIN_POPULATION_DENSITY_OPTIONS, position).apply();
+    }
+
+    public static List<Integer> getInitialPopulationDensityOptions() {
+        return minPopulationDensityOptions;
+    }
+
+    public static int getInitialPopulationDensityOption() {
+        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY_OPTIONS, (minPopulationDensityOptions.size() - 1) /
+                2);
+    }
+
+    public static void setInitialPopulationDensityOption(int position) {
+        getPrefs().edit().putInt(Keys.INITIAL_POPULATION_DENSITY_OPTIONS, position).apply();
     }
 
     public static boolean isInitialized() {

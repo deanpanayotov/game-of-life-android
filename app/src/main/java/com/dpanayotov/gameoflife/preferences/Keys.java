@@ -14,5 +14,6 @@ public class Keys {
     public static final String ISOMETRIC_PROJECTION = "ISOMETRIC_PROJECTION";
     public static final String HIGHLIFE = "HIGHLIFE";
     public static final String MIN_POPULATION_DENSITY_OPTIONS = "MIN_POPULATION_DENSITY_OPTIONS";
+    public static final String INITIAL_POPULATION_DENSITY_OPTIONS = "INITIAL_POPULATION_DENSITY_OPTIONS";
 
 }
