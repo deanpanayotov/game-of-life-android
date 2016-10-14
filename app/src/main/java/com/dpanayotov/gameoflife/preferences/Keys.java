@@ -13,6 +13,6 @@ public class Keys {
     public static final String TICK_RATE = "TICK_RATE";
     public static final String ISOMETRIC_PROJECTION = "ISOMETRIC_PROJECTION";
     public static final String HIGHLIFE = "HIGHLIFE";
-    public static final String POPULATION_PERCENTAGE = "POPULATION_PERCENTAGE";
+    public static final String MIN_POPULATION_DENSITY_OPTIONS = "MIN_POPULATION_DENSITY_OPTIONS";
 
 }

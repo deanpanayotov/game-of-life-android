@@ -1,10 +1,8 @@
 package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -131,8 +129,8 @@ public class Life {
         tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
         isometricProjection = Preferences.getIsometricProjection();
         highlife = Preferences.getHighlife();
-        int populationPercentage = Preferences.getPopulationPercentages().get(Preferences
-                .getPopulationPercentage());
+        int populationPercentage = Preferences.getMinPopulationDensityOptions().get(Preferences
+                .getMinPopulationDensityOption());
         minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
                 populationPercentage);
 

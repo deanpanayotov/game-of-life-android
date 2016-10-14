@@ -21,13 +21,13 @@ public class Preferences {
 
     private static final List<Integer> tickRates;
 
-    private static final List<Integer> populationPercentages;
+    private static final List<Integer> minPopulationDensityOptions;
 
     static {
         Integer[] array = new Integer[]{16, 32, 100, 250, 500, 1000, 1500, 2000, 3000, 5000};
         tickRates = Arrays.asList(array);
         array = new Integer[]{4, 6, 8, 10, 12, 14, 16, 18, 20};
-        populationPercentages = Arrays.asList(array);
+        minPopulationDensityOptions = Arrays.asList(array);
     }
 
     public static SharedPreferences getPrefs() {
@@ -132,17 +132,17 @@ public class Preferences {
         return getPrefs().getBoolean(Keys.HIGHLIFE, false);
     }
 
-    public static List<Integer> getPopulationPercentages() {
-        return populationPercentages;
+    public static List<Integer> getMinPopulationDensityOptions() {
+        return minPopulationDensityOptions;
     }
 
-    public static int getPopulationPercentage() {
-        return getPrefs().getInt(Keys.POPULATION_PERCENTAGE, (populationPercentages.size() - 1) /
+    public static int getMinPopulationDensityOption() {
+        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY_OPTIONS, (minPopulationDensityOptions.size() - 1) /
                 2);
     }
 
-    public static void setPopulationPercentage(int populationPercentage) {
-        getPrefs().edit().putInt(Keys.POPULATION_PERCENTAGE, populationPercentage).apply();
+    public static void setMinPopulationDensityOption(int position) {
+        getPrefs().edit().putInt(Keys.MIN_POPULATION_DENSITY_OPTIONS, position).apply();
     }
 
     public static boolean isInitialized() {

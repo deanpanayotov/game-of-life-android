@@ -106,10 +106,10 @@
                     </LinearLayout>
 
                     <com.dpanayotov.gameoflife.preferences.ValueSetSeekBar
-                        android:id="@+id/restard_population"
+                        android:id="@+id/min_population_density"
                         style="@style/HorizontalBar"
                         custom:suffix="@string/suffix_percent"
-                        custom:title="@string/population_percentage"/>
+                        custom:title="@string/min_population_density"/>
                 </LinearLayout>
 
                 <LinearLayout style="@style/PreferenceCard">

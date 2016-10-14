@@ -47,8 +47,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.highlife)
     Switch highlife;
 
-    @BindView(R.id.restard_population)
-    ValueSetSeekBar<Integer> restartPopulation;
+    @BindView(R.id.min_population_density)
+    ValueSetSeekBar<Integer> minPopulationDensity;
 
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
@@ -160,13 +160,13 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             }
         });
 
-        restartPopulation.setValues(Preferences.getPopulationPercentages());
-        restartPopulation.setPosition(Preferences.getPopulationPercentage());
-        restartPopulation.setOnValueChangeListener(new ValueSetSeekBar
+        minPopulationDensity.setValues(Preferences.getMinPopulationDensityOptions());
+        minPopulationDensity.setPosition(Preferences.getMinPopulationDensityOption());
+        minPopulationDensity.setOnValueChangeListener(new ValueSetSeekBar
                 .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
-                Preferences.setPopulationPercentage(position);
+                Preferences.setMinPopulationDensityOption(position);
                 initDemo();
             }
         });
