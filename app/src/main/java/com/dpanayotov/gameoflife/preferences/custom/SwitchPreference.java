@@ -78,13 +78,13 @@ public class SwitchPreference extends LinearLayout {
         String title;
     }
 
-    public interface OnCheckedChangeListener {
-        void onCheckedChanged(boolean isChecked);
-    }
-
     public void setOnCheckedChangeListener(SwitchPreference.OnCheckedChangeListener
                                                    onCheckedChangeListener) {
         this.onCheckedChangeListener = onCheckedChangeListener;
+    }
+
+    public interface OnCheckedChangeListener {
+        void onCheckedChanged(boolean isChecked);
     }
 
     public void setChecked(boolean isChecked){

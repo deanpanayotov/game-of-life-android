@@ -89,25 +89,6 @@ public class ValueSetSeekBarPreference<T> extends LinearLayout {
         });
     }
 
-    public void setValues(List<T> values) {
-        set = new ArrayList<>();
-        set.addAll(values);
-
-        int seekBarMax = values.size() - 1;
-        int seekBarDefault = seekBarMax / 2;
-
-        seekBar.setMax(seekBarMax);
-        seekBar.setProgress(seekBarDefault);
-    }
-
-    public void setOnValueChangeListener(OnValueChangeListener<T> onValueChangedListener) {
-        this.onValueChangeListener = onValueChangedListener;
-    }
-
-    public interface OnValueChangeListener<U> {
-        void onValueChange(U value, int position);
-    }
-
     private Attributes getAttributes(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable
                 .ValueSetSeekBarPreference, 0, 0);
@@ -127,6 +108,25 @@ public class ValueSetSeekBarPreference<T> extends LinearLayout {
         boolean showSeekBar;
         String title;
         String suffix;
+    }
+
+    public void setOnValueChangeListener(OnValueChangeListener<T> onValueChangedListener) {
+        this.onValueChangeListener = onValueChangedListener;
+    }
+
+    public interface OnValueChangeListener<U> {
+        void onValueChange(U value, int position);
+    }
+
+    public void setValues(List<T> values) {
+        set = new ArrayList<>();
+        set.addAll(values);
+
+        int seekBarMax = values.size() - 1;
+        int seekBarDefault = seekBarMax / 2;
+
+        seekBar.setMax(seekBarMax);
+        seekBar.setProgress(seekBarDefault);
     }
 
     public void setPosition(int position) {
