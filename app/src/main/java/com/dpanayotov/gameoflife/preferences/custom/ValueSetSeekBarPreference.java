@@ -96,7 +96,7 @@ public class ValueSetSeekBarPreference<T> extends LinearLayout {
         try {
             attributes = new Attributes();
             attributes.showSeekBar = a.getBoolean(R.styleable.ValueSetSeekBarPreference_show_bar, true);
-            attributes.title = a.getString(R.styleable.Preference_title);
+            attributes.title = a.getString(R.styleable.ValueSetSeekBarPreference_title);
             attributes.suffix = a.getString(R.styleable.ValueSetSeekBarPreference_suffix);
         } finally {
             a.recycle();

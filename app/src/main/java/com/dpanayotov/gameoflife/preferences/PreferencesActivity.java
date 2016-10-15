@@ -49,6 +49,9 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.highlife)
     SwitchPreference highlife;
 
+    @BindView(R.id.initial_population_density)
+    ValueSetSeekBarPreference<Integer> initialPopulationDensity;
+
     @BindView(R.id.min_population_density)
     ValueSetSeekBarPreference<Integer> minPopulationDensity;
 
@@ -164,6 +167,17 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             }
         });
 
+        initialPopulationDensity.setValues(Preferences.getInitialPopulationDensityOptions());
+        initialPopulationDensity.setPosition(Preferences.getInitialPopulationDensity());
+        initialPopulationDensity.setOnValueChangeListener(new ValueSetSeekBarPreference
+                .OnValueChangeListener<Integer>() {
+            @Override
+            public void onValueChange(Integer value, int position) {
+                Preferences.setInitialPopulationDensity(position);
+                initDemo();
+            }
+        });
+
         minPopulationDensity.setValues(Preferences.getMinPopulationDensityOptions());
         minPopulationDensity.setPosition(Preferences.getMinPopulationDensity());
         minPopulationDensity.setOnValueChangeListener(new ValueSetSeekBarPreference
@@ -174,6 +188,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 initDemo();
             }
         });
+
         surfaceView.getHolder().addCallback(this);
 
         updateColors();

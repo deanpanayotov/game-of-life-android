@@ -19,6 +19,7 @@
     <string name="isometric_projection">Isometric projection</string>
     <string name="highlife">Highlife</string>
     <string name="min_population_density">Restart when population hits</string>
+    <string name="initial_population_density">Start with a population of</string>
     <string name="suffix_percent">percent</string>
 
     <string name="color_primary">Primary</string>

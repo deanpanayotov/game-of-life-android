@@ -74,6 +74,12 @@
                         android:layout_height="wrap_content"/>
 
                     <com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference
+                        android:id="@+id/initial_population_density"
+                        style="@style/HorizontalBar"
+                        custom:suffix="@string/suffix_percent"
+                        custom:title="@string/initial_population_density"/>
+
+                    <com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference
                         android:id="@+id/min_population_density"
                         style="@style/HorizontalBar"
                         custom:suffix="@string/suffix_percent"
