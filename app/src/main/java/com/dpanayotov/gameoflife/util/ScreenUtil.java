@@ -1,10 +1,8 @@
 package com.dpanayotov.gameoflife.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -12,13 +10,10 @@ import android.view.WindowManager;
 
 import com.dpanayotov.gameoflife.GameOfLifeApplication;
 import com.dpanayotov.gameoflife.life.Constants;
-import com.dpanayotov.gameoflife.preferences.Keys;
 import com.dpanayotov.gameoflife.preferences.Preferences;
-import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,9 +95,7 @@ public class ScreenUtil {
     public static List<Resolution> getAvailableResolutions() {
 
         List<Resolution> resolutions = Preferences.getResolutions();
-        Log.d("zxc", "res");
         if (resolutions == null) {
-            Log.d("zxc", "res-load");
             List<Integer> cellSizes = getAvailableCellSizes();
             resolutions = new ArrayList<>();
             Point screenSize = getScreenSize();
