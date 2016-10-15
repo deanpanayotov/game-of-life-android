@@ -33,6 +33,7 @@ public class Life {
     private boolean isometricProjection;
     private boolean highlife;
     private int initialPopulationDensity;
+    private int minPopulationDensity;
     private int minPopulationCount;
 
     private boolean isRunning = false;
@@ -61,6 +62,9 @@ public class Life {
         if (customGridHeight != 0) {
             resolution.gridHeight = customGridHeight;
         }
+
+        minPopulationCount = Math.round(resolution.gridWidth * resolution.gridHeight *
+                (minPopulationDensity / 100f));
 
         reset();
     }
@@ -130,13 +134,10 @@ public class Life {
         tickRate = Preferences.getTickRates().get(Preferences.getTickRate());
         isometricProjection = Preferences.getIsometricProjection();
         highlife = Preferences.getHighlife();
-        int populationPercentage = Preferences.getMinPopulationDensityOptions().get(Preferences
+        minPopulationDensity = Preferences.getMinPopulationDensityOptions().get(Preferences
                 .getMinPopulationDensity());
         initialPopulationDensity = Preferences.getInitialPopulationDensityOptions().get
                 (Preferences.getInitialPopulationDensity());
-        minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
-                populationPercentage);
-
     }
 
     private void drawRestart(){
