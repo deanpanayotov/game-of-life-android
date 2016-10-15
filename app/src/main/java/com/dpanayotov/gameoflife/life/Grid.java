@@ -25,7 +25,7 @@ public class Grid {
         if (populate) {
             populate();
         } else {
-            populateEmpty();
+            fill(false);
         }
     }
 
@@ -68,11 +68,11 @@ public class Grid {
         }
     }
 
-    public void populateEmpty() {
+    public void fill(boolean positive) {
         for (int[] row : cells) {
-            Arrays.fill(row, 0);
+            Arrays.fill(row, positive ? 1 : 0);
         }
-        populationCount = 0;
+        populationCount = positive ? width*height : 0;
     }
 
     public void mirrorPopulate() {
