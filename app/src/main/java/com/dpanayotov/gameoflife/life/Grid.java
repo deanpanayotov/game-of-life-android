@@ -1,5 +1,7 @@
 package com.dpanayotov.gameoflife.life;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -9,21 +11,24 @@ import java.util.Random;
 
 public class Grid {
 
+    public static final int HALF = 50;
+    public static final int FULL = 100;
+
     public int[][] cells;
 
     public int populationCount = 0;
 
     public int width, height;
 
-    public Grid(int width, int height, boolean populate) {
+    public Grid(int width, int height, int populationDensity) {
 
         this.width = width;
         this.height = height;
 
         cells = new int[width][height];
 
-        if (populate) {
-            populate();
+        if (populationDensity != 0) {
+            populate(populationDensity);
         } else {
             fill(false);
         }
@@ -55,24 +60,35 @@ public class Grid {
         return total;
     }
 
-    public void populate() {
+    public void populate(int populationDensity) {
 
+        boolean positive = populationDensity <= HALF;
+
+        fill(!positive);
+
+        int targetPopulationCount = Math.round(width * height * (populationDensity / 100f));
+        Log.d("zxc", "targetPopulationCount: " + targetPopulationCount+" max population: "+(width*height));
+
+        int value = positive ? 1 : 0;
+        int increment = positive ? 1 : -1;
         Random random = new Random();
-
-        for (int i = 0; i < width; i++) {
-            populationCount = 0;
-            for (int j = 0; j < height; j++) {
-                cells[i][j] = random.nextInt(2);
-                populationCount += cells[i][j];
+        int x, y;
+        while (populationCount != targetPopulationCount) {
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+            if (cells[x][y] != value) {
+                cells[x][y] = value;
+                populationCount += increment;
             }
         }
+        Log.d("zxc", "populationCount: " + populationCount);
     }
 
     public void fill(boolean positive) {
         for (int[] row : cells) {
             Arrays.fill(row, positive ? 1 : 0);
         }
-        populationCount = positive ? width*height : 0;
+        populationCount = positive ? width * height : 0;
     }
 
     public void mirrorPopulate() {
@@ -103,7 +119,7 @@ public class Grid {
     }
 
     public Grid deriveNextState(boolean highlife) {
-        Grid nextGrid = new Grid(width, height, false);
+        Grid nextGrid = new Grid(width, height, 0);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 int neighboursCount = getNeighboursCount(i, j);

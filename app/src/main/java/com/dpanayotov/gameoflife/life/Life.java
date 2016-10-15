@@ -3,6 +3,7 @@ package com.dpanayotov.gameoflife.life;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -32,6 +33,7 @@ public class Life {
     private int tickRate;
     private boolean isometricProjection;
     private boolean highlife;
+    private int initialPopulationDensity;
     private int minPopulationCount;
 
     private boolean isRunning = false;
@@ -83,6 +85,7 @@ public class Life {
         Grid nextGrid = grid.deriveNextState(highlife);
 
         if (nextGrid.populationCount < minPopulationCount || previousGrid.equals(nextGrid)) {
+            Log.d("zxc", "reset: "+nextGrid.populationCount);
             reset();
             update();
         } else {
@@ -113,13 +116,13 @@ public class Life {
     private void resetQueue() {
         queue = new ArrayList<>();
         for (int i = 0; i < Constants.QUEUE_SIZE; i++) {
-            queue.add(new Grid(resolution.gridWidth, resolution.gridHeight, false));
+            queue.add(new Grid(resolution.gridWidth, resolution.gridHeight, 0));
         }
     }
 
     private void reset() {
-        previousGrid = new Grid(resolution.gridWidth, resolution.gridHeight, false);
-        grid = new Grid(resolution.gridWidth, resolution.gridHeight, true);
+        previousGrid = new Grid(resolution.gridWidth, resolution.gridHeight, 0);
+        grid = new Grid(resolution.gridWidth, resolution.gridHeight, initialPopulationDensity);
         resetQueue();
     }
 
@@ -131,6 +134,8 @@ public class Life {
         highlife = Preferences.getHighlife();
         int populationPercentage = Preferences.getMinPopulationDensityOptions().get(Preferences
                 .getMinPopulationDensity());
+        initialPopulationDensity = Preferences.getInitialPopulationDensityOptions().get
+                (Preferences.getInitialPopulationDensity());
         minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
                 populationPercentage);
 
