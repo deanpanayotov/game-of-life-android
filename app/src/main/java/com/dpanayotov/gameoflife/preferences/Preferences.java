@@ -150,11 +150,11 @@ public class Preferences {
     }
 
     public static List<Integer> getInitialPopulationDensityOptions() {
-        return minPopulationDensityOptions;
+        return initialPopulationDensityOptions;
     }
 
     public static int getInitialPopulationDensity() {
-        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY, (minPopulationDensityOptions.size() - 1) /
+        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY, (initialPopulationDensityOptions.size() - 1) /
                 2);
     }
 
