@@ -67,7 +67,6 @@ public class Grid {
         fill(!positive);
 
         int targetPopulationCount = Math.round(width * height * (populationDensity / 100f));
-        Log.d("zxc", "targetPopulationCount: " + targetPopulationCount+" max population: "+(width*height));
 
         int value = positive ? 1 : 0;
         int increment = positive ? 1 : -1;
@@ -81,7 +80,6 @@ public class Grid {
                 populationCount += increment;
             }
         }
-        Log.d("zxc", "populationCount: " + populationCount);
     }
 
     public void fill(boolean positive) {

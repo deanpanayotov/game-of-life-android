@@ -3,7 +3,6 @@ package com.dpanayotov.gameoflife.life;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -85,9 +84,8 @@ public class Life {
         Grid nextGrid = grid.deriveNextState(highlife);
 
         if (nextGrid.populationCount < minPopulationCount || previousGrid.equals(nextGrid)) {
-            Log.d("zxc", "reset: "+nextGrid.populationCount);
             reset();
-            update();
+            drawRestart();
         } else {
 
             queue.add(0, new Grid(grid));
@@ -139,6 +137,18 @@ public class Life {
         minPopulationCount = Math.round(((resolution.gridWidth * resolution.gridWidth) / 100f) *
                 populationPercentage);
 
+    }
+
+    private void drawRestart(){
+        Canvas canvas = null;
+        try {
+            canvas = surfaceHolder.lockCanvas();
+            if (canvas != null) {
+                canvas.drawRect(0, 0, screenWidth, screenHeight, backgroundPaint);
+            }
+        } finally {
+            if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
+        }
     }
 
     private void draw() {
