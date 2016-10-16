@@ -3,6 +3,7 @@ package com.dpanayotov.gameoflife.preferences;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -72,6 +73,9 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     @BindView(R.id.swap_right)
     View swapRight;
+
+    @BindView(R.id.progress_overlay)
+    View progressOverlay;
 
     private Life life;
 
@@ -235,6 +239,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
+        progressOverlay.setVisibility(View.VISIBLE);
         ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
         colorPickerDialog.hideOpacityBar();
         colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
@@ -243,6 +248,12 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 Preferences.setColor(color, value);
                 updateColors();
                 initDemo();
+            }
+        });
+        colorPickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                progressOverlay.setVisibility(View.INVISIBLE);
             }
         });
         colorPickerDialog.setInitialColor(Preferences.getColor(color));

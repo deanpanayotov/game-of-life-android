@@ -63,15 +63,15 @@
 
                     <com.dpanayotov.gameoflife.preferences.custom.SwitchPreference
                         android:id="@+id/isometric_projection"
-                        custom:title="@string/isometric_projection"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        custom:title="@string/isometric_projection"/>
 
                     <com.dpanayotov.gameoflife.preferences.custom.SwitchPreference
                         android:id="@+id/highlife"
-                        custom:title="@string/highlife"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        custom:title="@string/highlife"/>
 
                     <com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference
                         android:id="@+id/initial_population_density"
@@ -141,6 +141,22 @@
             android:background="#EEEEEE"/>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/progress_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:background="#77FFFFFF"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </FrameLayout>
 
 </FrameLayout>
 
