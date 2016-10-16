@@ -140,7 +140,7 @@ public class Life {
                 (Preferences.getInitialPopulationDensity());
     }
 
-    private void drawRestart(){
+    private void drawRestart() {
         Canvas canvas = null;
         try {
             canvas = surfaceHolder.lockCanvas();
@@ -166,21 +166,37 @@ public class Life {
                             if (isometricProjection) {
                                 cellY = (cellY + i * halfCell) % screenHeight;
                             }
-                            secondaryPaint.setAlpha((int) (255 * (1 / (float) summedGrid
-                                    .cells[i][j])));
-                            int radius = (halfCell - Constants.CELL_PADDING) - Constants
-                                    .RADIUS_STEP * (summedGrid.cells[i][j] - 1);
-                            if (summedGrid.cells[i][j] > 1) {
-                                canvas.drawCircle(cellX, cellY, radius, secondaryPaint);
-                            } else {
-                                canvas.drawCircle(cellX, cellY, radius, primaryPaint);
-                            }
+                            drawCell(cellX, cellY, summedGrid.cells[i][j], canvas);
                         }
+                    }
+                }
+
+                int j, value;
+
+                for (int i = 1; i < resolution.gridWidth; i += 2) {
+                    j = resolution.gridHeight - 1 - ((i - 1) / 2);
+                    value = summedGrid.cells[i][j];
+                    if (value > 0) {
+                        int cellX = i * resolution.cellSize + halfCell;
+                        int cellY = j * resolution.cellSize + halfCell;
+                        cellY = (cellY + i * halfCell);
+                        drawCell(cellX, cellY, value, canvas);
                     }
                 }
             }
         } finally {
             if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private void drawCell(int x, int y, int value, Canvas canvas) {
+        secondaryPaint.setAlpha((int) (255 * (1 / (float) value)));
+        int radius = (halfCell - Constants.CELL_PADDING) - Constants
+                .RADIUS_STEP * (value - 1);
+        if (value > 1) {
+            canvas.drawCircle(x, y, radius, secondaryPaint);
+        } else {
+            canvas.drawCircle(x, y, radius, primaryPaint);
         }
     }
 
