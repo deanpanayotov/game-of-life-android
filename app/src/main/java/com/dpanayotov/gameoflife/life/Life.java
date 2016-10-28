@@ -7,7 +7,6 @@ import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.dpanayotov.gameoflife.util.Resolution;
-import com.dpanayotov.gameoflife.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +42,7 @@ public class Life {
             secondaryPaint = new Paint(),
             backgroundPaint = new Paint();
 
-    public Life(int screenWidth, int screenHeight, int customGridWidth, int customGridHeight,
-                SurfaceHolder surfaceHolder) {
-
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-        this.surfaceHolder = surfaceHolder;
+    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
@@ -56,25 +50,17 @@ public class Life {
 
         getPreferences();
 
-        if (customGridWidth != 0) {
-            resolution.gridWidth = customGridWidth;
-        }
-        if (customGridHeight != 0) {
-            resolution.gridHeight = customGridHeight;
-        }
+        this.screenWidth = (int) ceil(screenWidth, resolution.cellSize);
+        this.screenHeight = (int) ceil(screenHeight, resolution.cellSize);
+        this.surfaceHolder = surfaceHolder;
+
+        resolution.gridWidth = this.screenWidth / resolution.cellSize;
+        resolution.gridHeight = this.screenHeight / resolution.cellSize;
 
         minPopulationCount = Math.round(resolution.gridWidth * resolution.gridHeight *
                 (minPopulationDensity / 100f));
 
         reset();
-    }
-
-    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
-        this(screenWidth, screenHeight, 0, 0, surfaceHolder);
-    }
-
-    public Life(SurfaceHolder surfaceHolder) {
-        this(ScreenUtil.getScreenSize().x, ScreenUtil.getScreenSize().y, surfaceHolder);
     }
 
     private void initPaint(int color, Paint paint) {
@@ -221,6 +207,10 @@ public class Life {
             handler.removeCallbacks(drawRunner);
             isRunning = false;
         }
+    }
+
+    public static double ceil(double input, double step) {
+        return Math.ceil(input / step) * step;
     }
 
 

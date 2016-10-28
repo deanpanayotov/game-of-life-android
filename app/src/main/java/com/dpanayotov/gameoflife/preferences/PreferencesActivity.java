@@ -11,9 +11,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
@@ -81,16 +79,11 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     private int canvasWidth;
     private int canvasHeight;
-    private int demoGridWidth;
-    private int demoGridHeight;
 
     private void calculateDimensions() {
-        Resolution resolution = Preferences.getResolutions().get(Preferences.getResolution());
         Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
         canvasWidth = surfaceFrame.width();
         canvasHeight = surfaceFrame.height();
-        demoGridWidth = (int) Math.ceil((float) canvasWidth / (float) resolution.cellSize);
-        demoGridHeight = (int) Math.ceil((float) canvasHeight / (float) resolution.cellSize);
     }
 
     private void initDemo() {
@@ -98,8 +91,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             life.stop();
         }
 
-        life = new Life(canvasWidth, canvasHeight, demoGridWidth, demoGridHeight, surfaceView
-                .getHolder());
+        life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder());
         life.start();
     }
 
