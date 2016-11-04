@@ -2,7 +2,9 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.preferences.Preferences;
@@ -36,6 +38,16 @@ public class Life {
     private int minPopulationCount;
 
     private boolean isRunning = false;
+
+    private HandlerThread ht;
+    private Handler handler;
+    private final Runnable drawRunner = new Runnable() {
+        @Override
+        public void run() {
+            update();
+            handler.postDelayed(drawRunner, tickRate);
+        }
+    };
 
 
     private Paint primaryPaint = new Paint(),
@@ -186,18 +198,14 @@ public class Life {
         }
     }
 
-    private final Handler handler = new Handler();
-    private final Runnable drawRunner = new Runnable() {
-        @Override
-        public void run() {
-            update();
-            handler.postDelayed(drawRunner, tickRate);
-        }
-    };
-
     public void start() {
         if (!isRunning) {
             isRunning = true;
+
+            ht = new HandlerThread("");
+            ht.start();
+            handler = new Handler(ht.getLooper());
+
             handler.post(drawRunner);
         }
     }
@@ -205,6 +213,13 @@ public class Life {
     public void stop() {
         if (isRunning) {
             handler.removeCallbacks(drawRunner);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                ht.quitSafely();
+            }else{
+               ht.quit();
+            }
+
             isRunning = false;
         }
     }
