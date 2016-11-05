@@ -37,6 +37,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         //lifecycle
         private boolean restart;
+        private boolean visible;
 
 
         @Override
@@ -46,6 +47,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
 
         @Override
         public void onVisibilityChanged(boolean visible) {
+            this.visible = visible;
             if (visible) {
                 life.start();
             } else {
@@ -86,7 +88,9 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 }
                 life = new Life(screenWidth, screenHeight, getSurfaceHolder());
                 restart = false;
-                life.start();
+                if(visible){
+                    life.start();
+                }
             }
         }
     }
