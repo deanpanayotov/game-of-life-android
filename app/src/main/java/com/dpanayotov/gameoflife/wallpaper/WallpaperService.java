@@ -1,20 +1,11 @@
 package com.dpanayotov.gameoflife.wallpaper;
 
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 
-import com.dpanayotov.gameoflife.life.Constants;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.life.di.DependencyInjection;
 import com.dpanayotov.gameoflife.preferences.Preferences;
-import com.dpanayotov.gameoflife.util.Resolution;
-import com.dpanayotov.gameoflife.util.ScreenUtil;
-
-import static com.dpanayotov.gameoflife.R.xml.prefs;
 
 /**
  * Created by Dean Panayotov Local on 2.9.2015
@@ -86,7 +77,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 if (life != null) {
                     life.stop();
                 }
-                life = new Life(screenWidth, screenHeight, getSurfaceHolder());
+                life = new Life(screenWidth, screenHeight, getSurfaceHolder(), new
+                        DependencyInjection(false));
                 restart = false;
                 if(visible){
                     life.start();

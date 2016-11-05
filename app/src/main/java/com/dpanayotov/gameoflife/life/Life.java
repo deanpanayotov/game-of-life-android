@@ -2,11 +2,14 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.SurfaceHolder;
 
+import com.dpanayotov.gameoflife.life.di.DependencyInjection;
+import com.dpanayotov.gameoflife.life.di.HandlerDispenser;
+import com.dpanayotov.gameoflife.life.di.LiveHandlerDispenser;
+import com.dpanayotov.gameoflife.life.di.PreviewHandlerDispenser;
 import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.dpanayotov.gameoflife.util.Resolution;
 
@@ -48,13 +51,14 @@ public class Life {
             handler.postDelayed(drawRunner, tickRate);
         }
     };
-
+    private HandlerDispenser handlerDispenser;
 
     private Paint primaryPaint = new Paint(),
             secondaryPaint = new Paint(),
             backgroundPaint = new Paint();
 
-    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder) {
+    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, DependencyInjection di) {
+        handlerDispenser = di.preview ? new PreviewHandlerDispenser() : new LiveHandlerDispenser();
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
@@ -201,11 +205,7 @@ public class Life {
     public void start() {
         if (!isRunning) {
             isRunning = true;
-
-            ht = new HandlerThread("");
-            ht.start();
-            handler = new Handler(ht.getLooper());
-
+            handler = handlerDispenser.start();
             handler.post(drawRunner);
         }
     }
@@ -213,13 +213,7 @@ public class Life {
     public void stop() {
         if (isRunning) {
             handler.removeCallbacks(drawRunner);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                ht.quitSafely();
-            }else{
-               ht.quit();
-            }
-
+            handlerDispenser.stop();
             isRunning = false;
         }
     }

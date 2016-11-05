@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.life.di.DependencyInjection;
 import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
@@ -91,7 +92,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             life.stop();
         }
 
-        life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder());
+        life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder(), new
+                DependencyInjection(true));
         life.start();
     }
 
@@ -121,7 +123,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         gridWidthHeight.setValues(resolutions);
         cellSize.setValues(cellSizes);
         cellSize.setPosition(Preferences.getResolution());
-        cellSize.setOnValueChangeListener(new ValueSetSeekBarPreference.OnValueChangeListener<Integer>() {
+        cellSize.setOnValueChangeListener(new ValueSetSeekBarPreference
+                .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 gridWidthHeight.setPosition(position);
@@ -132,7 +135,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         tickRate.setValues(Preferences.getTickRates());
         tickRate.setPosition(Preferences.getTickRate());
-        tickRate.setOnValueChangeListener(new ValueSetSeekBarPreference.OnValueChangeListener<Integer>() {
+        tickRate.setOnValueChangeListener(new ValueSetSeekBarPreference
+                .OnValueChangeListener<Integer>() {
             @Override
             public void onValueChange(Integer value, int position) {
                 Preferences.setTickRate(position);
