@@ -89,9 +89,5 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 life.start();
             }
         }
-
-        private void step() {
-            life.update();
-        }
     }
 }
