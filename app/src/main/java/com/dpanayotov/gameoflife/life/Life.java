@@ -3,10 +3,8 @@ package com.dpanayotov.gameoflife.life;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.view.SurfaceHolder;
 
-import com.dpanayotov.gameoflife.life.di.DependencyInjection;
 import com.dpanayotov.gameoflife.life.di.HandlerDispenser;
 import com.dpanayotov.gameoflife.life.di.LiveHandlerDispenser;
 import com.dpanayotov.gameoflife.life.di.PreviewHandlerDispenser;
@@ -42,7 +40,6 @@ public class Life {
 
     private boolean isRunning = false;
 
-    private HandlerThread ht;
     private Handler handler;
     private final Runnable drawRunner = new Runnable() {
         @Override
@@ -57,8 +54,8 @@ public class Life {
             secondaryPaint = new Paint(),
             backgroundPaint = new Paint();
 
-    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, DependencyInjection di) {
-        handlerDispenser = di.preview ? new PreviewHandlerDispenser() : new LiveHandlerDispenser();
+    public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, boolean preview) {
+        handlerDispenser = preview ? new PreviewHandlerDispenser() : new LiveHandlerDispenser();
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);

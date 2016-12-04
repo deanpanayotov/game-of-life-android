@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.life.Life;
-import com.dpanayotov.gameoflife.life.di.DependencyInjection;
 import com.dpanayotov.gameoflife.preferences.Preferences;
 
 /**
@@ -77,8 +76,7 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
                 if (life != null) {
                     life.stop();
                 }
-                life = new Life(screenWidth, screenHeight, getSurfaceHolder(), new
-                        DependencyInjection(false));
+                life = new Life(screenWidth, screenHeight, getSurfaceHolder(), false);
                 restart = false;
                 if(visible){
                     life.start();

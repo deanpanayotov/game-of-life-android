@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
-import com.dpanayotov.gameoflife.life.di.DependencyInjection;
 import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
@@ -92,8 +91,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             life.stop();
         }
 
-        life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder(), new
-                DependencyInjection(true));
+        life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder(), true);
         life.start();
     }
 
