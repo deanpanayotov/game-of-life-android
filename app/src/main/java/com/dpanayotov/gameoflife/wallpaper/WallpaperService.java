@@ -16,6 +16,12 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         return new WallpaperEngine();
     }
 
+    @Override
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     private class WallpaperEngine extends android.service.wallpaper.WallpaperService.Engine
             implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -57,7 +63,6 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             super.onSurfaceDestroyed(holder);
             Preferences.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
             onVisibilityChanged(false);
-            life.stop();
             life.destroy();
         }
 
@@ -76,7 +81,6 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
         private void init(boolean force) {
             if (force || restart) {
                 if (life != null) {
-                    life.stop();
                     life.destroy();
                 }
                 life = new Life(screenWidth, screenHeight, getSurfaceHolder(), false);

@@ -23,6 +23,7 @@ public class Life {
     private Grid grid;
     private Grid previousGrid;
     public Grid summedGrid;
+    private Boolean destroyed = false;
 
     private int screenWidth;
     private int screenHeight;
@@ -40,11 +41,13 @@ public class Life {
     private final Runnable drawRunner = new Runnable() {
         @Override
         public void run() {
-            Log.d("zxcv", "runnable start " +hashCode());
-            synchronized (handlerWrapper){
-                update();
-                handlerWrapper.get().postDelayed(drawRunner, tickRate);
-                Log.d("zxcv", "runnable finnish " +hashCode());
+            Log.d("zxcv", "runnable start " + hashCode());
+            synchronized (destroyed) {
+                if (!destroyed) {
+                    update();
+                    handlerWrapper.get().postDelayed(drawRunner, tickRate);
+                    Log.d("zxcv", "runnable finnish " + hashCode());
+                }
             }
         }
     };
@@ -87,6 +90,7 @@ public class Life {
     }
 
     public void update() {
+        Log.d("zxcv", "UPDATEEEEEEE " + hashCode());
 
         Grid nextGrid = grid.deriveNextState(highlife);
 
@@ -219,9 +223,10 @@ public class Life {
 
     public void destroy() {
         Log.d("zxcv", "DESTROYYYYY " + hashCode());
-        synchronized (handlerWrapper){
+        synchronized (destroyed) {
             stop();
             handlerWrapper.destroy();
+            destroyed = true;
         }
     }
 }
