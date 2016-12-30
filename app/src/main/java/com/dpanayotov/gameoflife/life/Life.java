@@ -2,12 +2,10 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.view.SurfaceHolder;
 
-import com.dpanayotov.gameoflife.life.di.HandlerDispenser;
-import com.dpanayotov.gameoflife.life.di.LiveHandlerDispenser;
-import com.dpanayotov.gameoflife.life.di.PreviewHandlerDispenser;
+import com.dpanayotov.gameoflife.life.di.SyncHandlerWrapper;
+import com.dpanayotov.gameoflife.life.di.AsyncHandlerWrapper;
 import com.dpanayotov.gameoflife.preferences.Preferences;
 import com.dpanayotov.gameoflife.util.Resolution;
 
@@ -38,24 +36,24 @@ public class Life {
     private int minPopulationDensity;
     private int minPopulationCount;
 
-    private boolean isRunning = false;
-
-    private Handler handler;
     private final Runnable drawRunner = new Runnable() {
         @Override
         public void run() {
             update();
-            handler.postDelayed(drawRunner, tickRate);
+            handlerDispenser.get().postDelayed(drawRunner, tickRate);
         }
     };
-    private HandlerDispenser handlerDispenser;
+
+    //DI
+    private SyncHandlerWrapper handlerDispenser;
+
 
     private Paint primaryPaint = new Paint(),
             secondaryPaint = new Paint(),
             backgroundPaint = new Paint();
 
     public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, boolean preview) {
-        handlerDispenser = preview ? new PreviewHandlerDispenser() : new LiveHandlerDispenser();
+        handlerDispenser = preview ? new AsyncHandlerWrapper() : new SyncHandlerWrapper();
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
@@ -172,6 +170,8 @@ public class Life {
 
                 int j, value;
 
+                //The last cell of every odd column should be duplicated on top of the screen.
+                // This way half of the cell is displayed on top and half - on bottom.
                 for (int i = 1; i < resolution.gridWidth; i += 2) {
                     j = resolution.gridHeight - 1 - ((i - 1) / 2);
                     value = summedGrid.cells[i][j];
@@ -200,19 +200,11 @@ public class Life {
     }
 
     public void start() {
-        if (!isRunning) {
-            isRunning = true;
-            handler = handlerDispenser.start();
-            handler.post(drawRunner);
-        }
+        handlerDispenser.get().post(drawRunner);
     }
 
     public void stop() {
-        if (isRunning) {
-            handler.removeCallbacks(drawRunner);
-            handlerDispenser.stop();
-            isRunning = false;
-        }
+        handlerDispenser.get().removeCallbacks(drawRunner);
     }
 
     public static double ceil(double input, double step) {
