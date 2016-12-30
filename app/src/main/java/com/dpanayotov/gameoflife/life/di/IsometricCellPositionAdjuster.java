@@ -9,6 +9,6 @@ import android.graphics.Point;
 public class IsometricCellPositionAdjuster implements CellPositionAdjuster{
     @Override
     public void adjustPosition(Point cellPosition){
-        cellPosition.y = (cellPosition.y + i * halfCell) % screenHeight;
+//        cellPosition.y = (cellPosition.y + i * halfCell) % screenHeight;
     };
 }
