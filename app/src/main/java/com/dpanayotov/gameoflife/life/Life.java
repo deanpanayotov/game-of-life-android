@@ -40,12 +40,12 @@ public class Life {
         @Override
         public void run() {
             update();
-            handlerDispenser.get().postDelayed(drawRunner, tickRate);
+            handlerWrapper.get().postDelayed(drawRunner, tickRate);
         }
     };
 
     //DI
-    private SyncHandlerWrapper handlerDispenser;
+    private SyncHandlerWrapper handlerWrapper;
 
 
     private Paint primaryPaint = new Paint(),
@@ -53,7 +53,7 @@ public class Life {
             backgroundPaint = new Paint();
 
     public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, boolean preview) {
-        handlerDispenser = preview ? new AsyncHandlerWrapper() : new SyncHandlerWrapper();
+        handlerWrapper = preview ? new AsyncHandlerWrapper() : new SyncHandlerWrapper();
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
@@ -200,11 +200,11 @@ public class Life {
     }
 
     public void start() {
-        handlerDispenser.get().post(drawRunner);
+        handlerWrapper.get().post(drawRunner);
     }
 
     public void stop() {
-        handlerDispenser.get().removeCallbacks(drawRunner);
+        handlerWrapper.get().removeCallbacks(drawRunner);
     }
 
     public static double ceil(double input, double step) {
