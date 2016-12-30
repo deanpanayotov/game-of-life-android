@@ -54,6 +54,7 @@ public class Life {
 
     public Life(int screenWidth, int screenHeight, SurfaceHolder surfaceHolder, boolean preview) {
         handlerWrapper = preview ? new AsyncHandlerWrapper() : new SyncHandlerWrapper();
+        handlerWrapper.init();
 
         initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
         initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
@@ -211,5 +212,7 @@ public class Life {
         return Math.ceil(input / step) * step;
     }
 
-
+    public void destroy(){
+        handlerWrapper.destroy();
+    }
 }

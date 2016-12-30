@@ -89,6 +89,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     private void initDemo() {
         if (life != null) {
             life.stop();
+            life.destroy();
         }
 
         life = new Life(canvasWidth, canvasHeight, surfaceView.getHolder(), true);
@@ -309,6 +310,15 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         super.onStart();
         if (life != null) {
             life.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(life!=null){
+            life.stop();
+            life.destroy();
         }
     }
 }

@@ -57,6 +57,8 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             super.onSurfaceDestroyed(holder);
             Preferences.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
             onVisibilityChanged(false);
+            life.stop();
+            life.destroy();
         }
 
         @Override
@@ -75,10 +77,11 @@ public class WallpaperService extends android.service.wallpaper.WallpaperService
             if (force || restart) {
                 if (life != null) {
                     life.stop();
+                    life.destroy();
                 }
                 life = new Life(screenWidth, screenHeight, getSurfaceHolder(), false);
                 restart = false;
-                if(visible){
+                if (visible) {
                     life.start();
                 }
             }
