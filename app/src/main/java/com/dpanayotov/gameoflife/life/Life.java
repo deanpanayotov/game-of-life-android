@@ -2,6 +2,7 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.life.di.SyncHandlerWrapper;
@@ -39,8 +40,12 @@ public class Life {
     private final Runnable drawRunner = new Runnable() {
         @Override
         public void run() {
-            update();
-            handlerWrapper.get().postDelayed(drawRunner, tickRate);
+            Log.d("zxcv", "runnable start " +hashCode());
+            synchronized (handlerWrapper){
+                update();
+                handlerWrapper.get().postDelayed(drawRunner, tickRate);
+                Log.d("zxcv", "runnable finnish " +hashCode());
+            }
         }
     };
 
@@ -212,7 +217,11 @@ public class Life {
         return Math.ceil(input / step) * step;
     }
 
-    public void destroy(){
-        handlerWrapper.destroy();
+    public void destroy() {
+        Log.d("zxcv", "DESTROYYYYY " + hashCode());
+        synchronized (handlerWrapper){
+            stop();
+            handlerWrapper.destroy();
+        }
     }
 }

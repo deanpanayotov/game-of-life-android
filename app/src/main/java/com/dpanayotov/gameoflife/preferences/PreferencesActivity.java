@@ -88,7 +88,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     private void initDemo() {
         if (life != null) {
-            life.stop();
             life.destroy();
         }
 
@@ -317,7 +316,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     protected void onDestroy() {
         super.onDestroy();
         if(life!=null){
-            life.stop();
             life.destroy();
         }
     }
