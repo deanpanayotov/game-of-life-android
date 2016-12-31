@@ -2,7 +2,6 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.life.di.SyncHandlerWrapper;
@@ -41,12 +40,10 @@ public class Life {
     private final Runnable drawRunner = new Runnable() {
         @Override
         public void run() {
-            Log.d("zxcv", "runnable start " + hashCode());
             synchronized (destroyed) {
                 if (!destroyed) {
                     update();
                     handlerWrapper.get().postDelayed(drawRunner, tickRate);
-                    Log.d("zxcv", "runnable finnish " + hashCode());
                 }
             }
         }
@@ -90,8 +87,6 @@ public class Life {
     }
 
     public void update() {
-        Log.d("zxcv", "UPDATEEEEEEE " + hashCode());
-
         Grid nextGrid = grid.deriveNextState(highlife);
 
         if (nextGrid.populationCount < minPopulationCount || previousGrid.equals(nextGrid)) {
@@ -222,7 +217,6 @@ public class Life {
     }
 
     public void destroy() {
-        Log.d("zxcv", "DESTROYYYYY " + hashCode());
         synchronized (destroyed) {
             stop();
             handlerWrapper.destroy();
