@@ -37,13 +37,13 @@ public class Life {
     private int minPopulationDensity;
     private int minPopulationCount;
 
-    private final Runnable drawRunner = new Runnable() {
+    private final Runnable drawRunnable = new Runnable() {
         @Override
         public void run() {
             synchronized (destroyed) {
                 if (!destroyed) {
                     update();
-                    handlerWrapper.get().postDelayed(drawRunner, tickRate);
+                    handlerWrapper.get().postDelayed(drawRunnable, tickRate);
                 }
             }
         }
@@ -205,11 +205,19 @@ public class Life {
     }
 
     public void start() {
-        handlerWrapper.get().post(drawRunner);
+        synchronized (destroyed) {
+            if (!destroyed) {
+                handlerWrapper.get().post(drawRunnable);
+            }
+        }
     }
 
     public void stop() {
-        handlerWrapper.get().removeCallbacks(drawRunner);
+        synchronized (destroyed) {
+            if (!destroyed) {
+                handlerWrapper.get().removeCallbacks(drawRunnable);
+            }
+        }
     }
 
     public static double ceil(double input, double step) {
