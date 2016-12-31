@@ -76,9 +76,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.swap_right)
     View swapRight;
 
-    @BindView(R.id.progress_overlay)
-    View progressOverlay;
-
     @BindView(R.id.lobster_picker_frame)
     FrameLayout lobsterPickerFrame;
 
@@ -254,7 +251,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
-        progressOverlay.setVisibility(View.VISIBLE);
         ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
         colorPickerDialog.hideOpacityBar();
         colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
@@ -268,7 +264,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         colorPickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                progressOverlay.setVisibility(View.INVISIBLE);
+                //progressOverlay.setVisibility(View.INVISIBLE);
             }
         });
         colorPickerDialog.setInitialColor(Preferences.getColor(color));

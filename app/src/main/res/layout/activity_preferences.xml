@@ -143,22 +143,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/progress_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:clickable="true"
-        android:background="#77FFFFFF"
-        android:visibility="invisible">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/lobster_picker_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
