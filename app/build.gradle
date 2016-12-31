@@ -31,5 +31,6 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.azeesoft.lib.colorpicker:colorpicker:1.0.8@aar'
+    compile 'com.larswerkman:lobsterpicker:1.0.1'
 
 }

@@ -158,6 +158,52 @@
             android:gravity="center"/>
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/lobster_picker_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
+        android:background="#77FFFFFF">
+        <LinearLayout
+            android:padding="16dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.larswerkman.lobsterpicker.LobsterPicker
+                android:id="@+id/lobster_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider
+                android:id="@+id/lobster_shadeslider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:padding="16dp"
+                    android:text="Cancel"
+                    android:id="@+id/button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:padding="16dp"
+                    android:text="Done"
+                    android:id="@+id/button_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </FrameLayout>
 
 

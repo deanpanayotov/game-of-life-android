@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
@@ -20,6 +22,8 @@ import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
+import com.larswerkman.lobsterpicker.LobsterPicker;
+import com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +78,21 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     @BindView(R.id.progress_overlay)
     View progressOverlay;
+
+    @BindView(R.id.lobster_picker_frame)
+    FrameLayout lobsterPickerFrame;
+
+    @BindView(R.id.lobster_picker)
+    LobsterPicker lobsterPicker;
+
+    @BindView(R.id.lobster_shadeslider)
+    LobsterShadeSlider lobsterShadeSlider;
+
+    @BindView(R.id.button_cancel)
+    TextView buttonCancel;
+
+    @BindView(R.id.button_done)
+    TextView buttonDone;
 
     private Life life;
 
@@ -223,6 +242,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.PRIMARY);
             }
         });
+
+        lobsterPicker.addDecorator(lobsterShadeSlider);
 
     }
 
