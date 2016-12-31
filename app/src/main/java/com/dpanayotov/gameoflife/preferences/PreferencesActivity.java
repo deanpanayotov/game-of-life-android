@@ -3,7 +3,6 @@ package com.dpanayotov.gameoflife.preferences;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
 import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
@@ -30,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Dean Panayotov on 9/24/2016
@@ -85,9 +84,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.lobster_shadeslider)
     LobsterShadeSlider lobsterShadeSlider;
 
-    @BindView(R.id.button_cancel)
-    TextView buttonCancel;
-
     @BindView(R.id.button_done)
     TextView buttonDone;
 
@@ -95,7 +91,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     private int canvasWidth;
     private int canvasHeight;
-
     private void calculateDimensions() {
         Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
         canvasWidth = surfaceFrame.width();
@@ -242,6 +237,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         lobsterPicker.addDecorator(lobsterShadeSlider);
 
+        surfaceView.setZOrderMediaOverlay(false);
     }
 
     private void swapColors(Preferences.Colors a, Preferences.Colors b) {
@@ -251,24 +247,23 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
-        ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
-        colorPickerDialog.hideOpacityBar();
-        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+        lobsterPicker.setColor(Preferences.getColor(color));
+        buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onColorPicked(int value, String hexVal) {
-                Preferences.setColor(color, value);
+            public void onClick(View v) {
+                Preferences.setColor(color, lobsterPicker.getColor());
                 updateColors();
                 initDemo();
+                buttonDone.setOnClickListener(null);
+                cancelColorPicker();
             }
         });
-        colorPickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                //progressOverlay.setVisibility(View.INVISIBLE);
-            }
-        });
-        colorPickerDialog.setInitialColor(Preferences.getColor(color));
-        colorPickerDialog.show();
+        lobsterPickerFrame.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.button_cancel)
+    void cancelColorPicker(){
+        lobsterPickerFrame.setVisibility(View.INVISIBLE);
     }
 
     private void updateColors() {
@@ -324,6 +319,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onStart() {
         super.onStart();
+//        cancelColorPicker();
         if (life != null) {
             life.start();
         }
