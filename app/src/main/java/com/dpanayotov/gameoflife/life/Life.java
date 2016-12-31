@@ -1,6 +1,5 @@
 package com.dpanayotov.gameoflife.life;
 
-import android.app.PendingIntent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
@@ -38,13 +37,13 @@ public class Life {
     private int minPopulationDensity;
     private int minPopulationCount;
 
-    private final Runnable drawRunner = new Runnable() {
+    private final Runnable drawRunnable = new Runnable() {
         @Override
         public void run() {
             synchronized (destroyed) {
                 if (!destroyed) {
                     update();
-                    handlerWrapper.get().postDelayed(drawRunner, tickRate);
+                    handlerWrapper.get().postDelayed(drawRunnable, tickRate);
                 }
             }
         }
@@ -208,7 +207,7 @@ public class Life {
     public void start() {
         synchronized (destroyed) {
             if (!destroyed) {
-                handlerWrapper.get().post(drawRunner);
+                handlerWrapper.get().post(drawRunnable);
             }
         }
     }
@@ -216,7 +215,7 @@ public class Life {
     public void stop() {
         synchronized (destroyed) {
             if (!destroyed) {
-                handlerWrapper.get().removeCallbacks(drawRunner);
+                handlerWrapper.get().removeCallbacks(drawRunnable);
             }
         }
     }
