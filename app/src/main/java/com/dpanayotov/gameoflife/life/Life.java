@@ -1,5 +1,6 @@
 package com.dpanayotov.gameoflife.life;
 
+import android.app.PendingIntent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
@@ -205,11 +206,19 @@ public class Life {
     }
 
     public void start() {
-        handlerWrapper.get().post(drawRunner);
+        synchronized (destroyed) {
+            if (!destroyed) {
+                handlerWrapper.get().post(drawRunner);
+            }
+        }
     }
 
     public void stop() {
-        handlerWrapper.get().removeCallbacks(drawRunner);
+        synchronized (destroyed) {
+            if (!destroyed) {
+                handlerWrapper.get().removeCallbacks(drawRunner);
+            }
+        }
     }
 
     public static double ceil(double input, double step) {
