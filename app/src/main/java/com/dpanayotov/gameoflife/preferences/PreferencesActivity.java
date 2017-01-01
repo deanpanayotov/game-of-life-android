@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
 import com.larswerkman.lobsterpicker.LobsterPicker;
+import com.larswerkman.lobsterpicker.sliders.LobsterOpacitySlider;
 import com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider;
 
 import java.util.ArrayList;
@@ -75,8 +77,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.swap_right)
     View swapRight;
 
-    @BindView(R.id.lobster_picker_frame)
-    FrameLayout lobsterPickerFrame;
+    @BindView(R.id.lobster_picker_frame_inner)
+    LinearLayout lobsterPickerFrame;
 
     @BindView(R.id.lobster_picker)
     LobsterPicker lobsterPicker;
@@ -84,8 +86,14 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.lobster_shadeslider)
     LobsterShadeSlider lobsterShadeSlider;
 
+    @BindView(R.id.lobster_opacityslider)
+    LobsterOpacitySlider lobsterOpacitySlider;
+
     @BindView(R.id.button_done)
     TextView buttonDone;
+
+    @BindView(R.id.root_frame)
+    FrameLayout rootFrame;
 
     private Life life;
 
@@ -236,8 +244,19 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         });
 
         lobsterPicker.addDecorator(lobsterShadeSlider);
+        lobsterPicker.addDecorator(lobsterOpacitySlider);
 
-        surfaceView.setZOrderMediaOverlay(false);
+        surfaceView.setZOrderOnTop(false);
+
+        rootFrame.invalidate();
+        rootFrame.forceLayout();
+        rootFrame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                lobsterPickerFrame.setVisibility(View.INVISIBLE);
+                rootFrame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     private void swapColors(Preferences.Colors a, Preferences.Colors b) {
@@ -259,6 +278,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             }
         });
         lobsterPickerFrame.setVisibility(View.VISIBLE);
+        rootFrame.invalidate();
+        rootFrame.forceLayout();
     }
 
     @OnClick(R.id.button_cancel)

@@ -3,7 +3,8 @@
              xmlns:custom="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#EEEEEE">
+             android:background="#EEEEEE"
+    android:id="@+id/root_frame">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,27 +146,30 @@
     <FrameLayout
         android:id="@+id/lobster_picker_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="#77FFFFFF"
-        android:clickable="true"
-        android:visibility="invisible">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/lobster_picker_frame_inner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="16dp">
+            <!--android:visibility="invisible"-->
 
-            <com.larswerkman.lobsterpicker.LobsterPicker
+        <com.larswerkman.lobsterpicker.LobsterPicker
                 android:id="@+id/lobster_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider
                 android:id="@+id/lobster_shadeslider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.larswerkman.lobsterpicker.sliders.LobsterOpacitySlider
+                android:id="@+id/lobster_opacityslider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
