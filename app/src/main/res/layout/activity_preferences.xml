@@ -10,12 +10,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <SurfaceView
-            android:id="@+id/surface_view"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="160dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <SurfaceView
+                android:id="@+id/surface_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
 
         <ScrollView
+            android:scrollbars="none"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -27,7 +42,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    style="@style/PreferenceCard">
+                    style="@style/PreferenceCard.MarginBottom">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -49,7 +64,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/PreferenceCard">
+                    style="@style/PreferenceCard.MarginTopBottom">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -86,7 +101,7 @@
                         custom:title="@string/min_population_density"/>
                 </LinearLayout>
 
-                <LinearLayout style="@style/PreferenceCard">
+                <LinearLayout style="@style/PreferenceCard.MarginTop">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -99,56 +114,13 @@
         </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="160dp"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:alpha="0.3 "
-            android:background="#EEEEEE"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:alpha="0.5"
-            android:background="#EEEEEE"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="#EEEEEE"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:alpha="0.9"
-            android:background="#EEEEEE"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:alpha="1.0"
-            android:background="#EEEEEE"/>
-
-    </LinearLayout>
-
     <FrameLayout
         android:id="@+id/progress_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:clickable="true"
         android:background="#77FFFFFF"
+        android:clickable="true"
         android:visibility="invisible">
 
         <ProgressBar
