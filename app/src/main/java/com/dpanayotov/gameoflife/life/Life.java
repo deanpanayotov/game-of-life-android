@@ -2,7 +2,7 @@ package com.dpanayotov.gameoflife.life;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
+
 import android.view.SurfaceHolder;
 
 import com.dpanayotov.gameoflife.life.di.SyncHandlerWrapper;
@@ -177,16 +177,18 @@ public class Life {
                 //The last cell of every odd column should be duplicated on top of the screen.
                 // This way half of the cell is displayed on top and half - on bottom.
                 if (isometricProjection) {
-                    int j, value;
-                    Log.d("zxc", "resolution.gridHeight "+resolution.gridHeight);
+                    int j = resolution.gridHeight, value;
                     for (int i = 1; i < resolution.gridWidth; i += 2) {
-                        j = resolution.gridHeight - 1 - ((i - 1) / 2);
+                        j--;
                         value = summedGrid.cells[i][j];
                         if (value > 0) {
                             int cellX = i * resolution.cellSize + halfCell;
                             int cellY = j * resolution.cellSize + halfCell;
                             cellY = (cellY + i * halfCell);
                             drawCell(cellX, cellY, value, canvas);
+                        }
+                        if(j==0){
+                            j=resolution.gridHeight;
                         }
                     }
                 }
