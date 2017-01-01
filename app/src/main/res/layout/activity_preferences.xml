@@ -26,6 +26,7 @@
         </FrameLayout>
 
         <ScrollView
+            android:scrollbars="none"
             android:background="@android:drawable/dialog_holo_light_frame"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
