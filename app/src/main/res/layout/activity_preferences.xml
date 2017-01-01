@@ -14,7 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:background="@android:drawable/dialog_holo_light_frame"
-            android:layout_margin="4dp">
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
 
             <SurfaceView
                 android:id="@+id/surface_view"
@@ -24,7 +26,10 @@
         </FrameLayout>
 
         <ScrollView
-            android:layout_margin="4dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -36,7 +41,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    style="@style/PreferenceCard">
+                    style="@style/PreferenceCard.MarginBottom">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -58,7 +63,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/PreferenceCard">
+                    style="@style/PreferenceCard.MarginTopBottom">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -95,7 +100,7 @@
                         custom:title="@string/min_population_density"/>
                 </LinearLayout>
 
-                <LinearLayout style="@style/PreferenceCard">
+                <LinearLayout style="@style/PreferenceCard.MarginTop">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"

@@ -40,4 +40,17 @@
         <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
     </style>
 
+    <style name="PreferenceCard.MarginTop" parent="PreferenceCard">
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="PreferenceCard.MarginBottom" parent="PreferenceCard">
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="PreferenceCard.MarginTopBottom" parent="PreferenceCard">
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
 </resources>
