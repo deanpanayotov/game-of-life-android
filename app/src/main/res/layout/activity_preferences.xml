@@ -14,13 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:background="@android:drawable/dialog_holo_light_frame"
-            android:layout_margin="4dp"
-            >
+            android:layout_margin="4dp">
 
             <SurfaceView
                 android:id="@+id/surface_view"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="match_parent"/>
 
         </FrameLayout>
 
