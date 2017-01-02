@@ -107,7 +107,24 @@
                         style="@style/PreferenceSectionHeader"
                         android:text="@string/color"/>
 
-                    <include layout="@layout/view_color_preferences_h"/>
+                    <LinearLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:orientation="horizontal">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:background="#00FF00"
+                            android:id="@+id/list_color_names"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"/>
+                        <View
+                            android:id="@+id/lost_view"
+                            android:background="#FF0000"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

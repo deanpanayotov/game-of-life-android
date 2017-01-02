@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -16,10 +18,13 @@ import android.widget.LinearLayout;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
+import com.dpanayotov.gameoflife.preferences.custom.ColorNamesAdapter;
+import com.dpanayotov.gameoflife.preferences.custom.ColorValuesAdapter;
 import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
+import com.woxthebox.draglistview.DragListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,23 +62,18 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
 
-    @BindView(R.id.color_background)
-    View colorBackgorund;
-
-    @BindView(R.id.color_secondary)
-    LinearLayout colorSecondary;
-
-    @BindView(R.id.color_primary)
-    View colorPrimary;
-
-    @BindView(R.id.swap_left)
-    View swapLeft;
-
-    @BindView(R.id.swap_right)
-    View swapRight;
-
     @BindView(R.id.progress_overlay)
     View progressOverlay;
+
+    //-------------
+
+    @BindView(R.id.list_color_names)
+    RecyclerView listColorNames;
+    ColorNamesAdapter colorNamesAdapter;
+
+//    @BindView(R.id.list_color_values)
+//    DragListView listColorValues;
+//    ColorValuesAdapter colorValuesAdapter;
 
     private Life life;
 
@@ -191,38 +191,22 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         updateColors();
 
-        colorBackgorund.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showColorPickerDialog(Preferences.Colors.BACKGROUND);
-            }
-        });
-        colorSecondary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showColorPickerDialog(Preferences.Colors.SECONDARY);
-            }
-        });
-        colorPrimary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showColorPickerDialog(Preferences.Colors.PRIMARY);
-            }
-        });
+        List<String> colorNames = new ArrayList<>();
+        colorNames.add(getString(R.string.color_background));
+        colorNames.add(getString(R.string.color_secondary));
+        colorNames.add(getString(R.string.color_primary));
+        colorNamesAdapter = new ColorNamesAdapter(colorNames);
+        listColorNames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listColorNames.setAdapter(colorNamesAdapter);
 
-        swapLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swapColors(Preferences.Colors.BACKGROUND, Preferences.Colors.SECONDARY);
-            }
-        });
 
-        swapRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swapColors(Preferences.Colors.SECONDARY, Preferences.Colors.PRIMARY);
-            }
-        });
+//        List<Integer> colorValues = new ArrayList<>();
+//        colorValues.add(Preferences.getColor(Preferences.Colors.BACKGROUND));
+//        colorValues.add(Preferences.getColor(Preferences.Colors.SECONDARY));
+//        colorValues.add(Preferences.getColor(Preferences.Colors.PRIMARY));
+//        colorValuesAdapter = new ColorValuesAdapter(colorValues);
+//        listColorValues.setLayoutManager(new LinearLayoutManager(this));
+//        listColorValues.setAdapter(colorValuesAdapter, true);
 
     }
 
@@ -255,14 +239,14 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void updateColors() {
-        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Colors
-                .BACKGROUND));
-        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Colors.BACKGROUND));
-        for (int i = 0; i < colorSecondary.getChildCount(); i++) {
-            animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
-                    .Colors.SECONDARY));
-        }
-        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Colors.PRIMARY));
+//        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Colors
+//                .BACKGROUND));
+//        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Colors.BACKGROUND));
+//        for (int i = 0; i < colorSecondary.getChildCount(); i++) {
+//            animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
+//                    .Colors.SECONDARY));
+//        }
+//        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Colors.PRIMARY));
     }
 
     private void animateBackgroundColor(final View view, int newColor) {
