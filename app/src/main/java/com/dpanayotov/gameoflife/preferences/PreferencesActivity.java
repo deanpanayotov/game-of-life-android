@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.DragEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -71,9 +72,9 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     RecyclerView listColorNames;
     ColorNamesAdapter colorNamesAdapter;
 
-//    @BindView(R.id.list_color_values)
-//    DragListView listColorValues;
-//    ColorValuesAdapter colorValuesAdapter;
+    @BindView(R.id.list_color_values)
+    DragListView listColorValues;
+    ColorValuesAdapter colorValuesAdapter;
 
     private Life life;
 
@@ -200,14 +201,14 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         listColorNames.setAdapter(colorNamesAdapter);
 
 
-//        List<Integer> colorValues = new ArrayList<>();
-//        colorValues.add(Preferences.getColor(Preferences.Colors.BACKGROUND));
-//        colorValues.add(Preferences.getColor(Preferences.Colors.SECONDARY));
-//        colorValues.add(Preferences.getColor(Preferences.Colors.PRIMARY));
-//        colorValuesAdapter = new ColorValuesAdapter(colorValues);
-//        listColorValues.setLayoutManager(new LinearLayoutManager(this));
-//        listColorValues.setAdapter(colorValuesAdapter, true);
-
+        List<Integer> colorValues = new ArrayList<>();
+        colorValues.add(Preferences.getColor(Preferences.Colors.BACKGROUND));
+        colorValues.add(Preferences.getColor(Preferences.Colors.SECONDARY));
+        colorValues.add(Preferences.getColor(Preferences.Colors.PRIMARY));
+        colorValuesAdapter = new ColorValuesAdapter(colorValues);
+        listColorValues.setLayoutManager(new LinearLayoutManager(this));
+        listColorValues.setAdapter(colorValuesAdapter, true);
+        listColorValues.setCanDragHorizontally(false);
     }
 
     private void swapColors(Preferences.Colors a, Preferences.Colors b) {

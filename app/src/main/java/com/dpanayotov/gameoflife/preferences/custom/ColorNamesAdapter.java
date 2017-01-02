@@ -38,8 +38,6 @@ public class ColorNamesAdapter extends RecyclerView.Adapter<ColorNamesAdapter
 
     @Override
     public int getItemCount() {
-
-        Log.d("zxc", "size: "+names.size());
         return names.size();
     }
 
