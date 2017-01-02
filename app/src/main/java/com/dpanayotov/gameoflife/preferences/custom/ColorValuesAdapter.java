@@ -1,6 +1,6 @@
 package com.dpanayotov.gameoflife.preferences.custom;
 
-import android.util.Log;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +14,12 @@ import java.util.List;
  * Created by Dean Panayotov on 1/2/2017
  */
 
-public class ColorValuesAdapter extends DragItemAdapter<Integer, ColorValuesAdapter
+public class ColorValuesAdapter extends DragItemAdapter<Pair<Integer, Integer>, ColorValuesAdapter
         .ColorValuesViewHolder> {
 
-    List<Integer> colors;
+    List<Pair<Integer, Integer>> colors;
 
-    public ColorValuesAdapter(List<Integer> colors) {
+    public ColorValuesAdapter(List<Pair<Integer, Integer>> colors) {
         this.colors = colors;
 
         setHasStableIds(true);
@@ -33,16 +33,14 @@ public class ColorValuesAdapter extends DragItemAdapter<Integer, ColorValuesAdap
     }
 
     @Override
-    public int getItemCount() {
-        Log.d("zxc", "getItemCount: "+colors.size());
-        return colors.size();
+    public void onBindViewHolder(ColorValuesViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        holder.value.setBackgroundColor(colors.get(position).second);
     }
 
     @Override
-    public void onBindViewHolder(ColorValuesViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        holder.value.setBackgroundColor(colors.get(position));
-        holder.value.setVisibility(View.VISIBLE);
+    public long getItemId(int position) {
+        return colors.get(position).first;
     }
 
     class ColorValuesViewHolder extends DragItemAdapter.ViewHolder {

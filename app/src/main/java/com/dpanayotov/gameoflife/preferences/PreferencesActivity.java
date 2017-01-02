@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -201,10 +202,10 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         listColorNames.setAdapter(colorNamesAdapter);
 
 
-        List<Integer> colorValues = new ArrayList<>();
-        colorValues.add(Preferences.getColor(Preferences.Colors.BACKGROUND));
-        colorValues.add(Preferences.getColor(Preferences.Colors.SECONDARY));
-        colorValues.add(Preferences.getColor(Preferences.Colors.PRIMARY));
+        List<Pair<Integer, Integer>> colorValues = new ArrayList<>();
+        colorValues.add(new Pair<>(0, Preferences.getColor(Preferences.Colors.BACKGROUND)));
+        colorValues.add(new Pair<>(1, Preferences.getColor(Preferences.Colors.SECONDARY)));
+        colorValues.add(new Pair<>(2, Preferences.getColor(Preferences.Colors.PRIMARY)));
         colorValuesAdapter = new ColorValuesAdapter(colorValues);
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
         listColorValues.setAdapter(colorValuesAdapter, true);
