@@ -29,7 +29,7 @@ public class ColorValuesAdapter extends DragItemAdapter<Integer, ColorValuesAdap
     @Override
     public ColorValuesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ColorValuesViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout
-                .view_item_color_value, parent, false), R.id.grab_handle, false);
+                .view_item_color_value, parent, false));
     }
 
     @Override
@@ -49,8 +49,8 @@ public class ColorValuesAdapter extends DragItemAdapter<Integer, ColorValuesAdap
 
         View value;
 
-        public ColorValuesViewHolder(View itemView, int handleResId, boolean dragOnLongPress) {
-            super(itemView, handleResId, dragOnLongPress);
+        public ColorValuesViewHolder(View itemView) {
+            super(itemView, R.id.grab_handle, false);
             value = itemView;
         }
     }
