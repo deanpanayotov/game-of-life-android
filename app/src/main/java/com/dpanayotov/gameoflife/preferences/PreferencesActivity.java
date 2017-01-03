@@ -210,11 +210,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         listColorValues.setCanDragHorizontally(false);
     }
 
-    private void swapColors(Preferences.Color a, Preferences.Color b) {
-        Preferences.swapColors(a, b);
-        updateColors();
-        initDemo();
-    }
+
 
     private void showColorPickerDialog(final Preferences.Color color) {
         progressOverlay.setVisibility(View.VISIBLE);
