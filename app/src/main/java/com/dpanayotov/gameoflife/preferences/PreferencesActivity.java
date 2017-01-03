@@ -235,31 +235,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void updateColors() {
-//        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Color
-//                .BACKGROUND));
-//        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Color.BACKGROUND));
-//        for (int i = 0; i < colorSecondary.getChildCount(); i++) {
-//            animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
-//                    .Color.SECONDARY));
-//        }
-//        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Color.PRIMARY));
-    }
-
-    private void animateBackgroundColor(final View view, int newColor) {
-        ColorDrawable currentColorDrawable = (ColorDrawable) view.getBackground();
-        int oldColor = currentColorDrawable.getColor();
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), oldColor,
-                newColor);
-        colorAnimation.setDuration(500); // milliseconds
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                view.setBackgroundColor((int) animator.getAnimatedValue());
-            }
-
-        });
-        colorAnimation.start();
+        //TODO
     }
 
     @Override
