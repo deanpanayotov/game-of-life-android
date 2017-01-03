@@ -186,18 +186,51 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         surfaceView.getHolder().addCallback(this);
 
-        updateColors();
-
-        listColorNames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listColorNames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager
+                .VERTICAL, false));
         listColorNames.setAdapter(new ColorNamesAdapter());
 
 
         colorValues = constructColorValues();
-        colorValuesAdapter = new ColorValuesAdapter(colorValues);
+        colorValuesAdapter = new ColorValuesAdapter(new ArrayList<>(colorValues));
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
         listColorValues.setAdapter(colorValuesAdapter, true);
         listColorValues.setCanDragHorizontally(false);
-       
+        listColorValues.setDragListListener(new DragListView.DragListListener() {
+            @Override
+            public void onItemDragStarted(int position) {
+            }
+
+            @Override
+            public void onItemDragging(int itemPosition, float x, float y) {
+            }
+
+            @Override
+            public void onItemDragEnded(int fromPosition, int toPosition) {
+                if (fromPosition != toPosition) {
+                    colorItemDragged(fromPosition, toPosition);
+                    colorValues = constructColorValues();
+                    initDemo();
+                }
+            }
+        });
+    }
+
+    private void colorItemDragged(int from, int to) {
+        setColorValueByPosition(to, from);
+        if (from < to) {
+            for (int i = from; i < to; i++) {
+                setColorValueByPosition(i, i + 1);
+            }
+        } else {
+            for (int i = to + 1; i <= from; i++) {
+                setColorValueByPosition(i, i - 1);
+            }
+        }
+    }
+
+    private void setColorValueByPosition(int target, int source) {
+        Preferences.setColor(Preferences.Color.values()[target], colorValues.get(source).second);
     }
 
     private List<Pair<Integer, Integer>> constructColorValues() {
@@ -232,7 +265,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void updateColors() {
-        //TODO
+        //TODO fade out list; change adapter; fade in list;
     }
 
     @Override
