@@ -11,11 +11,9 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
@@ -203,22 +201,22 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
 
         List<Pair<Integer, Integer>> colorValues = new ArrayList<>();
-        colorValues.add(new Pair<>(0, Preferences.getColor(Preferences.Colors.BACKGROUND)));
-        colorValues.add(new Pair<>(1, Preferences.getColor(Preferences.Colors.SECONDARY)));
-        colorValues.add(new Pair<>(2, Preferences.getColor(Preferences.Colors.PRIMARY)));
+        colorValues.add(new Pair<>(0, Preferences.getColor(Preferences.Color.BACKGROUND)));
+        colorValues.add(new Pair<>(1, Preferences.getColor(Preferences.Color.SECONDARY)));
+        colorValues.add(new Pair<>(2, Preferences.getColor(Preferences.Color.PRIMARY)));
         colorValuesAdapter = new ColorValuesAdapter(colorValues);
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
         listColorValues.setAdapter(colorValuesAdapter, true);
         listColorValues.setCanDragHorizontally(false);
     }
 
-    private void swapColors(Preferences.Colors a, Preferences.Colors b) {
+    private void swapColors(Preferences.Color a, Preferences.Color b) {
         Preferences.swapColors(a, b);
         updateColors();
         initDemo();
     }
 
-    private void showColorPickerDialog(final Preferences.Colors color) {
+    private void showColorPickerDialog(final Preferences.Color color) {
         progressOverlay.setVisibility(View.VISIBLE);
         ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
         colorPickerDialog.hideOpacityBar();
@@ -241,14 +239,14 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void updateColors() {
-//        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Colors
+//        animateBackgroundColor(colorBackgorund, Preferences.getColor(Preferences.Color
 //                .BACKGROUND));
-//        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Colors.BACKGROUND));
+//        animateBackgroundColor(colorSecondary, Preferences.getColor(Preferences.Color.BACKGROUND));
 //        for (int i = 0; i < colorSecondary.getChildCount(); i++) {
 //            animateBackgroundColor(colorSecondary.getChildAt(i), Preferences.getColor(Preferences
-//                    .Colors.SECONDARY));
+//                    .Color.SECONDARY));
 //        }
-//        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Colors.PRIMARY));
+//        animateBackgroundColor(colorPrimary, Preferences.getColor(Preferences.Color.PRIMARY));
     }
 
     private void animateBackgroundColor(final View view, int newColor) {

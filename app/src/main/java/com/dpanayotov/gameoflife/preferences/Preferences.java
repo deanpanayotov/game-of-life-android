@@ -1,7 +1,6 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 
 import com.dpanayotov.gameoflife.GameOfLifeApplication;
@@ -72,29 +71,29 @@ public class Preferences {
         prefsEditor.apply();
     }
 
-    public static void setColor(Colors color, int value) {
+    public static void setColor(Color color, int value) {
         getPrefs().edit().putInt(color.getKey(), value).commit();
     }
 
-    public static int getColor(Colors color) {
+    public static int getColor(Color color) {
         return getPrefs().getInt(color.getKey(), color.getDefaultValue());
     }
 
-    public static void swapColors(Colors a, Colors b) {
+    public static void swapColors(Color a, Color b) {
         int c = getColor(b);
         setColor(b, getColor(a));
         setColor(a, c);
     }
 
-    public enum Colors {
-        PRIMARY("PRIMARY", Color.parseColor("#0B083B")),
-        SECONDARY("SECONDARY", Color.parseColor("#FFD57C")),
-        BACKGROUND("BACKGROUND", Color.parseColor("#595594"));
+    public enum Color {
+        PRIMARY("PRIMARY", android.graphics.Color.parseColor("#0B083B")),
+        SECONDARY("SECONDARY", android.graphics.Color.parseColor("#FFD57C")),
+        BACKGROUND("BACKGROUND", android.graphics.Color.parseColor("#595594"));
 
         String key;
         int defaultValue;
 
-        Colors(String key, int defaultValue) {
+        Color(String key, int defaultValue) {
             this.key = key;
             this.defaultValue = defaultValue;
         }
@@ -110,7 +109,7 @@ public class Preferences {
 
     public static List<String> getColorList() {
         List<String> colors = new ArrayList<>();
-        for (Colors color : Colors.values()) {
+        for (Color color : Color.values()) {
             colors.add(color.getKey());
         }
         return colors;
