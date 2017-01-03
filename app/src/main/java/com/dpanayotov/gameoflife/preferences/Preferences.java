@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.dpanayotov.gameoflife.GameOfLifeApplication;
+import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.google.gson.Gson;
 
@@ -86,15 +87,19 @@ public class Preferences {
     }
 
     public enum Color {
-        PRIMARY("PRIMARY", android.graphics.Color.parseColor("#0B083B")),
-        SECONDARY("SECONDARY", android.graphics.Color.parseColor("#FFD57C")),
-        BACKGROUND("BACKGROUND", android.graphics.Color.parseColor("#595594"));
+        PRIMARY("PRIMARY", R.string.color_primary, android.graphics.Color.parseColor("#0B083B")),
+        SECONDARY("SECONDARY", R.string.color_secondary, android.graphics.Color.parseColor
+                ("#FFD57C")),
+        BACKGROUND("BACKGROUND", R.string.color_background, android.graphics.Color.parseColor
+                ("#595594"));
 
         String key;
+        int stringResId;
         int defaultValue;
 
-        Color(String key, int defaultValue) {
+        Color(String key, int stringResId, int defaultValue) {
             this.key = key;
+            this.stringResId = stringResId;
             this.defaultValue = defaultValue;
         }
 
@@ -102,17 +107,29 @@ public class Preferences {
             return key;
         }
 
+        public int getStringResId() {
+            return stringResId;
+        }
+
         public int getDefaultValue() {
             return defaultValue;
         }
-    }
 
-    public static List<String> getColorList() {
-        List<String> colors = new ArrayList<>();
-        for (Color color : Color.values()) {
-            colors.add(color.getKey());
+        public static List<String> getKeys() {
+            List<String> colors = new ArrayList<>();
+            for (Color color : values()) {
+                colors.add(color.getKey());
+            }
+            return colors;
         }
-        return colors;
+
+        public static List<Integer> getResIds() {
+            List<Integer> colors = new ArrayList<>();
+            for (Color color : values()) {
+                colors.add(color.getStringResId());
+            }
+            return colors;
+        }
     }
 
     public static List<Integer> getTickRates() {
@@ -164,7 +181,7 @@ public class Preferences {
     public static int getInitialPopulationDensity() {
         return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY,
                 (initialPopulationDensityOptions.size() - 1) /
-                2);
+                        2);
     }
 
     public static void setInitialPopulationDensity(int position) {

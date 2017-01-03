@@ -191,11 +191,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         updateColors();
 
-        List<String> colorNames = new ArrayList<>();
-        colorNames.add(getString(R.string.color_background));
-        colorNames.add(getString(R.string.color_secondary));
-        colorNames.add(getString(R.string.color_primary));
-        colorNamesAdapter = new ColorNamesAdapter(colorNames);
+        colorNamesAdapter = new ColorNamesAdapter(Preferences.Color.getResIds());
         listColorNames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listColorNames.setAdapter(colorNamesAdapter);
 

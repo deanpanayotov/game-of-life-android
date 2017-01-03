@@ -19,9 +19,9 @@ import java.util.List;
 public class ColorNamesAdapter extends RecyclerView.Adapter<ColorNamesAdapter
         .ColorNamesViewHolder> {
 
-    List<String> names;
+    List<Integer> names;
 
-    public ColorNamesAdapter(List<String> names) {
+    public ColorNamesAdapter(List<Integer> names) {
         this.names = new ArrayList<>(names);
     }
 
