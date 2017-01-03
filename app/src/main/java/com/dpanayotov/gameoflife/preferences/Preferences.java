@@ -8,6 +8,7 @@ import com.dpanayotov.gameoflife.GameOfLifeApplication;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,7 +106,14 @@ public class Preferences {
         public int getDefaultValue() {
             return defaultValue;
         }
+    }
 
+    public static List<String> getColorList() {
+        List<String> colors = new ArrayList<>();
+        for (Colors color : Colors.values()) {
+            colors.add(color.getKey());
+        }
+        return colors;
     }
 
     public static List<Integer> getTickRates() {
@@ -141,7 +149,8 @@ public class Preferences {
     }
 
     public static int getMinPopulationDensity() {
-        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY, (minPopulationDensityOptions.size() - 1) /
+        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY, (minPopulationDensityOptions.size()
+                - 1) /
                 2);
     }
 
@@ -154,7 +163,8 @@ public class Preferences {
     }
 
     public static int getInitialPopulationDensity() {
-        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY, (initialPopulationDensityOptions.size() - 1) /
+        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY,
+                (initialPopulationDensityOptions.size() - 1) /
                 2);
     }
 
