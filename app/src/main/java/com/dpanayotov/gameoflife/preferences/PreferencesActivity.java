@@ -1,11 +1,8 @@
 package com.dpanayotov.gameoflife.preferences;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatDelegate;
@@ -69,11 +66,11 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     @BindView(R.id.list_color_names)
     RecyclerView listColorNames;
-    ColorNamesAdapter colorNamesAdapter;
 
     @BindView(R.id.list_color_values)
     DragListView listColorValues;
     ColorValuesAdapter colorValuesAdapter;
+    List<Pair<Integer, Integer>> colorValues;
 
     private Life life;
 
@@ -191,22 +188,26 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
         updateColors();
 
-        colorNamesAdapter = new ColorNamesAdapter(Preferences.Color.getResIds());
         listColorNames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        listColorNames.setAdapter(colorNamesAdapter);
+        listColorNames.setAdapter(new ColorNamesAdapter());
 
 
-        List<Pair<Integer, Integer>> colorValues = new ArrayList<>();
-        colorValues.add(new Pair<>(0, Preferences.getColor(Preferences.Color.BACKGROUND)));
-        colorValues.add(new Pair<>(1, Preferences.getColor(Preferences.Color.SECONDARY)));
-        colorValues.add(new Pair<>(2, Preferences.getColor(Preferences.Color.PRIMARY)));
+        colorValues = constructColorValues();
         colorValuesAdapter = new ColorValuesAdapter(colorValues);
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
         listColorValues.setAdapter(colorValuesAdapter, true);
         listColorValues.setCanDragHorizontally(false);
+       
     }
 
-
+    private List<Pair<Integer, Integer>> constructColorValues() {
+        Preferences.Color[] colors = Preferences.Color.values();
+        List<Pair<Integer, Integer>> pairs = new ArrayList<>();
+        for (int i = 0; i < colors.length; i++) {
+            pairs.add(new Pair<>(i, Preferences.getColor(colors[i])));
+        }
+        return pairs;
+    }
 
     private void showColorPickerDialog(final Preferences.Color color) {
         progressOverlay.setVisibility(View.VISIBLE);

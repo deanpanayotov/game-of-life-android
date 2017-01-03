@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dpanayotov.gameoflife.R;
+import com.dpanayotov.gameoflife.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class ColorNamesAdapter extends RecyclerView.Adapter<ColorNamesAdapter
 
     List<Integer> names;
 
-    public ColorNamesAdapter(List<Integer> names) {
-        this.names = new ArrayList<>(names);
+    public ColorNamesAdapter() {
+        this.names = Preferences.Color.getResIds();
     }
 
     @Override
