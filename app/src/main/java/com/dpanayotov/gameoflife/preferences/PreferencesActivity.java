@@ -11,6 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
@@ -76,6 +80,15 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     private int canvasWidth;
     private int canvasHeight;
+
+    ColorValuesAdapter.OnItemClickedListener onItemClickedListener = new ColorValuesAdapter
+            .OnItemClickedListener() {
+        @Override
+        public void onItemClicked(int position) {
+            showColorPickerDialog(Preferences.Color.values()[position]);
+        }
+    };
+
 
     private void calculateDimensions() {
         Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
@@ -190,17 +203,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 .VERTICAL, false));
         listColorNames.setAdapter(new ColorNamesAdapter());
 
-
-        colorValues = constructColorValues();
-        colorValuesAdapter = new ColorValuesAdapter(new ArrayList<>(colorValues), new
-                ColorValuesAdapter.OnItemClickedListener() {
-            @Override
-            public void onItemClicked(int position) {
-                showColorPickerDialog(Preferences.Color.values()[position]);
-            }
-        });
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
-        listColorValues.setAdapter(colorValuesAdapter, true);
         listColorValues.setCanDragHorizontally(false);
         listColorValues.setDragListListener(new DragListView.DragListListener() {
             @Override
@@ -220,6 +223,23 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 }
             }
         });
+
+        initFadeAnimations();
+
+        initColorValues();
+    }
+
+    private void initColorValues() {
+        colorValues = constructColorValues();
+        colorValuesAdapter = new ColorValuesAdapter(new ArrayList<>(colorValues),
+                onItemClickedListener);
+        listColorValues.post(new Runnable() {
+            @Override
+            public void run() {
+                fadeColorsList(false);
+            }
+        });
+        listColorValues.setAdapter(colorValuesAdapter, true);
     }
 
     private void colorItemDragged(int from, int to) {
@@ -270,8 +290,42 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         colorPickerDialog.show();
     }
 
+    private Animation fadeIn;
+    private Animation fadeOut;
+
+    private static final long FADE_ANIMATION_DURATION = 1000;
+
+    private void initFadeAnimations() {
+        fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(1000);
+
+        fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setStartOffset(FADE_ANIMATION_DURATION);
+        fadeOut.setDuration(FADE_ANIMATION_DURATION);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                initColorValues();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+    }
+
+    private void fadeColorsList(boolean out) {
+        listColorValues.startAnimation(out ? fadeOut : fadeIn);
+    }
+
     private void updateColors() {
-        //TODO fade out list; change adapter; fade in list;
+        fadeColorsList(true);
     }
 
     @Override
