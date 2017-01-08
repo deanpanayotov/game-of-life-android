@@ -37,7 +37,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#EEEEEE"
                 android:orientation="vertical">
 
@@ -68,7 +68,7 @@
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
-                        android:text="General"/>
+                        android:text="@string/general"/>
 
                     <com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference
                         android:id="@+id/tick_rate"
@@ -105,7 +105,7 @@
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
-                        android:text="@string/color"/>
+                        android:text="@string/colors"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,7 +138,6 @@
         android:background="#66000000"
         android:clickable="true"
         android:visibility="invisible">
-        android:layout_height="match_parent">
 
         <LinearLayout
             style="@style/PreferenceCard"
@@ -174,7 +173,7 @@
                     android:background="@drawable/rounded_button_primary_clickable"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -185,7 +184,7 @@
                     android:background="@drawable/rounded_button_primary_clickable"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="Done"
+                    android:text="@string/done"
                     android:textStyle="bold"/>
 
             </LinearLayout>
