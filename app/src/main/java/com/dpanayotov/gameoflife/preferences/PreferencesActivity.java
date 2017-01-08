@@ -192,7 +192,13 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
 
         colorValues = constructColorValues();
-        colorValuesAdapter = new ColorValuesAdapter(new ArrayList<>(colorValues));
+        colorValuesAdapter = new ColorValuesAdapter(new ArrayList<>(colorValues), new
+                ColorValuesAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClicked(int position) {
+                showColorPickerDialog(Preferences.Color.values()[position]);
+            }
+        });
         listColorValues.setLayoutManager(new LinearLayoutManager(this));
         listColorValues.setAdapter(colorValuesAdapter, true);
         listColorValues.setCanDragHorizontally(false);
