@@ -317,7 +317,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         fadeIn.setDuration(FADE_ANIMATION_DURATION);
 
         fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setStartOffset(FADE_ANIMATION_DURATION);
         fadeOut.setDuration(FADE_ANIMATION_DURATION);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
