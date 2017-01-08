@@ -293,7 +293,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     private Animation fadeIn;
     private Animation fadeOut;
 
-    private static final long FADE_ANIMATION_DURATION = 1000;
+    private static final long FADE_ANIMATION_DURATION = 500;
 
     private void initFadeAnimations() {
         fadeIn = new AlphaAnimation(0, 1);
