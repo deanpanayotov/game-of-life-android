@@ -1,8 +1,5 @@
 <resources>
-    <style name="PreferenceCard">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
+    <style name="ElevatedItem">
         <item name="android:background">#FFFFFF</item>
         <item name="android:elevation">4dp</item>
     </style>

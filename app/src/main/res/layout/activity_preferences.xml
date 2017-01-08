@@ -3,7 +3,7 @@
              xmlns:custom="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#EEEEEE">
+             android:background="#BBBBBB">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    style="@style/PreferenceCard.MarginBottom">
+                    style="@style/PreferenceCard">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -64,7 +64,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/PreferenceCard.MarginTopBottom">
+                    style="@style/PreferenceCard">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -101,7 +101,7 @@
                         custom:title="@string/min_population_density"/>
                 </LinearLayout>
 
-                <LinearLayout style="@style/PreferenceCard.MarginTop">
+                <LinearLayout style="@style/PreferenceCard">
 
                     <TextView
                         style="@style/PreferenceSectionHeader"
@@ -110,13 +110,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="20dp">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/list_color_names"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"/>
+                            android:layout_weight="1"/>
 
                         <com.woxthebox.draglistview.DragListView
                             android:id="@+id/list_color_values"

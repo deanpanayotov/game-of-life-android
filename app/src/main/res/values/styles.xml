@@ -19,6 +19,7 @@
     </style>
 
     <style name="PreferenceSectionHeader">
+        <item name="android:background">#EEEEEE</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -33,24 +34,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="PreferenceCard">
+    <style name="PreferenceCard" parent="ElevatedItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ElevatedItem">
         <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
-    </style>
-
-    <style name="PreferenceCard.MarginTop" parent="PreferenceCard">
-        <item name="android:layout_marginTop">6dp</item>
-    </style>
-
-    <style name="PreferenceCard.MarginBottom" parent="PreferenceCard">
-        <item name="android:layout_marginBottom">6dp</item>
-    </style>
-
-    <style name="PreferenceCard.MarginTopBottom" parent="PreferenceCard">
-        <item name="android:layout_marginTop">6dp</item>
-        <item name="android:layout_marginBottom">6dp</item>
     </style>
 
 </resources>
