@@ -11,10 +11,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -254,7 +252,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         listColorValues.post(new Runnable() {
             @Override
             public void run() {
-                fadeColorsList(false);
+                fadeListColorValues(false);
             }
         });
         listColorValues.setAdapter(colorValuesAdapter, true);
@@ -307,18 +305,18 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         colorPickerFrame.setVisibility(View.INVISIBLE);
     }
 
-    private Animation fadeIn;
-    private Animation fadeOut;
+    private Animation fadeInListColorValues;
+    private Animation fadeOutListColorValues;
 
     private static final long FADE_ANIMATION_DURATION = 300;
 
     private void initFadeAnimations() {
-        fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(FADE_ANIMATION_DURATION);
+        fadeInListColorValues = new AlphaAnimation(0, 1);
+        fadeInListColorValues.setDuration(FADE_ANIMATION_DURATION);
 
-        fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setDuration(FADE_ANIMATION_DURATION);
-        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+        fadeOutListColorValues = new AlphaAnimation(1, 0);
+        fadeOutListColorValues.setDuration(FADE_ANIMATION_DURATION);
+        fadeOutListColorValues.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -332,14 +330,15 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             public void onAnimationRepeat(Animation animation) {
             }
         });
+    private void fadeListColorValues(boolean out) {
+        listColorValues.startAnimation(out ? fadeOutListColorValues : fadeInListColorValues);
+    }
     }
 
-    private void fadeColorsList(boolean out) {
-        listColorValues.startAnimation(out ? fadeOut : fadeIn);
     }
 
     private void updateColors() {
-        fadeColorsList(true);
+        fadeListColorValues(true);
     }
 
     @Override
