@@ -21,9 +21,8 @@ import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
-import com.larswerkman.lobsterpicker.LobsterPicker;
-import com.larswerkman.lobsterpicker.sliders.LobsterOpacitySlider;
-import com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider;
+import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.SVBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,14 +79,11 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.lobster_picker_frame_inner)
     LinearLayout lobsterPickerFrame;
 
-    @BindView(R.id.lobster_picker)
-    LobsterPicker lobsterPicker;
+    @BindView(R.id.holo_colorpicker)
+    ColorPicker colorPicker;
 
-    @BindView(R.id.lobster_shadeslider)
-    LobsterShadeSlider lobsterShadeSlider;
-
-    @BindView(R.id.lobster_opacityslider)
-    LobsterOpacitySlider lobsterOpacitySlider;
+    @BindView(R.id.holo_svbar)
+    SVBar svBar;
 
     @BindView(R.id.button_done)
     TextView buttonDone;
@@ -243,8 +239,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             }
         });
 
-        lobsterPicker.addDecorator(lobsterShadeSlider);
-        lobsterPicker.addDecorator(lobsterOpacitySlider);
+        colorPicker.addSVBar(svBar);
 
         surfaceView.setZOrderOnTop(false);
 
@@ -266,11 +261,12 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void showColorPickerDialog(final Preferences.Colors color) {
-        lobsterPicker.setColor(Preferences.getColor(color));
+        colorPicker.setOldCenterColor(Preferences.getColor(color));
+        colorPicker.setColor(Preferences.getColor(color));
         buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Preferences.setColor(color, lobsterPicker.getColor());
+                Preferences.setColor(color, colorPicker.getColor());
                 updateColors();
                 initDemo();
                 buttonDone.setOnClickListener(null);

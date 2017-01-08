@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:custom="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/root_frame"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#EEEEEE"
-    android:id="@+id/root_frame">
+             android:background="#EEEEEE">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -158,18 +158,13 @@
             android:padding="16dp">
             <!--android:visibility="invisible"-->
 
-        <com.larswerkman.lobsterpicker.LobsterPicker
-                android:id="@+id/lobster_picker"
+            <com.larswerkman.holocolorpicker.ColorPicker
+                android:id="@+id/holo_colorpicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider
-                android:id="@+id/lobster_shadeslider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <com.larswerkman.lobsterpicker.sliders.LobsterOpacitySlider
-                android:id="@+id/lobster_opacityslider"
+            <com.larswerkman.holocolorpicker.SVBar
+                android:id="@+id/holo_svbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
