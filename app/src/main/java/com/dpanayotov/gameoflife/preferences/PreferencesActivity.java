@@ -297,16 +297,19 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 cancelColorPicker();
             }
         });
-        colorPickerFrame.setVisibility(View.VISIBLE);
+        showColorPickerFrame();
     }
 
     @OnClick(R.id.button_cancel)
     void cancelColorPicker() {
-        colorPickerFrame.setVisibility(View.INVISIBLE);
+        hideColorPickerFrame();
     }
 
     private Animation fadeInListColorValues;
     private Animation fadeOutListColorValues;
+
+    private Animation fadeInColorPickerFrame;
+    private Animation fadeOutColorPickerFrame;
 
     private static final long FADE_ANIMATION_DURATION = 300;
 
@@ -330,11 +333,39 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             public void onAnimationRepeat(Animation animation) {
             }
         });
+
+        fadeInColorPickerFrame = new AlphaAnimation(0, 1);
+        fadeInColorPickerFrame.setDuration(FADE_ANIMATION_DURATION);
+
+        fadeOutColorPickerFrame = new AlphaAnimation(1, 0);
+        fadeOutColorPickerFrame.setDuration(FADE_ANIMATION_DURATION);
+        fadeOutColorPickerFrame.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                colorPickerFrame.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+    }
+
     private void fadeListColorValues(boolean out) {
         listColorValues.startAnimation(out ? fadeOutListColorValues : fadeInListColorValues);
     }
+
+    private void showColorPickerFrame(){
+        colorPickerFrame.setVisibility(View.VISIBLE);
+        colorPickerFrame.startAnimation(fadeInColorPickerFrame);
     }
 
+    private void hideColorPickerFrame(){
+        colorPickerFrame.startAnimation(fadeOutColorPickerFrame);
     }
 
     private void updateColors() {
@@ -366,7 +397,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onStart() {
         super.onStart();
-//        cancelColorPicker();
         if (life != null) {
             life.start();
         }
