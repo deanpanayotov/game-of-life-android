@@ -13,10 +13,10 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="@android:drawable/dialog_holo_light_frame"
-            android:layout_marginTop="2dp"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp">
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@android:drawable/dialog_holo_light_frame">
 
             <SurfaceView
                 android:id="@+id/surface_view"
@@ -26,14 +26,14 @@
         </FrameLayout>
 
         <ScrollView
-            android:scrollbars="none"
-            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,15 +108,16 @@
                         android:text="@string/color"/>
 
                     <LinearLayout
-                                  android:layout_width="match_parent"
-                                  android:layout_height="match_parent"
-                                  android:orientation="horizontal">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/list_color_names"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"/>
+
                         <com.woxthebox.draglistview.DragListView
                             android:id="@+id/list_color_values"
                             android:layout_width="0dp"
@@ -134,16 +135,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
+        android:background="#66000000"
         android:clickable="true"
         android:visibility="invisible">
         android:layout_height="match_parent">
 
         <LinearLayout
+            style="@style/PreferenceCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/white"
-            android:orientation="vertical"
             android:padding="16dp">
 
             <com.larswerkman.holocolorpicker.ColorPicker
@@ -157,23 +159,31 @@
                 android:layout_height="wrap_content"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
 
                 <TextView
                     android:id="@+id/button_cancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_primary_clickable"
+                    android:gravity="center"
                     android:padding="16dp"
                     android:text="Cancel"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/button_done"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_primary_clickable"
+                    android:gravity="center"
                     android:padding="16dp"
                     android:text="Done"
                     android:textStyle="bold"/>
