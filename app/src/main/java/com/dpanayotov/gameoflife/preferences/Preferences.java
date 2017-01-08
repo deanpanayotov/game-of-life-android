@@ -1,13 +1,14 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 
 import com.dpanayotov.gameoflife.GameOfLifeApplication;
+import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,30 +72,34 @@ public class Preferences {
         prefsEditor.apply();
     }
 
-    public static void setColor(Colors color, int value) {
+    public static void setColor(Color color, int value) {
         getPrefs().edit().putInt(color.getKey(), value).commit();
     }
 
-    public static int getColor(Colors color) {
+    public static int getColor(Color color) {
         return getPrefs().getInt(color.getKey(), color.getDefaultValue());
     }
 
-    public static void swapColors(Colors a, Colors b) {
+    public static void swapColors(Color a, Color b) {
         int c = getColor(b);
         setColor(b, getColor(a));
         setColor(a, c);
     }
 
-    public enum Colors {
-        PRIMARY("PRIMARY", Color.parseColor("#0B083B")),
-        SECONDARY("SECONDARY", Color.parseColor("#FFD57C")),
-        BACKGROUND("BACKGROUND", Color.parseColor("#595594"));
+    public enum Color {
+        PRIMARY("PRIMARY", R.string.color_primary, android.graphics.Color.parseColor("#0B083B")),
+        SECONDARY("SECONDARY", R.string.color_secondary, android.graphics.Color.parseColor
+                ("#FFD57C")),
+        BACKGROUND("BACKGROUND", R.string.color_background, android.graphics.Color.parseColor
+                ("#595594"));
 
         String key;
+        int stringResId;
         int defaultValue;
 
-        Colors(String key, int defaultValue) {
+        Color(String key, int stringResId, int defaultValue) {
             this.key = key;
+            this.stringResId = stringResId;
             this.defaultValue = defaultValue;
         }
 
@@ -102,10 +107,29 @@ public class Preferences {
             return key;
         }
 
+        public int getStringResId() {
+            return stringResId;
+        }
+
         public int getDefaultValue() {
             return defaultValue;
         }
 
+        public static List<String> getKeys() {
+            List<String> colors = new ArrayList<>();
+            for (Color color : values()) {
+                colors.add(color.getKey());
+            }
+            return colors;
+        }
+
+        public static List<Integer> getResIds() {
+            List<Integer> colors = new ArrayList<>();
+            for (Color color : values()) {
+                colors.add(color.getStringResId());
+            }
+            return colors;
+        }
     }
 
     public static List<Integer> getTickRates() {
@@ -141,7 +165,8 @@ public class Preferences {
     }
 
     public static int getMinPopulationDensity() {
-        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY, (minPopulationDensityOptions.size() - 1) /
+        return getPrefs().getInt(Keys.MIN_POPULATION_DENSITY, (minPopulationDensityOptions.size()
+                - 1) /
                 2);
     }
 
@@ -154,8 +179,9 @@ public class Preferences {
     }
 
     public static int getInitialPopulationDensity() {
-        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY, (initialPopulationDensityOptions.size() - 1) /
-                2);
+        return getPrefs().getInt(Keys.INITIAL_POPULATION_DENSITY,
+                (initialPopulationDensityOptions.size() - 1) /
+                        2);
     }
 
     public static void setInitialPopulationDensity(int position) {

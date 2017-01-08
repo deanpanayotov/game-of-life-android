@@ -62,9 +62,9 @@ public class Life {
         handlerWrapper = preview ? new AsyncHandlerWrapper() : new SyncHandlerWrapper();
         handlerWrapper.init();
 
-        initPaint(Preferences.getColor(Preferences.Colors.PRIMARY), primaryPaint);
-        initPaint(Preferences.getColor(Preferences.Colors.SECONDARY), secondaryPaint);
-        initPaint(Preferences.getColor(Preferences.Colors.BACKGROUND), backgroundPaint);
+        initPaint(Preferences.getColor(Preferences.Color.PRIMARY), primaryPaint);
+        initPaint(Preferences.getColor(Preferences.Color.SECONDARY), secondaryPaint);
+        initPaint(Preferences.getColor(Preferences.Color.BACKGROUND), backgroundPaint);
 
         getPreferences();
 
