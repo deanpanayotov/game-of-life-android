@@ -1,13 +1,13 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,8 +15,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
-import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.dpanayotov.gameoflife.R;
 import com.dpanayotov.gameoflife.life.Life;
 import com.dpanayotov.gameoflife.preferences.custom.ColorNamesAdapter;
@@ -25,13 +26,19 @@ import com.dpanayotov.gameoflife.preferences.custom.SwitchPreference;
 import com.dpanayotov.gameoflife.preferences.custom.ValueSetSeekBarPreference;
 import com.dpanayotov.gameoflife.util.Resolution;
 import com.dpanayotov.gameoflife.util.ScreenUtil;
+
 import com.woxthebox.draglistview.DragListView;
+
+import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.SVBar;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Dean Panayotov on 9/24/2016
@@ -63,9 +70,6 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.surface_view)
     SurfaceView surfaceView;
 
-    @BindView(R.id.progress_overlay)
-    View progressOverlay;
-
     //-------------
 
     @BindView(R.id.list_color_names)
@@ -76,6 +80,18 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     ColorValuesAdapter colorValuesAdapter;
     List<Pair<Integer, Integer>> colorValues;
 
+    @BindView(R.id.colorpicker_frame)
+    FrameLayout colorPickerFrame;
+
+    @BindView(R.id.holo_colorpicker)
+    ColorPicker colorPicker;
+
+    @BindView(R.id.holo_svbar)
+    SVBar svBar;
+
+    @BindView(R.id.button_done)
+    TextView buttonDone;
+
     private Life life;
 
     private int canvasWidth;
@@ -85,10 +101,10 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             .OnItemClickedListener() {
         @Override
         public void onItemClicked(int position) {
+            Log.d("zxc", "onItemClicked: "+position);
             showColorPickerDialog(Preferences.Color.values()[position]);
         }
     };
-
 
     private void calculateDimensions() {
         Rect surfaceFrame = surfaceView.getHolder().getSurfaceFrame();
@@ -224,6 +240,8 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             }
         });
 
+        colorPicker.addSVBar(svBar);
+
         initFadeAnimations();
 
         initColorValues();
@@ -269,39 +287,36 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void showColorPickerDialog(final Preferences.Color color) {
-        progressOverlay.setVisibility(View.VISIBLE);
-        ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this);
-        colorPickerDialog.hideOpacityBar();
-        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+        colorPicker.setOldCenterColor(Preferences.getColor(color));
+        colorPicker.setColor(Preferences.getColor(color));
+        buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onColorPicked(int value, String hexVal) {
-                Preferences.setColor(color, value);
+            public void onClick(View v) {
+                Preferences.setColor(color, colorPicker.getColor());
                 updateColors();
                 initDemo();
+                buttonDone.setOnClickListener(null);
+                cancelColorPicker();
             }
         });
-        colorPickerDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                progressOverlay.setVisibility(View.INVISIBLE);
-            }
-        });
-        colorPickerDialog.setInitialColor(Preferences.getColor(color));
-        colorPickerDialog.show();
+        colorPickerFrame.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.button_cancel)
+    void cancelColorPicker() {
+        colorPickerFrame.setVisibility(View.INVISIBLE);
     }
 
     private Animation fadeIn;
     private Animation fadeOut;
 
-    private static final long FADE_ANIMATION_DURATION = 500;
+    private static final long FADE_ANIMATION_DURATION = 300;
 
     private void initFadeAnimations() {
         fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator());
-        fadeIn.setDuration(1000);
+        fadeIn.setDuration(FADE_ANIMATION_DURATION);
 
         fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator());
         fadeOut.setStartOffset(FADE_ANIMATION_DURATION);
         fadeOut.setDuration(FADE_ANIMATION_DURATION);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
@@ -353,6 +368,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onStart() {
         super.onStart();
+//        cancelColorPicker();
         if (life != null) {
             life.start();
         }
