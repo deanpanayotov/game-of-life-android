@@ -169,6 +169,8 @@
                     android:textSize="24sp"/>
 
                 <EditText
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
                     android:id="@+id/hex_code_input"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
