@@ -39,6 +39,8 @@
     <SeekBar
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
         android:id="@+id/seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

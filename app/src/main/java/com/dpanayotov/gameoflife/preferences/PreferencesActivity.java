@@ -1,18 +1,22 @@
 package com.dpanayotov.gameoflife.preferences;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -90,6 +94,9 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @BindView(R.id.button_done)
     TextView buttonDone;
 
+    @BindView(R.id.hex_code_input)
+    EditText hexCodeInput;
+
     private Life life;
 
     private int canvasWidth;
@@ -99,7 +106,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             .OnItemClickedListener() {
         @Override
         public void onItemClicked(int position) {
-            Log.d("zxc", "onItemClicked: "+position);
+            Log.d("zxc", "onItemClicked: " + position);
             showColorPickerDialog(Preferences.Color.values()[position]);
         }
     };
@@ -239,10 +246,39 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         });
 
         colorPicker.addSVBar(svBar);
+        colorPicker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
+            @Override
+            public void onColorChanged(int color) {
+                setHexInput(color);
+            }
+        });
 
         initFadeAnimations();
 
         initColorValues();
+
+        hexCodeInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d("zxc", "afterTextChanged");
+                if (s.toString().length() == 6) {
+                    String newColor = s.toString().toUpperCase();
+                    String oldColor = String.format("%06X", (0xFFFFFF & colorPicker.getColor()));
+                    if (!newColor.equals(oldColor)) {
+                        Log.d("zxc", newColor + " " + colorPicker.getColor());
+                        colorPicker.setColor(Color.parseColor("#"+newColor));
+                    }
+                }
+            }
+        });
     }
 
     private void initColorValues() {
@@ -297,7 +333,17 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
                 cancelColorPicker();
             }
         });
+        setHexInput(Preferences.getColor(color));
         showColorPickerFrame();
+    }
+
+    private void setHexInput(int color) {
+        String newColor = String.format("%06X", (0xFFFFFF & color));
+        Log.d("zxc", "onColorChanged");
+        if (!newColor.equals(hexCodeInput.getText().toString().toUpperCase())) {
+            Log.d("zxc", newColor + " " + hexCodeInput.getText().toString().toUpperCase());
+            hexCodeInput.setText(newColor);
+        }
     }
 
     @OnClick(R.id.button_cancel)
@@ -359,12 +405,12 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
         listColorValues.startAnimation(out ? fadeOutListColorValues : fadeInListColorValues);
     }
 
-    private void showColorPickerFrame(){
+    private void showColorPickerFrame() {
         colorPickerFrame.setVisibility(View.VISIBLE);
         colorPickerFrame.startAnimation(fadeInColorPickerFrame);
     }
 
-    private void hideColorPickerFrame(){
+    private void hideColorPickerFrame() {
         colorPickerFrame.startAnimation(fadeOutColorPickerFrame);
     }
 
@@ -405,9 +451,9 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void onBackPressed() {
-        if(colorPickerFrame.getVisibility() == View.VISIBLE){
+        if (colorPickerFrame.getVisibility() == View.VISIBLE) {
             hideColorPickerFrame();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
