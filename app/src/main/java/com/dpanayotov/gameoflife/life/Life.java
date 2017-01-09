@@ -199,7 +199,7 @@ public class Life {
     }
 
     private void drawCell(int x, int y, int value, Canvas canvas) {
-        secondaryPaint.setAlpha((int) (255 * (1 / (float) value)));
+//        secondaryPaint.setAlpha((int) (255 * (1 / (float) value)));
         int radius = (halfCell - Constants.CELL_PADDING) - Constants
                 .RADIUS_STEP * (value - 1);
         if (value > 1) {

@@ -430,6 +430,7 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         life.destroy();
+        life = null;
     }
 
     @Override
