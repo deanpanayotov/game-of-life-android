@@ -3,5 +3,4 @@
         <item name="android:background">#FFFFFF</item>
         <item name="android:elevation">6dp</item>
     </style>
-
 </resources>

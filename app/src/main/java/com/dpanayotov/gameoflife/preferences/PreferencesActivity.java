@@ -401,4 +401,14 @@ public class PreferencesActivity extends Activity implements SurfaceHolder.Callb
             life.start();
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if(colorPickerFrame.getVisibility() == View.VISIBLE){
+            hideColorPickerFrame();
+        }else {
+            super.onBackPressed();
+        }
+    }
 }
